@@ -18,4 +18,5 @@ public partial class Certificate
     public string? Status { get; set; }
 
     public virtual User User { get; set; } = null!;
+
 }

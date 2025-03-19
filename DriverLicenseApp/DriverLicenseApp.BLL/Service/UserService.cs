@@ -14,5 +14,28 @@ namespace DriverLicenseApp.BLL.Service
         {
             return UserRepository.GetAllUsers();
         }
+
+        public List<User> GetAllTeacher()
+        {
+            return UserRepository.GetAllTeacher();
+        }
+
+        // Lấy thông tin người dùng theo userId
+        public User GetUserProfile(int userId)
+        {
+            return UserRepository.GetUserById(userId);
+        }
+
+        // Cập nhật thông tin người dùng
+        public bool UpdateUserProfile(User updatedUser)
+        {
+            // Thực hiện validation cơ bản
+            if (string.IsNullOrWhiteSpace(updatedUser.FullName) || string.IsNullOrWhiteSpace(updatedUser.Email))
+            {
+                throw new ArgumentException("FullName and Email are required.");
+            }
+
+            return UserRepository.UpdateUser(updatedUser);
+        }
     }
 }

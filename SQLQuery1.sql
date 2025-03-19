@@ -110,46 +110,44 @@ CREATE TABLE Notifications (
 
 
 INSERT INTO Users (FullName, Email, Password, Role, Class, School, Phone) VALUES
--- Giáo viên (Teacher)
-('Nguyễn Văn H', 'h@teacher.com', '123456', 2, NULL, NULL, '0911112222'),
-('Trần Thị I', 'i@teacher.com', '123456', 2, NULL, NULL, '0922223333'),
+-- Teachers
+('Nguyen Van H', 'h@teacher.com', '123456', 2, NULL, NULL, '0911112222'),
+('Tran Thi I', 'i@teacher.com', '123456', 2, NULL, NULL, '0922223333'),
 
--- Cảnh sát giao thông (Traffic Police)
-('Phạm Minh J', 'j@police.com', '123456', 3, NULL, NULL, '0933334444'),
+-- Traffic Police
+('Pham Minh J', 'j@police.com', '123456', 3, NULL, NULL, '0933334444'),
 
--- Quản trị viên (Admin)
-('Lê Quốc K', 'k@admin.com', '123456', 4, NULL, NULL, '0944445555'),
+-- Admin
+('Le Quoc K', 'k@admin.com', '123456', 4, NULL, NULL, '0944445555'),
 
--- Học sinh (Student)
-('Học Sinh 01', 'student01@student.com', '123456', 1, '12A1', 'THPT Lê Hồng Phong', '0955556661'),
-('Học Sinh 02', 'student02@student.com', '123456', 1, '11A2', 'THPT Nguyễn Du', '0955556662'),
-('Học Sinh 03', 'student03@student.com', '123456', 1, '10B1', 'THPT Trần Phú', '0955556663'),
-('Học Sinh 04', 'student04@student.com', '123456', 1, '12A3', 'THPT Lê Hồng Phong', '0955556664'),
-('Học Sinh 05', 'student05@student.com', '123456', 1, '11C1', 'THPT Nguyễn Du', '0955556665'),
-('Học Sinh 06', 'student06@student.com', '123456', 1, '10B3', 'THPT Trần Phú', '0955556666'),
-('Học Sinh 07', 'student07@student.com', '123456', 1, '12B2', 'THPT Lê Hồng Phong', '0955556667'),
-('Học Sinh 08', 'student08@student.com', '123456', 1, '11A3', 'THPT Nguyễn Du', '0955556668'),
-('Học Sinh 09', 'student09@student.com', '123456', 1, '10C2', 'THPT Trần Phú', '0955556669'),
-('Học Sinh 10', 'student10@student.com', '123456', 1, '12C3', 'THPT Lê Hồng Phong', '0955556670'),
-('Học Sinh 11', 'student11@student.com', '123456', 1, '11B3', 'THPT Nguyễn Du', '0955556671'),
-('Học Sinh 12', 'student12@student.com', '123456', 1, '10A1', 'THPT Trần Phú', '0955556672'),
-('Học Sinh 13', 'student13@student.com', '123456', 1, '12A2', 'THPT Lê Hồng Phong', '0955556673'),
-('Học Sinh 14', 'student14@student.com', '123456', 1, '11C2', 'THPT Nguyễn Du', '0955556674'),
-('Học Sinh 15', 'student15@student.com', '123456', 1, '10B2', 'THPT Trần Phú', '0955556675'),
-('Học Sinh 16', 'student16@student.com', '123456', 1, '12B1', 'THPT Lê Hồng Phong', '0955556676'),
-('Học Sinh 17', 'student17@student.com', '123456', 1, '11A1', 'THPT Nguyễn Du', '0955556677'),
-('Học Sinh 18', 'student18@student.com', '123456', 1, '10C3', 'THPT Trần Phú', '0955556678'),
-('Học Sinh 19', 'student19@student.com', '123456', 1, '12C1', 'THPT Lê Hồng Phong', '0955556679'),
-('Học Sinh 20', 'student20@student.com', '123456', 1, '11B1', 'THPT Nguyễn Du', '0955556680');
-
+-- Students
+('Student 01', 'student01@student.com', '123456', 1, '12A1', 'Le Hong Phong High School', '0955556661'),
+('Student 02', 'student02@student.com', '123456', 1, '11A2', 'Nguyen Du High School', '0955556662'),
+('Student 03', 'student03@student.com', '123456', 1, '10B1', 'Tran Phu High School', '0955556663'),
+('Student 04', 'student04@student.com', '123456', 1, '12A3', 'Le Hong Phong High School', '0955556664'),
+('Student 05', 'student05@student.com', '123456', 1, '11C1', 'Nguyen Du High School', '0955556665'),
+('Student 06', 'student06@student.com', '123456', 1, '10B3', 'Tran Phu High School', '0955556666'),
+('Student 07', 'student07@student.com', '123456', 1, '12B2', 'Le Hong Phong High School', '0955556667'),
+('Student 08', 'student08@student.com', '123456', 1, '11A3', 'Nguyen Du High School', '0955556668'),
+('Student 09', 'student09@student.com', '123456', 1, '10C2', 'Tran Phu High School', '0955556669'),
+('Student 10', 'student10@student.com', '123456', 1, '12C3', 'Le Hong Phong High School', '0955556670'),
+('Student 11', 'student11@student.com', '123456', 1, '11B3', 'Nguyen Du High School', '0955556671'),
+('Student 12', 'student12@student.com', '123456', 1, '10A1', 'Tran Phu High School', '0955556672'),
+('Student 13', 'student13@student.com', '123456', 1, '12A2', 'Le Hong Phong High School', '0955556673'),
+('Student 14', 'student14@student.com', '123456', 1, '11C2', 'Nguyen Du High School', '0955556674'),
+('Student 15', 'student15@student.com', '123456', 1, '10B2', 'Tran Phu High School', '0955556675'),
+('Student 16', 'student16@student.com', '123456', 1, '12B1', 'Le Hong Phong High School', '0955556676'),
+('Student 17', 'student17@student.com', '123456', 1, '11A1', 'Nguyen Du High School', '0955556677'),
+('Student 18', 'student18@student.com', '123456', 1, '10C3', 'Tran Phu High School', '0955556678'),
+('Student 19', 'student19@student.com', '123456', 1, '12C1', 'Le Hong Phong High School', '0955556679'),
+('Student 20', 'student20@student.com', '123456', 1, '11B1', 'Nguyen Du High School', '0955556680');
 
 INSERT INTO Courses (CourseName, TeacherID, StartDate, EndDate, Status) VALUES
-('Lý thuyết và thực hành bằng A1', 1, '2025-03-10', '2025-04-10', 'Active'),
-('Lý thuyết nâng cao A1 & A2', 2, '2025-03-15', '2025-04-20', 'Active'),
-('Thực hành lái xe A1', 1, '2025-03-12', '2025-04-15', 'Active'),
-('Tổng hợp lý thuyết A1, A2, B1', 2, '2025-03-20', '2025-05-01', 'Active'),
-('Kỹ năng lái xe an toàn A1', 1, '2025-03-25', '2025-04-30', 'Active');
-
+('Theory and Practice for A1 License', 1, '2025-03-10', '2025-04-10', 'Active'),
+('Advanced Theory for A1 & A2 License', 2, '2025-03-15', '2025-04-20', 'Active'),
+('A1 Driving Practice', 1, '2025-03-12', '2025-04-15', 'Active'),
+('Comprehensive Theory for A1, A2, B1 Licenses', 2, '2025-03-20', '2025-05-01', 'Active'),
+('Safe Driving Skills for A1 License', 1, '2025-03-25', '2025-04-30', 'Active');
 
 INSERT INTO Registrations (UserID, CourseID, Status) VALUES
 (5, 1, 'Approved'), (6, 1, 'Approved'), (7, 1, 'Approved'), (8, 1, 'Approved'), 
@@ -159,40 +157,23 @@ INSERT INTO Registrations (UserID, CourseID, Status) VALUES
 (21, 5, 'Approved'), (22, 5, 'Approved'), (23, 5, 'Approved'), (24, 5, 'Approved');
 
 INSERT INTO Exams (CourseID, ExamDate, ExamTime, DurationMinutes, Room, UserID) VALUES
-(1, '2025-04-15', '08:00:00', 60, 'Phòng 101', 3), 
-(2, '2025-04-25', '09:00:00', 60, 'Phòng 102', 3), 
-(3, '2025-04-20', '10:00:00', 60, 'Phòng 103', 3), 
-(4, '2025-05-05', '08:30:00', 90, 'Phòng 104', 3), 
-(5, '2025-04-30', '09:30:00', 60, 'Phòng 105', 3);
-
-INSERT INTO Exams (CourseID, ExamDate, ExamTime, DurationMinutes, Room, UserID) VALUES
--- Giáo viên T1 giám sát lớp C2, C3 (không phải lớp của họ)
-(1, '2025-04-15', '08:00:00', 60, 'Phòng 101', 2), 
-(2, '2025-04-25', '09:00:00', 60, 'Phòng 102', 3), -- Police giám sát lớp này
--- Giáo viên T2 giám sát lớp C1, C4 (không phải lớp của họ)
-(3, '2025-04-20', '10:00:00', 60, 'Phòng 103', 1), 
-(4, '2025-05-05', '08:30:00', 90, 'Phòng 104', 3), -- Police giám sát lớp này
--- Police giám sát lớp C5
-(5, '2025-04-30', '09:30:00', 60, 'Phòng 105', 3);
-
-
+(1, '2025-04-15', '08:00:00', 60, 'Room 101', 3), 
+(2, '2025-04-25', '09:00:00', 60, 'Room 102', 3), 
+(3, '2025-04-20', '10:00:00', 60, 'Room 103', 3), 
+(4, '2025-05-05', '08:30:00', 90, 'Room 104', 3), 
+(5, '2025-04-30', '09:30:00', 60, 'Room 105', 3);
 
 INSERT INTO Results (ExamID, UserID, Score, Status, Notes) VALUES
--- Kết quả cho kỳ thi của khóa 1
-(1, 5, 8.5, 'Pass', 'Làm bài tốt'), (1, 6, 7.0, 'Pass', 'Đạt yêu cầu'), 
-(1, 7, 6.5, 'Pass', 'Cần cải thiện'), (1, 8, 5.0, 'Not Pass', 'Thi lại lần sau'),
--- Kết quả cho kỳ thi của khóa 2
-(2, 9, 9.0, 'Pass', 'Xuất sắc'), (2, 10, 7.5, 'Pass', 'Đạt yêu cầu'), 
-(2, 11, 6.0, 'Pass', 'Cố gắng hơn'), (2, 12, 4.5, 'Not Pass', 'Thi lại lần sau'),
--- Kết quả cho kỳ thi của khóa 3
-(3, 13, 8.0, 'Pass', 'Làm bài tốt'), (3, 14, 7.2, 'Pass', 'Ổn định'), 
-(3, 15, 6.8, 'Pass', 'Cải thiện thêm'), (3, 16, 4.0, 'Not Pass', 'Thi lại lần sau'),
--- Kết quả cho kỳ thi của khóa 4
-(4, 17, 9.5, 'Pass', 'Xuất sắc'), (4, 18, 7.8, 'Pass', 'Đạt yêu cầu'), 
-(4, 19, 6.2, 'Pass', 'Cần cải thiện'), (4, 20, 3.5, 'Not Pass', 'Thi lại lần sau'),
--- Kết quả cho kỳ thi của khóa 5
-(5, 21, 8.7, 'Pass', 'Rất tốt'), (5, 22, 7.3, 'Pass', 'Đạt yêu cầu'), 
-(5, 23, 6.7, 'Pass', 'Ổn'), (5, 24, 5.2, 'Not Pass', 'Thi lại lần sau');
+(1, 5, 8.5, 'Pass', 'Good performance'), (1, 6, 7.0, 'Pass', 'Meets requirements'), 
+(1, 7, 6.5, 'Pass', 'Needs improvement'), (1, 8, 5.0, 'Not Pass', 'Retake required'),
+(2, 9, 9.0, 'Pass', 'Excellent'), (2, 10, 7.5, 'Pass', 'Meets requirements'), 
+(2, 11, 6.0, 'Pass', 'Needs more effort'), (2, 12, 4.5, 'Not Pass', 'Retake required'),
+(3, 13, 8.0, 'Pass', 'Good performance'), (3, 14, 7.2, 'Pass', 'Stable performance'), 
+(3, 15, 6.8, 'Pass', 'Could improve'), (3, 16, 4.0, 'Not Pass', 'Retake required'),
+(4, 17, 9.5, 'Pass', 'Excellent'), (4, 18, 7.8, 'Pass', 'Meets requirements'), 
+(4, 19, 6.2, 'Pass', 'Needs improvement'), (4, 20, 3.5, 'Not Pass', 'Retake required'),
+(5, 21, 8.7, 'Pass', 'Very good'), (5, 22, 7.3, 'Pass', 'Meets requirements'), 
+(5, 23, 6.7, 'Pass', 'Acceptable'), (5, 24, 5.2, 'Not Pass', 'Retake required');
 
 
 INSERT INTO Certificates (UserID, IssuedDate, ExpirationDate, CertificateCode, Status)
