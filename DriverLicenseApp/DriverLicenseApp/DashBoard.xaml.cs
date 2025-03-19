@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DriverLicenseApp.DAL.Models;
 
 namespace DriverLicenseApp
 {
@@ -19,12 +20,12 @@ namespace DriverLicenseApp
     /// </summary>
     public partial class DashBoard : Window
     {
-        private string UserRole;
+        private User currentUser;
 
-        public DashBoard(string role)
+        public DashBoard(User user)
         {
             InitializeComponent();
-            UserRole = role;
+            currentUser = user;
             SetupMenu();
         }
         private void SetupMenu()
@@ -34,27 +35,31 @@ namespace DriverLicenseApp
             StackPanelMenu.Children.Clear();
             // Nút chung cho tất cả role
             AddMenuButton("Profile", Profile_Click);
-            AddMenuButton("Logout", Logout_Click);
 
             // Hiển thị nút theo từng role
-            switch (UserRole)
+            switch (currentUser.Role)
             {
-                case "Student":
-                    AddMenuButton("Take Exam", TakeExam_Click);
+                //Student
+                case 1:
+
                     break;
-                case "Teacher":
-                    AddMenuButton("Manage Students", ManageStudents_Click);
-                    AddMenuButton("Create Exam", CreateExam_Click);
+                //Teacher
+                case 2:
+                    AddMenuButton("Course Management", CourseManagement_Click);
+                    AddMenuButton("List Exam", ListExam_Click);
                     break;
-                case "TrafficPolice":
-                    AddMenuButton("Check License", CheckLicense_Click);
+                //Police
+                case 3:
+
                     break;
-                case "Admin":
-                    AddMenuButton("Manage Users", ManageUsers_Click);
-                    AddMenuButton("System Settings", SystemSettings_Click);
+                //Admin
+                case 4:
+
                     break;
             }
+            AddMenuButton("Logout", Logout_Click);
         }
+
         private void AddMenuButton(string text, RoutedEventHandler clickEvent)
         {
             Button button = new Button
@@ -70,45 +75,24 @@ namespace DriverLicenseApp
 
         private void Profile_Click(object sender, RoutedEventArgs e)
         {
-            OpenWindow(new ProfileWindom());
+            OpenWindow(new Profile(currentUser.UserId));
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            Login loginWindow = new Login();
+            loginWindow.Show();
             this.Close();
         }
-
-        private void TakeExam_Click(object sender, RoutedEventArgs e)
+        private void CourseManagement_Click(object sender, RoutedEventArgs e)
         {
-            //OpenWindow(new TakeExamWindow());
+            OpenWindow(new CourseManagement());
+        }
+        private void ListExam_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new ListExam());
         }
 
-        private void ManageStudents_Click(object sender, RoutedEventArgs e)
-        {
-            //OpenWindow(new ManageStudentsWindow());
-        }
-
-        private void CreateExam_Click(object sender, RoutedEventArgs e)
-        {
-            //OpenWindow(new CreateExamWindow());
-        }
-
-        private void CheckLicense_Click(object sender, RoutedEventArgs e)
-        {
-            //OpenWindow(new CheckLicenseWindow());
-        }
-
-        private void ManageUsers_Click(object sender, RoutedEventArgs e)
-        {
-            //OpenWindow(new ManageUsersWindow());
-        }
-
-        private void SystemSettings_Click(object sender, RoutedEventArgs e)
-        {
-            //OpenWindow(new SystemSettingsWindow());
-        }
         private void OpenWindow(Window window)
         {
             this.Hide(); // Ẩn Dashboard

@@ -14,18 +14,19 @@ using DriverLicenseApp.BLL.Service;
 using DriverLicenseApp.DAL.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace DriverLicenseApp
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Login : Window
     {
         UserService service = new();
         private bool isRegistering = false; // Trạng thái đăng ký
-        public MainWindow()
+        public Login()
         {
             InitializeComponent();
         }
@@ -34,12 +35,11 @@ namespace DriverLicenseApp
             string email = txtEmail.Text;
             string password = txtPassword.Password;
 
-            if (isRegistering) // Nếu đang ở chế độ đăng ký
+            if (isRegistering)
             {
                 string fullName = txtFullName.Text;
                 string confirmPassword = txtConfirmPassword.Password;
                 int role = Convert.ToInt32(((ComboBoxItem)cbRole.SelectedItem).Tag);
-
 
                 if (password != confirmPassword)
                 {
@@ -48,16 +48,15 @@ namespace DriverLicenseApp
                 }
 
                 RegisterUser(fullName, email, password, role);
-                MessageBox.Show("Đăng ký thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 isRegistering = false;
                 ToggleRegisterMode(null, null);
             }
-            else // Nếu đang ở chế độ đăng nhập
+            else
             {
-                string role = AuthenticateUser(email, password);
-                if (!string.IsNullOrEmpty(role))
+                User? user = AuthenticateUser(email, password);
+                if (user != null)
                 {
-                    OpenDashboard(role);
+                    OpenDashboard(user);
                 }
                 else
                 {
@@ -67,15 +66,16 @@ namespace DriverLicenseApp
         }
 
 
+
         private void LoginUser()
         {
             string email = txtEmail.Text;
             string password = txtPassword.Password;
-            string role = AuthenticateUser(email, password);
+            User user = AuthenticateUser(email, password);
 
-            if (!string.IsNullOrEmpty(role))
+            if (user != null)
             {
-                OpenDashboard(role);
+                OpenDashboard(user);
             }
             else
             {
@@ -83,28 +83,20 @@ namespace DriverLicenseApp
             }
         }
 
-        private string AuthenticateUser(string email, string password)
+        private User? AuthenticateUser(string email, string password)
         {
             string hashedPassword = HashPassword(password);
             LicenseDriverDbContext context = new();
             var user = context.Users
                 .Where(u => u.Email == email && u.Password == hashedPassword)
-                .Select(u => u.Role)
                 .FirstOrDefault();
 
-            return user switch
-            {
-                1 => "Student",
-                2 => "Teacher",
-                3 => "TrafficPolice",
-                4 => "Admin",
-                _ => string.Empty
-            };
+            return user;
         }
 
-        private void OpenDashboard(string role)
+        private void OpenDashboard(User user)
         {
-            Window dashboard = new DashBoard(role);
+            Window dashboard = new DashBoard(user);
 
             if (dashboard != null)
             {
@@ -112,6 +104,7 @@ namespace DriverLicenseApp
                 this.Close();
             }
         }
+
 
         private string HashPassword(string password)
         {
