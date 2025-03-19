@@ -1,0 +1,26 @@
+﻿<Window x:Class="DriverLicenseApp.DashBoard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DriverLicenseApp"
+        mc:Ignorable="d"
+        Title="DashBoard" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <!-- Menu bên trái -->
+            <ColumnDefinition Width="*"/>
+            <!-- Nội dung chính -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Menu bên trái -->
+        <StackPanel x:Name="StackPanelMenu" Background="#2C3E50" Width="200" Orientation="Vertical"/>
+
+        <!-- Nội dung chính -->
+        <Grid Grid.Column="1">
+            <StackPanel x:Name="StackPanelButtons" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Image HorizontalAlignment="Left" Height="262" Margin="119,0,0,0" VerticalAlignment="Center" Width="368"/>
+        </Grid>
+    </Grid>
+</Window>

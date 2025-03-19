@@ -11,7 +11,7 @@ namespace DriverLicenseApp.DAL.Repository
     {
         public static List<User> GetAllUsers()
         {
-            LicenseDriverDbContext context = new();
+            LicenseDriverDbContext context = new LicenseDriverDbContext();
             return context.Users.ToList();
         }
     }
