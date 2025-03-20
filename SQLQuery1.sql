@@ -1,112 +1,112 @@
-USE [master]
-GO
+	USE [master]
+	GO
 
-/*******************************************************************************
-   Drop database if it exists
-********************************************************************************/
-IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'LicenseDriverDB')
-BEGIN
-	ALTER DATABASE LicenseDriverDB SET OFFLINE WITH ROLLBACK IMMEDIATE;
-	ALTER DATABASE LicenseDriverDB SET ONLINE;
-	DROP DATABASE LicenseDriverDB;
-END
+	/*******************************************************************************
+	   Drop database if it exists
+	********************************************************************************/
+	IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'LicenseDriverDB')
+	BEGIN
+		ALTER DATABASE LicenseDriverDB SET OFFLINE WITH ROLLBACK IMMEDIATE;
+		ALTER DATABASE LicenseDriverDB SET ONLINE;
+		DROP DATABASE LicenseDriverDB;
+	END
 
-GO
+	GO
 
-CREATE DATABASE LicenseDriverDB
-GO
+	CREATE DATABASE LicenseDriverDB
+	GO
 
-USE LicenseDriverDB
-GO
+	USE LicenseDriverDB
+	GO
 
-/*******************************************************************************
-	Drop tables if exists
-*******************************************************************************/
--- Tạo bảng Users (Quản lý tài khoản)
-CREATE TABLE Users (
-    UserID INT IDENTITY(1,1) PRIMARY KEY,
-    FullName NVARCHAR(100) NOT NULL,
-    Email NVARCHAR(100) NOT NULL UNIQUE,
-    Password NVARCHAR(255) NOT NULL,
-    Role INT CHECK (Role IN (1, 2, 3, 4)) NOT NULL, -- 1: Student, 2: Teacher, 3: TrafficPolice, 4: Admin
-    Class VARCHAR(50) NULL, -- chỉ dành cho học sinh) 
-    School VARCHAR(100) NULL, -- chỉ dành cho học sinh)
-    Phone NVARCHAR(15) NULL
-);
+	/*******************************************************************************
+		Drop tables if exists
+	*******************************************************************************/
+	-- Tạo bảng Users (Quản lý tài khoản)
+	CREATE TABLE Users (
+		UserID INT IDENTITY(1,1) PRIMARY KEY,
+		FullName NVARCHAR(100) NOT NULL,
+		Email NVARCHAR(100) NOT NULL UNIQUE,
+		Password NVARCHAR(255) NOT NULL,
+		Role INT CHECK (Role IN (1, 2, 3, 4)) NOT NULL, -- 1: Student, 2: Teacher, 3: TrafficPolice, 4: Admin
+		Class VARCHAR(50) NULL, -- chỉ dành cho học sinh) 
+		School VARCHAR(100) NULL, -- chỉ dành cho học sinh)
+		Phone NVARCHAR(15) NULL
+	);
 
--- Tạo bảng Courses (Khóa học)
-CREATE TABLE Courses (
-    CourseID INT IDENTITY(1,1) PRIMARY KEY,
-    CourseName NVARCHAR(100) NOT NULL,
-    TeacherID INT NOT NULL,
-    StartDate DATE NOT NULL,
-    EndDate DATE NOT NULL,
-    Status NVARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Closed', 'Cancelled')), -- Ràng buộc giá trị cho Status
-    FOREIGN KEY (TeacherID) REFERENCES Users(UserID)
-);
-
-
--- Tạo bảng Registrations (Đăng ký khóa học/kỳ thi)
-CREATE TABLE Registrations (
-    RegistrationID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT NOT NULL,
-    CourseID INT NOT NULL,
-    Status NVARCHAR(20) CHECK (Status IN ('Pending', 'Approved', 'Rejected')) DEFAULT 'Pending',
-    Comments NVARCHAR(MAX) NULL,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
-);
-
--- Tạo bảng Exams (Thông tin kỳ thi)
-CREATE TABLE Exams (
-    ExamID INT IDENTITY(1,1) PRIMARY KEY,
-    CourseID INT NOT NULL,
-    ExamDate DATE NOT NULL,
-    ExamTime TIME NOT NULL, -- Giờ bắt đầu thi
-    DurationMinutes INT NOT NULL, -- Thời lượng thi (phút)
-    Room NVARCHAR(50) NOT NULL,
-    UserID INT NOT NULL, -- Người giám sát kỳ thi
-    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
+	-- Tạo bảng Courses (Khóa học)
+	CREATE TABLE Courses (
+		CourseID INT IDENTITY(1,1) PRIMARY KEY,
+		CourseName NVARCHAR(100) NOT NULL,
+		TeacherID INT NOT NULL,
+		StartDate DATE NOT NULL,
+		EndDate DATE NOT NULL,
+		Status NVARCHAR(20) NOT NULL DEFAULT 'Active' CHECK (Status IN ('Active', 'Closed', 'Cancelled')), -- Ràng buộc giá trị cho Status
+		FOREIGN KEY (TeacherID) REFERENCES Users(UserID)
+	);
 
 
+	-- Tạo bảng Registrations (Đăng ký khóa học/kỳ thi)	
+	CREATE TABLE Registrations (
+		RegistrationID INT IDENTITY(1,1) PRIMARY KEY,
+		UserID INT NOT NULL,
+		CourseID INT NOT NULL,
+		Status NVARCHAR(20) CHECK (Status IN ('Pending', 'Approved', 'Rejected')) DEFAULT 'Pending',
+		Comments NVARCHAR(MAX) NULL,
+		FOREIGN KEY (UserID) REFERENCES Users(UserID),
+		FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+	);
 
--- Tạo bảng Results (Kết quả thi)
-CREATE TABLE Results (
-    ResultID INT IDENTITY(1,1) PRIMARY KEY,
-    ExamID INT NOT NULL,
-    UserID INT NOT NULL,
-    Score DECIMAL(5,2) NOT NULL,
-    Status NVARCHAR(10) NOT NULL CHECK (Status IN ('Pass', 'Not Pass')), 
-    Notes NVARCHAR(MAX) NULL, -- Ghi chú về kết quả thi
-    FOREIGN KEY (ExamID) REFERENCES Exams(ExamID),
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
+	-- Tạo bảng Exams (Thông tin kỳ thi)
+	CREATE TABLE Exams (
+		ExamID INT IDENTITY(1,1) PRIMARY KEY,
+		CourseID INT NOT NULL,
+		ExamDate DATE NOT NULL,
+		ExamTime TIME NOT NULL, -- Giờ bắt đầu thi
+		DurationMinutes INT NOT NULL, -- Thời lượng thi (phút)
+		Room NVARCHAR(50) NOT NULL,
+		UserID INT NOT NULL, -- Người giám sát kỳ thi
+		FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
+		FOREIGN KEY (UserID) REFERENCES Users(UserID)
+	);
 
 
 
+	-- Tạo bảng Results (Kết quả thi)
+	CREATE TABLE Results (
+		ResultID INT IDENTITY(1,1) PRIMARY KEY,
+		ExamID INT NOT NULL,
+		UserID INT NOT NULL,
+		Score DECIMAL(5,2) NOT NULL,
+		Status NVARCHAR(10) NOT NULL CHECK (Status IN ('Pass', 'Not Pass')), 
+		Notes NVARCHAR(MAX) NULL, -- Ghi chú về kết quả thi
+		FOREIGN KEY (ExamID) REFERENCES Exams(ExamID),
+		FOREIGN KEY (UserID) REFERENCES Users(UserID)
+	);
 
--- Tạo bảng Certificates (Chứng chỉ)
-CREATE TABLE Certificates (
-    CertificateID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT NOT NULL,
-    IssuedDate DATE NOT NULL,
-    ExpirationDate DATE NOT NULL,
-    CertificateCode NVARCHAR(50) UNIQUE NOT NULL,
-Status Nvarchar(20) check (Status in ('Inactive', 'Active')) Default 'Active'
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
 
--- Tạo bảng Notifications (Thông báo)
-CREATE TABLE Notifications (
-    NotificationID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT NOT NULL,
-    Message NVARCHAR(MAX) NOT NULL,
-    SentDate DATETIME DEFAULT GETDATE(),
-    IsRead BIT DEFAULT 0,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID)
-);
+
+
+	-- Tạo bảng Certificates (Chứng chỉ)
+	CREATE TABLE Certificates (
+		CertificateID INT IDENTITY(1,1) PRIMARY KEY,
+		UserID INT NOT NULL,
+		IssuedDate DATE NOT NULL,
+		ExpirationDate DATE NOT NULL,
+		CertificateCode NVARCHAR(50) UNIQUE NOT NULL,
+	Status Nvarchar(20) check (Status in ('Inactive', 'Active')) Default 'Active'
+		FOREIGN KEY (UserID) REFERENCES Users(UserID)
+	);
+
+	-- Tạo bảng Notifications (Thông báo)
+	CREATE TABLE Notifications (
+		NotificationID INT IDENTITY(1,1) PRIMARY KEY,
+		UserID INT NOT NULL,
+		Message NVARCHAR(MAX) NOT NULL,
+		SentDate DATETIME DEFAULT GETDATE(),
+		IsRead BIT DEFAULT 0,
+		FOREIGN KEY (UserID) REFERENCES Users(UserID)
+	);
 
 
 INSERT INTO Users (FullName, Email, Password, Role, Class, School, Phone) VALUES
