@@ -70,8 +70,6 @@ namespace DriverLicenseApp
 
 
 
-
-
         // Xử lý sự kiện khi nhấn nút Fill Mark
         private void FillMarkButton_Click(object sender, RoutedEventArgs e)
         {

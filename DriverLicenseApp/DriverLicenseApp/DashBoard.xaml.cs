@@ -50,14 +50,24 @@ namespace DriverLicenseApp
                     break;
                 //Police
                 case 3:
-
+                    AddMenuButton("Exam Management", EC_Click);
                     break;
                 //Admin
                 case 4:
-
+                    AddMenuButton("User Management", EC1_Click);
                     break;
             }
             AddMenuButton("Logout", Logout_Click);
+        }
+
+        private void EC_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new ExamPolice());
+        }
+
+        private void EC1_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new ListUser());
         }
 
         private void AddMenuButton(string text, RoutedEventHandler clickEvent)
