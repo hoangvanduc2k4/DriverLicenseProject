@@ -1,0 +1,66 @@
+﻿<Window x:Class="DriverLicenseApp.Register"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Đăng ký" Height="500" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Background="LightBlue">
+        <Border Background="White" CornerRadius="10" Padding="20" Width="350" Height="450"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <StackPanel>
+                <!-- Tiêu đề -->
+                <TextBlock x:Name="TitleText" Text="Đăng Ký" FontSize="22" FontWeight="Bold" 
+                           Foreground="#1565C0" HorizontalAlignment="Center" Margin="10"/>
+
+                <!-- Email -->
+                <TextBlock Text="Email:" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtEmail" Height="30" Margin="0,5,0,10" Padding="5"
+                         BorderBrush="#1976D2" BorderThickness="1"/>
+
+                <!-- Mật khẩu -->
+                <TextBlock Text="Mật khẩu:" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="txtPassword" Height="30" Margin="0,5,0,10" Padding="5"
+                             BorderBrush="#1976D2" BorderThickness="1"/>
+                <!-- Xác nhận mật khẩu (Ẩn mặc định) -->
+                <TextBlock x:Name="ConfirmPasswordLabel" Text="Xác nhận mật khẩu:" FontWeight="SemiBold" />
+                <PasswordBox x:Name="txtConfirmPassword" Height="30" Margin="0,5,0,10" Padding="5"
+                    BorderBrush="#1976D2" BorderThickness="1" />
+
+                <!-- Họ và tên -->
+                <TextBlock x:Name="FullNameLabel" Text="Họ và tên:" FontWeight="SemiBold" />
+                <TextBox x:Name="txtFullName" Height="30" Margin="0,5,0,10" Padding="5"
+                    BorderBrush="#1976D2" BorderThickness="1" />
+                <!-- Chọn vai trò (Ẩn mặc định) -->
+                <TextBlock x:Name="RoleLabel" Text="Vai trò:" FontWeight="SemiBold" />
+                <ComboBox x:Name="cbRole"  Height="30">
+                    <ComboBoxItem Content="Học viên" Tag="1"/>
+                    <ComboBoxItem Content="Giáo viên" Tag="2"/>
+                    <ComboBoxItem Content="Cảnh sát giao thông" Tag="3"/>
+                    <ComboBoxItem Content="Quản trị viên" Tag="4"/>
+                </ComboBox>
+                <Button x:Name="BtnRegister" Content="Đăng ký" Width="120" Height="35" 
+                        Cursor="Hand" Click="BtnRegister_Click">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Blue"/>
+                            <Setter Property="BorderBrush" Value="Blue"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+
+                <!-- Nút đăng nhập -->
+
+                <!-- Chuyển đổi giữa Đăng nhập <-> Đăng ký -->
+                <TextBlock HorizontalAlignment="Center" Margin="15">
+                    <Run  Text="Đã có tài khoản? " Foreground="Black"/>
+                    <Run  Text="Đăng nhập" Foreground="Blue" 
+                         TextDecorations="Underline" Cursor="Hand" MouseDown="ToggleLoginMode"/>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
