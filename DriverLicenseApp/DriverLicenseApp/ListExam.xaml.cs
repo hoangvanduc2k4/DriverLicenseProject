@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DriverLicenseApp.BLL.Service;
 using DriverLicenseApp.DAL.Models;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace DriverLicenseApp
 {
@@ -23,9 +24,11 @@ namespace DriverLicenseApp
     public partial class ListExam : Window
     {
         private ExamService _examService;
+        public int _userId;
 
-        public ListExam()
+        public ListExam(int userId)
         {
+            _userId = userId;
             InitializeComponent();
             _examService = new ExamService();
             LoadExams();
@@ -36,7 +39,7 @@ namespace DriverLicenseApp
         {
             try
             {
-                var exams = _examService.GetAllExams();
+                var exams = _examService.GetAllExams().Where(x => x.UserId == _userId);
                 examDataGrid.ItemsSource = exams;
             }
             catch (Exception ex)

@@ -13,9 +13,9 @@ namespace DriverLicenseApp
         private readonly CourseService courseService = new CourseService();
         private readonly LicenseDriverDbContext context = new LicenseDriverDbContext();
         public int _userId;
-        public CourseManagement()
+        public CourseManagement(int userId)
         {
-            _userId = 1;
+            _userId = userId;
             InitializeComponent();
             LoadDataGridCourse();
    
@@ -32,7 +32,6 @@ namespace DriverLicenseApp
                 {
                     c.CourseId,
                     c.CourseName,
-                    TeacherName = c.Teacher.FullName,
                     c.StartDate,
                     c.EndDate,
                     c.Status,
