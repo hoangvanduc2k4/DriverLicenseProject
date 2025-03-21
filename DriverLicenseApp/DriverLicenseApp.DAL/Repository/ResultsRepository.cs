@@ -16,7 +16,7 @@ namespace DriverLicenseApp.DAL.Repository
             try
             {
                 using var db = new LicenseDriverDbContext();
-                return db.Results.Include(u => u.User).Where(r => r.ExamId == examId).ToList();
+                return db.Results.Include(u => u.User).Include(e => e.Exam).Where(r => r.ExamId == examId).ToList();
                          
             }
             catch (Exception ex)

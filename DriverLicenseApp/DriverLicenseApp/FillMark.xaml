@@ -12,14 +12,24 @@
             <RowDefinition Height="Auto"/>
             <!-- Form nhập điểm -->
         </Grid.RowDefinitions>
-
-        <!-- Hàng 1: Tiêu đề + Nút Export -->
+        <!-- Hàng 1: Tiêu đề + Nút Export + Nút Import -->
         <Grid Grid.Row="0">
-            <Label Content="Fill Mark" FontSize="20" FontWeight="Bold"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button x:Name="btnExportCSV" Content="Export to CSV" Width="120" Height="30"
-                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"
-                    Click="btnExportCSV_Click"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="lblName" FontSize="20" FontWeight="Bold"
+           HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
+
+            <Button x:Name="btnExportCSV" Content="Export" Width="80" Height="30"
+            HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"
+            Click="btnExportCSV_Click" Grid.Column="1"/>
+
+            <Button x:Name="btnImportCSV" Content="Import" Width="80" Height="30"
+            HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"
+            Grid.Column="2" Click="btnImportCSV_Click"/>
         </Grid>
 
         <!-- Hàng 2: DataGrid hiển thị danh sách học sinh -->

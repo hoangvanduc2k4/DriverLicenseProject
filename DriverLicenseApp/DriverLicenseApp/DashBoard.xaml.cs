@@ -96,11 +96,11 @@ namespace DriverLicenseApp
         }
         private void CourseManagement_Click(object sender, RoutedEventArgs e)
         {
-            OpenWindow(new CourseManagement());
+            OpenWindow(new CourseManagement(currentUser.UserId));
         }
         private void ListExam_Click(object sender, RoutedEventArgs e)
         {
-            OpenWindow(new ListExam());
+            OpenWindow(new ListExam(currentUser.UserId));
         }
 
         private void OpenWindow(Window window)
