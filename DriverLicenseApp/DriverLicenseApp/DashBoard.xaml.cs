@@ -41,7 +41,7 @@ namespace DriverLicenseApp
             {
                 //Student
                 case 1:
-
+                    AddMenuButton("My Courses", ViewCoursesOfStudent_Click);
                     break;
                 //Teacher
                 case 2:
@@ -101,6 +101,11 @@ namespace DriverLicenseApp
         private void ListExam_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new ListExam(currentUser.UserId));
+        }
+
+        private void ViewCoursesOfStudent_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new StudentCourses(currentUser.UserId));
         }
 
         private void OpenWindow(Window window)

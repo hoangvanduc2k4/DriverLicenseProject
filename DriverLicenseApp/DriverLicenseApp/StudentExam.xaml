@@ -1,0 +1,38 @@
+﻿<Window x:Class="DriverLicenseApp.StudentExam"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DriverLicenseApp"
+        mc:Ignorable="d"
+        Title="My Exam" Height="500" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Background="AliceBlue">
+        <!-- Định nghĩa 3 hàng -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Row 1: Label -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 2: StackPanel -->
+            <RowDefinition Height="*"/>
+            <!-- Row 3: DataGrid -->
+        </Grid.RowDefinitions>
+
+        <!-- Row 1: Label "List Exam" -->
+        <Label Content="My Exam" Grid.Row="0" 
+           HorizontalAlignment="Center" VerticalAlignment="Center"
+           FontSize="24" FontWeight="Bold" Margin="10"/>
+
+        <!-- Row 3: DataGrid hiển thị danh sách kỳ thi -->
+        <DataGrid x:Name="examDataGrid" Grid.Row="2" Margin="10" AutoGenerateColumns="False" IsReadOnly="true">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Exam ID" Binding="{Binding ExamId}" Width="80"/>
+                <DataGridTextColumn Header="Course Name" Binding="{Binding Course.CourseName}" Width="150"/>
+                <DataGridTextColumn Header="Exam Date" Binding="{Binding ExamDate}" Width="120"/>
+                <DataGridTextColumn Header="Exam Time" Binding="{Binding ExamTime}" Width="100"/>
+                <DataGridTextColumn Header="Duration Minutes" Binding="{Binding DurationMinutes}" Width="120"/>
+                <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="60"/>
+                <DataGridTextColumn Header="Teacher Supervisor" Binding="{Binding User.FullName}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
