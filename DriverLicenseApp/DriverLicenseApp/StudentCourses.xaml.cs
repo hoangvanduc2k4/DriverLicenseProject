@@ -38,8 +38,8 @@ namespace DriverLicenseApp
             var courses = context.Registrations
                 .Include(r => r.Course)
                 .Include(r => r.Course.Teacher)
-                .Where(r => r.UserId == _userId) // Lọc trước khi Select
-                                                 //.Where(r => r.Status == "Approved")
+                .Where(r => r.UserId == _userId)
+                .Where(r => r.Status == "Approved")
                 .ToList();
 
             dgCourses.ItemsSource = courses;
@@ -87,9 +87,7 @@ namespace DriverLicenseApp
             {
                 // Lấy CourseId từ anonymous object
                 int courseId = (int)dgCourses.SelectedItem.GetType().GetProperty("CourseId")?.GetValue(dgCourses.SelectedItem);
-
                 StudentExam studentExamByCourseWindom = new StudentExam(courseId);
-                this.Hide();
                 studentExamByCourseWindom.ShowDialog();
             }
             else
@@ -103,21 +101,5 @@ namespace DriverLicenseApp
 
         }
 
-        private void btnRegistration_Click(object sender, RoutedEventArgs e)
-        {
-            if (dgCourses.SelectedItem is not null)
-            {
-                // Lấy CourseId từ anonymous object
-                int courseId = (int)dgCourses.SelectedItem.GetType().GetProperty("CourseId")?.GetValue(dgCourses.SelectedItem);
-                string courseName = (string)dgCourses.SelectedItem.GetType().GetProperty("CourseName")?.GetValue(dgCourses.SelectedItem);
-
-                var registrationList = new RegistrationList(courseId, courseName);
-                registrationList.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Please select a course first!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
     }
 }

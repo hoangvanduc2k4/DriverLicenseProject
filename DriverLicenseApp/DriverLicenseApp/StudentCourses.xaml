@@ -87,7 +87,6 @@
                     <Button x:Name="btnMark" Content="View mark" Width="100" Margin="5" Click="btnMark_Click"/>
                     <Button x:Name="btnExam" Content="View exam" Width="100" Margin="5" Click="btnExam_Click"/>
                     <Button x:Name="btnCertificate" Content="View Certificate" Width="100" Margin="5" Click="btnCertificate_Click"/>
-                    <Button x:Name="btnRegistration" Content="Registration" Width="100" Margin="5" Click="btnRegistration_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
