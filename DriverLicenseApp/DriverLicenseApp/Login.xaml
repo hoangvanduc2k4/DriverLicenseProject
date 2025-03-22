@@ -8,7 +8,7 @@
 
             <StackPanel>
                 <!-- Tiêu đề -->
-                <TextBlock x:Name="TitleText" Text="Đăng Nhập" FontSize="22" FontWeight="Bold" 
+                <TextBlock x:Name="TitleText" Text="Login" FontSize="22" FontWeight="Bold" 
                            Foreground="#1565C0" HorizontalAlignment="Center" Margin="10"/>
 
                 <!-- Email -->
@@ -17,14 +17,14 @@
                          BorderBrush="#1976D2" BorderThickness="1"/>
 
                 <!-- Mật khẩu -->
-                <TextBlock Text="Mật khẩu:" FontWeight="SemiBold"/>
+                <TextBlock Text="Password:" FontWeight="SemiBold"/>
                 <PasswordBox x:Name="txtPassword" Height="30" Margin="0,5,0,10" Padding="5"
                              BorderBrush="#1976D2" BorderThickness="1"/>
 
 
 
                 <!-- Nút đăng nhập -->
-                <Button x:Name="btnLogin" Content="Đăng nhập" Width="120" Height="35" 
+                <Button x:Name="btnLogin" Content="Login" Width="120" Height="35" 
                         HorizontalAlignment="Center" Cursor="Hand" Click="BtnLogin_Click">
                     <Button.Style>
                         <Style TargetType="Button">
@@ -40,8 +40,8 @@
 
                 <!-- Chuyển đổi giữa Đăng nhập <-> Đăng ký -->
                 <TextBlock HorizontalAlignment="Center" Margin="15">
-                    <Run  Text="Chưa có tài khoản? " Foreground="Black"/>
-                    <Run  Text="Đăng ký" Foreground="Blue" 
+                    <Run  Text="No Account? " Foreground="Black"/>
+                    <Run  Text="Register" Foreground="Blue" 
                          TextDecorations="Underline" Cursor="Hand" MouseDown="ToggleRegisterMode"/>
                 </TextBlock>
             </StackPanel>
