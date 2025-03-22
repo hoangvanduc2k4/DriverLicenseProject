@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
-        Title="DashBoard" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="DashBoard" Height="460" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -13,14 +13,13 @@
             <ColumnDefinition Width="*"/>
             <!-- Nội dung chính -->
         </Grid.ColumnDefinitions>
-
+        <Image HorizontalAlignment="Left" Height="450" VerticalAlignment="Center" Width="801" Grid.ColumnSpan="2" Source="/background.jpg"/>
         <!-- Menu bên trái -->
-        <StackPanel x:Name="StackPanelMenu" Background="#2C3E50" Width="200" Orientation="Vertical"/>
+        <StackPanel x:Name="StackPanelMenu" Background="Transparent" Width="200" Orientation="Vertical"/>
 
         <!-- Nội dung chính -->
         <Grid Grid.Column="1">
             <StackPanel x:Name="StackPanelButtons" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Image HorizontalAlignment="Left" Height="262" Margin="119,0,0,0" VerticalAlignment="Center" Width="368"/>
         </Grid>
     </Grid>
 </Window>

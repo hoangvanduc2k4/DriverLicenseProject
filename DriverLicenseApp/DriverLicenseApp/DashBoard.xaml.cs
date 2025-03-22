@@ -75,9 +75,16 @@ namespace DriverLicenseApp
             Button button = new Button
             {
                 Content = text,
-                Width = 200,
+                Width = 150,
                 Height = 50,
                 Margin = new Thickness(10),
+
+                Background = new SolidColorBrush(Color.FromRgb(136, 211, 187)), // Màu nền (xanh teal nhạt)
+                Foreground = Brushes.White, // Màu chữ (trắng)
+                BorderBrush = new SolidColorBrush(Color.FromRgb(88, 177, 159)), // Màu viền (đậm hơn nền)
+                BorderThickness = new Thickness(2), // Độ dày viền
+                FontWeight = FontWeights.Bold, // Độ đậm của chữ
+                Cursor = Cursors.Hand, // Đổi con trỏ chuột khi hover
             };
             button.Click += clickEvent;
             StackPanelMenu.Children.Add(button);
