@@ -1,64 +1,177 @@
 ﻿<Window x:Class="DriverLicenseApp.Register"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Đăng ký" Height="530" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid Background="LightBlue">
-        <Border Background="White" CornerRadius="10" Padding="20" Width="350" Height="460"
-                HorizontalAlignment="Center" VerticalAlignment="Center">
+        Title="Register" 
+        Height="530" 
+        Width="500" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize">
+
+    <!-- Màu nền cửa sổ: #CEFAE3 -->
+    <Grid Background="#CEFAE3">
+
+        <Grid.Resources>
+
+            <!-- Style cho TextBlock (label) -->
+            <Style x:Key="CustomLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <!-- Màu chữ xanh đậm, hợp với nền pastel -->
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+
+            <!-- Style cho TextBox -->
+            <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="0,5,0,10"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+
+            <!-- Style cho PasswordBox -->
+            <Style x:Key="CustomPasswordBoxStyle" TargetType="PasswordBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="0,5,0,10"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+
+            <!-- Style cho ComboBox -->
+            <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="0,5,0,10"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+
+            <!-- Style nút (Button) mới, tránh hiện tượng "lẹm" -->
+            <Style x:Key="CustomButtonStyle" TargetType="Button">
+                <!-- Kích thước, màu sắc -->
+                <Setter Property="Width" Value="130"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Background" Value="#B2E3C4"/>
+                <!-- Xanh nhạt hợp với #CEFAE3 -->
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="10,5"/>
+                <Setter Property="Padding" Value="8,4"/>
+
+                <!-- Template bo góc + hiệu ứng hover/pressed -->
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <!-- Hover -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#A1D1B7"/>
+                                </Trigger>
+                                <!-- Pressed -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#8CB89F"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style cho Border chính (form) -->
+            <Style x:Key="MainFormBorderStyle" TargetType="Border">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="Width" Value="350"/>
+                <Setter Property="Height" Value="460"/>
+                <!-- Đổ bóng -->
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="Gray" ShadowDepth="3" BlurRadius="5"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </Grid.Resources>
+
+        <!-- Form chính -->
+        <Border Style="{StaticResource MainFormBorderStyle}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
 
             <StackPanel>
-                <!-- Tiêu đề -->
-                <TextBlock x:Name="TitleText" Text="Đăng Ký" FontSize="22" FontWeight="Bold" 
-                           Foreground="#1565C0" HorizontalAlignment="Center" Margin="10"/>
+                <!-- Title -->
+                <TextBlock x:Name="TitleText" 
+                           Text="Register" 
+                           FontSize="26" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Center" 
+                           Margin="10"
+                           Foreground="#006B38"/>
 
                 <!-- Email -->
-                <TextBlock Text="Email:" FontWeight="SemiBold"/>
-                <TextBox x:Name="txtEmail" Height="30" Margin="0,5,0,10" Padding="5"
-                         BorderBrush="#1976D2" BorderThickness="1"/>
+                <TextBlock Text="Email:" Style="{StaticResource CustomLabelStyle}"/>
+                <TextBox x:Name="txtEmail" Style="{StaticResource CustomTextBoxStyle}"/>
 
-                <!-- Mật khẩu -->
-                <TextBlock Text="Mật khẩu:" FontWeight="SemiBold"/>
-                <PasswordBox x:Name="txtPassword" Height="30" Margin="0,5,0,10" Padding="5"
-                             BorderBrush="#1976D2" BorderThickness="1"/>
-                <!-- Xác nhận mật khẩu (Ẩn mặc định) -->
-                <TextBlock x:Name="ConfirmPasswordLabel" Text="Xác nhận mật khẩu:" FontWeight="SemiBold" />
-                <PasswordBox x:Name="txtConfirmPassword" Height="30" Margin="0,5,0,10" Padding="5"
-                    BorderBrush="#1976D2" BorderThickness="1" />
+                <!-- Password -->
+                <TextBlock Text="Password:" Style="{StaticResource CustomLabelStyle}"/>
+                <PasswordBox x:Name="txtPassword" Style="{StaticResource CustomPasswordBoxStyle}"/>
 
-                <!-- Họ và tên -->
-                <TextBlock x:Name="FullNameLabel" Text="Họ và tên:" FontWeight="SemiBold" />
-                <TextBox x:Name="txtFullName" Height="30" Margin="0,5,0,10" Padding="5"
-                    BorderBrush="#1976D2" BorderThickness="1" />
-                <!-- Chọn vai trò (Ẩn mặc định) -->
-                <TextBlock x:Name="RoleLabel" Text="Vai trò:" FontWeight="SemiBold" />
-                <ComboBox x:Name="cbRole"  Height="30">
-                    <ComboBoxItem Content="Học viên" Tag="1"/>
-                    <ComboBoxItem Content="Giáo viên" Tag="2"/>
-                    <ComboBoxItem Content="Cảnh sát giao thông" Tag="3"/>
-                    <ComboBoxItem Content="Quản trị viên" Tag="4"/>
+                <!-- Confirm Password -->
+                <TextBlock x:Name="ConfirmPasswordLabel" 
+                           Text="Confirm Password:" 
+                           Style="{StaticResource CustomLabelStyle}"/>
+                <PasswordBox x:Name="txtConfirmPassword" Style="{StaticResource CustomPasswordBoxStyle}"/>
+
+                <!-- Full Name -->
+                <TextBlock x:Name="FullNameLabel" 
+                           Text="Full Name:" 
+                           Style="{StaticResource CustomLabelStyle}"/>
+                <TextBox x:Name="txtFullName" Style="{StaticResource CustomTextBoxStyle}"/>
+
+                <!-- Role -->
+                <TextBlock x:Name="RoleLabel" 
+                           Text="Role:" 
+                           Style="{StaticResource CustomLabelStyle}"/>
+                <ComboBox x:Name="cbRole" Style="{StaticResource CustomComboBoxStyle}">
+                    <ComboBoxItem Content="Student" Tag="1"/>
+                    <ComboBoxItem Content="Teacher" Tag="2"/>
+                    <ComboBoxItem Content="Traffic Police" Tag="3"/>
+                    <ComboBoxItem Content="Administrator" Tag="4"/>
                 </ComboBox>
-                <Button x:Name="BtnRegister" Content="Đăng ký" Width="120" Height="35" 
-                        Cursor="Hand" Click="BtnRegister_Click" Margin="0,10,0,0">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="Foreground" Value="Blue"/>
-                            <Setter Property="BorderBrush" Value="Blue"/>
-                            <Setter Property="BorderThickness" Value="2"/>
-                            <Setter Property="FontWeight" Value="Bold"/>
-                            <Setter Property="Padding" Value="5"/>
-                        </Style>
-                    </Button.Style>
-                </Button>
 
+                <!-- Register Button -->
+                <Button x:Name="BtnRegister"
+                        Content="Register"
+                        Click="BtnRegister_Click"
+                        Style="{StaticResource CustomButtonStyle}" Height="29"/>
 
-                <!-- Nút đăng nhập -->
-
-                <!-- Chuyển đổi giữa Đăng nhập <-> Đăng ký -->
-                <TextBlock HorizontalAlignment="Center" Margin="15">
-                    <Run  Text="Đã có tài khoản? " Foreground="Black"/>
-                    <Run  Text="Đăng nhập" Foreground="Blue" 
-                         TextDecorations="Underline" Cursor="Hand" MouseDown="ToggleLoginMode"/>
+                <!-- "Already have an account?" + "Login" link -->
+                <TextBlock HorizontalAlignment="Center" Margin="15" Foreground="#006B38">
+                    <Run Text="Already have an account? " />
+                    <Run Text="Login" 
+                         TextDecorations="Underline" 
+                         Cursor="Hand" 
+                         MouseDown="ToggleLoginMode"/>
                 </TextBlock>
             </StackPanel>
         </Border>

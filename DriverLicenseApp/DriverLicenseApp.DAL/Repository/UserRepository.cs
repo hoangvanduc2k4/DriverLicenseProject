@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DriverLicenseApp.DAL.Models;
 
 namespace DriverLicenseApp.DAL.Repository
@@ -11,45 +9,68 @@ namespace DriverLicenseApp.DAL.Repository
     {
         public static List<User> GetAllUsers()
         {
-            LicenseDriverDbContext context = new LicenseDriverDbContext();
-            return context.Users.ToList();
+            using (var context = new LicenseDriverDbContext())
+            {
+                return context.Users.ToList();
+            }
         }
 
         public static List<User> GetAllTeacher()
         {
-            LicenseDriverDbContext context = new();
-            return context.Users.Where(x => x.Role == 2).ToList();
+            using (var context = new LicenseDriverDbContext())
+            {
+                return context.Users.Where(x => x.Role == 2).ToList();
+            }
         }
-
 
         // Tìm kiếm người dùng theo UserID
         public static User GetUserById(int userId)
         {
-            LicenseDriverDbContext context = new();
-            return context.Users.FirstOrDefault(u => u.UserId == userId);
+            using (var context = new LicenseDriverDbContext())
+            {
+                return context.Users.FirstOrDefault(u => u.UserId == userId);
+            }
         }
 
-        // Cập nhật thông tin người dùng
+        // Thêm người dùng mới
+        public static bool AddUser(User newUser)
+        {
+            if (newUser == null)
+                throw new ArgumentNullException(nameof(newUser));
+
+            using (var context = new LicenseDriverDbContext())
+            {
+                context.Users.Add(newUser);
+                context.SaveChanges();
+                return true;
+            }
+        }
+
         public static bool UpdateUser(User updatedUser)
         {
-            LicenseDriverDbContext context = new();
-            var user = context.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
-            if (user == null)
+            if (updatedUser == null)
+                throw new ArgumentNullException(nameof(updatedUser));
+
+            using (var context = new LicenseDriverDbContext())
             {
-                return false; // Không tìm thấy người dùng cần cập nhật
+                var user = context.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
+                if (user == null)
+                {
+                    return false; // Không tìm thấy người dùng cần cập nhật
+                }
+
+                // Cập nhật các trường dữ liệu, bao gồm Password
+                user.FullName = updatedUser.FullName;
+                user.Email = updatedUser.Email;
+                user.Phone = updatedUser.Phone;
+                user.Class = updatedUser.Class;
+                user.School = updatedUser.School;
+                user.Password = updatedUser.Password; // <-- Thêm dòng này để cập nhật password
+                user.Role = updatedUser.Role;
+
+                context.SaveChanges();
+                return true;
             }
-
-            // Cập nhật các trường dữ liệu
-            user.FullName = updatedUser.FullName;
-            user.Email = updatedUser.Email;
-            user.Phone = updatedUser.Phone;
-            user.Class = updatedUser.Class;
-            user.School = updatedUser.School;
-            user.Role = updatedUser.Role;
-            // Nếu cần cập nhật các trường khác (ví dụ: Password) thì thêm tại đây
-
-            context.SaveChanges();
-            return true;
         }
 
     }
