@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
-        Title="StudentCertificates" Height="450" Width="800">
-    <Grid>
-        
+        Title="My Certificates" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Background="AliceBlue">
+        <!-- Định nghĩa 3 hàng -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Row 1: Label -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 2: StackPanel -->
+            <RowDefinition Height="*"/>
+            <!-- Row 3: DataGrid -->
+        </Grid.RowDefinitions>
+
+        <!-- Row 1: Label "List Exam" -->
+        <Label Content="My Certificates" Grid.Row="0" 
+       HorizontalAlignment="Center" VerticalAlignment="Center"
+       FontSize="24" FontWeight="Bold" Margin="10"/>
+
+        <!-- Row 3: DataGrid hiển thị danh sách kỳ thi -->
+        <DataGrid x:Name="certificatesDataGrid" Grid.Row="2" Margin="10" AutoGenerateColumns="False" IsReadOnly="true">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Certificate ID" Binding="{Binding CertificateId}" Width="80"/>
+                <DataGridTextColumn Header="IssuedDate" Binding="{Binding IssuedDate}" Width="120"/>
+                <DataGridTextColumn Header="ExpirationDate" Binding="{Binding ExpirationDate}" Width="120"/>
+                <DataGridTextColumn Header="CertificateCode" Binding="{Binding CertificateCode}" Width="120"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="60"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!-- Row 1: Label "List Exam" -->
-        <Label Content="My Exam" Grid.Row="0" 
+        <Label Content="My Exams" Grid.Row="0" 
            HorizontalAlignment="Center" VerticalAlignment="Center"
            FontSize="24" FontWeight="Bold" Margin="10"/>
 

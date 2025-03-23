@@ -79,6 +79,9 @@ namespace DriverLicenseApp
         private void btnCertificate_Click(object sender, RoutedEventArgs e)
         {
 
+            // Lấy CourseId từ anonymous object
+            StudentCertificates studentCertificatesWindom = new StudentCertificates(_userId);
+            studentCertificatesWindom.ShowDialog();
         }
 
         private void btnExam_Click(object sender, RoutedEventArgs e)

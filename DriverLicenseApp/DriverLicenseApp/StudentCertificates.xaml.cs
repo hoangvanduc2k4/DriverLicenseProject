@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DriverLicenseApp.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DriverLicenseApp
 {
@@ -19,9 +21,21 @@ namespace DriverLicenseApp
     /// </summary>
     public partial class StudentCertificates : Window
     {
-        public StudentCertificates()
+        private int _userId;
+        private readonly LicenseDriverDbContext context = new LicenseDriverDbContext();
+        public StudentCertificates(int userId)
         {
             InitializeComponent();
+            _userId = userId;
+            LoadDataGridCertificates();
+        }
+
+        public void LoadDataGridCertificates()
+        {
+            var certificates = context.Certificates
+                .Where(r => r.UserId == _userId)
+                .ToList();
+            certificatesDataGrid.ItemsSource = certificates;
         }
     }
 }
