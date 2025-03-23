@@ -113,6 +113,9 @@ INSERT INTO Users (FullName, Email, Password, Role, Class, School, Phone) VALUES
 -- Teachers
 ('Nguyen Van H', 'h@teacher.com', '123456', 2, NULL, NULL, '0911112222'),
 ('Tran Thi I', 'i@teacher.com', '123456', 2, NULL, NULL, '0922223333'),
+('John Doe', 'johndoe@example.com', '123', 2, NULL, NULL, '1234567890'),
+('Jane Smith', 'janesmith@example.com', '456', 2, NULL, NULL, '0987654321'),
+('Anthony', 'athony@example.com', '123', 2, NULL, NULL, '0985554321'),
 
 -- Traffic Police
 ('Pham Minh J', 'j@police.com', '123456', 3, NULL, NULL, '0933334444'),
@@ -144,10 +147,16 @@ INSERT INTO Users (FullName, Email, Password, Role, Class, School, Phone) VALUES
 
 INSERT INTO Courses (CourseName, TeacherID, StartDate, EndDate, Status) VALUES
 ('Theory and Practice for A1 License', 1, '2025-03-10', '2025-04-10', 'Active'),
-('Advanced Theory for A1 & A2 License', 2, '2025-03-15', '2025-04-20', 'Active'),
-('A1 Driving Practice', 1, '2025-03-12', '2025-04-15', 'Active'),
-('Comprehensive Theory for A1, A2, B1 Licenses', 2, '2025-03-20', '2025-05-01', 'Active'),
-('Safe Driving Skills for A1 License', 1, '2025-03-25', '2025-04-30', 'Active');
+('Advanced Theory for A1 & A2 License', 3, '2025-03-15', '2025-04-20', 'Active'),
+('A1 Driving Practice', 4, '2025-03-12', '2025-04-15', 'Active'),
+('Comprehensive Theory for A1, A2, B1 Licenses', 5, '2025-03-20', '2025-05-01', 'Active'),
+('Safe Driving Skills for A1 License', 1, '2025-03-25', '2025-04-30', 'Active'),
+('Beginner Motorcycle Driving', 2, '2025-06-01', '2025-06-30', 'Active'),
+('Advanced Motorcycle Driving Techniques', 3, '2025-07-01', '2025-07-31', 'Active'),
+('Motorcycle Safety and Maintenance', 4, '2025-08-01', '2025-08-31', 'Active'),
+('Defensive Driving for Motorcyclists', 5, '2025-09-01', '2025-09-30', 'Active'),
+('Motorcycle Licensing Exam Preparation', 1, '2025-10-01', '2025-10-31', 'Active'),
+('Motorcycle Road Skills', 2, '2025-11-01', '2025-11-30', 'Active');
 
 INSERT INTO Registrations (UserID, CourseID, Status) VALUES
 (5, 1, 'Approved'), (6, 1, 'Approved'), (7, 1, 'Approved'), (8, 1, 'Approved'), 
@@ -157,11 +166,11 @@ INSERT INTO Registrations (UserID, CourseID, Status) VALUES
 (21, 5, 'Approved'), (22, 5, 'Approved'), (23, 5, 'Approved'), (24, 5, 'Approved');
 
 INSERT INTO Exams (CourseID, ExamDate, ExamTime, DurationMinutes, Room, UserID) VALUES
-(1, '2025-04-15', '08:00:00', 60, 'Room 101', 3), 
-(2, '2025-04-25', '09:00:00', 60, 'Room 102', 3), 
-(3, '2025-04-20', '10:00:00', 60, 'Room 103', 3), 
-(4, '2025-05-05', '08:30:00', 90, 'Room 104', 3), 
-(5, '2025-04-30', '09:30:00', 60, 'Room 105', 3);
+(1, '2025-04-15', '08:00:00', 60, 'Room 101', 2), 
+(2, '2025-04-25', '09:00:00', 60, 'Room 102', 1), 
+(3, '2025-04-20', '10:00:00', 60, 'Room 103', 1), 
+(4, '2025-05-05', '08:30:00', 90, 'Room 104', 3, 
+(5, '2025-04-30', '09:30:00', 60, 'Room 105', 5);
 
 INSERT INTO Results (ExamID, UserID, Score, Status, Notes) VALUES
 (1, 5, 8.5, 'Pass', 'Good performance'), (1, 6, 7.0, 'Pass', 'Meets requirements'), 
