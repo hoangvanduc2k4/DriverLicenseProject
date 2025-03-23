@@ -35,6 +35,7 @@ namespace DriverLicenseApp
             StackPanelMenu.Children.Clear();
             // Nút chung cho tất cả role
             AddMenuButton("Profile", Profile_Click);
+            AddMenuButton("Change Password", changePass_Click);
 
             // Hiển thị nút theo từng role
             switch (currentUser.Role)
@@ -93,6 +94,11 @@ namespace DriverLicenseApp
         private void Profile_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new Profile(currentUser.UserId));
+        }
+
+        private void changePass_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new ChangePassword(currentUser.UserId));
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
