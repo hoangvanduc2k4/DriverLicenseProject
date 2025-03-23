@@ -21,6 +21,7 @@ namespace DriverLicenseApp.DAL.Repository
             return context.Users.Where(x => x.Role == 2).ToList();
         }
 
+
         // Tìm kiếm người dùng theo UserID
         public static User GetUserById(int userId)
         {
@@ -50,5 +51,6 @@ namespace DriverLicenseApp.DAL.Repository
             context.SaveChanges();
             return true;
         }
+
     }
 }

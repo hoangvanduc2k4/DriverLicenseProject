@@ -3,111 +3,451 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DriverLicenseApp"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="ExamPolice" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        Title="ExamPolice" 
+        Height="614" 
+        Width="1344"
+        Background="#CEFAE3"
+        WindowStartupLocation="CenterScreen">
 
-        <Label Content="Exam List" 
-               HorizontalAlignment="Center" 
-               VerticalAlignment="Top" 
-               FontSize="36" 
-               FontWeight="Bold"/>
+    <Window.Resources>
+        <!-- Style chung cho các nút -->
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="#B2E3C4"/>
+            <Setter Property="Foreground" Value="DarkGreen"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1" 
+                                CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#A1D1B7"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#8CB89F"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-        <!-- Nội dung chính: danh sách và form -->
-        <Grid Grid.Row="1">
-            
-            <!-- Panel danh sách -->
-            <Grid x:Name="listPanel">
-                
-                <DataGrid x:Name="ExamDataGrid" AutoGenerateColumns="False" 
-                          ItemsSource="{Binding}" 
-                          CanUserAddRows="False"
-                          Margin="0,56,0,0" 
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          Height="Auto"
-                          Width="Auto">
-                    
-                    <DataGrid.Columns>
-                        
-                        <DataGridTextColumn Header="Course Name" Binding="{Binding Course.CourseName}" Width="*"/>
-                        <DataGridTextColumn Header="Exam Date"   Binding="{Binding ExamDate}" Width="*"/>
-                        <DataGridTextColumn Header="Exam Time"   Binding="{Binding ExamTime}" Width="*"/>
-                        <DataGridTextColumn Header="Duration (min)" Binding="{Binding DurationMinutes}" Width="*"/>
-                        <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="*"/>
-                        <DataGridTextColumn Header="Teacher" Binding="{Binding User.FullName}" Width="*"/>
-                        
-                    </DataGrid.Columns>
-                    
-                </DataGrid>
+        <!-- Style cho tiêu đề (header) -->
+        <Style x:Key="TitleBorderStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#B2E3C4" Offset="0"/>
+                        <GradientStop Color="#C8F1D2" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-                <!-- Nút Add, Update, Delete -->
-                <StackPanel Orientation="Horizontal" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Bottom" 
-                            Margin="0,0,0,10">
-                    
-                    <Button Content="Add" Width="80" Height="30" Margin="5" Click="Add_Click"/>
-                    <Button Content="Update" Width="80" Height="30" Margin="5" Click="Update_Click"/>
-                    <Button Content="Delete" Width="80" Height="30" Margin="5" Click="Delete_Click"/>
-                    
-                </StackPanel>
-            </Grid>
+        <!-- Style chung cho label tiêu đề -->
+        <Style x:Key="TitleLabelStyle" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="DarkGreen"/>
+        </Style>
 
-            <!-- Panel form thêm/cập nhật, ẩn mặc định -->
-            <Grid x:Name="examFormPanel" Visibility="Collapsed" Background="LightGray">
-                <Grid Margin="10">
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    
+        <!-- Style cho DataGrid -->
+        <Style TargetType="DataGrid">
+            <Setter Property="RowBackground" Value="WhiteSmoke"/>
+            <Setter Property="AlternatingRowBackground" Value="#E6F9EF"/>
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Gray"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Gray"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+
+        <!-- Style cho DataGrid ColumnHeader -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#CEFAE3"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="5,3"/>
+        </Style>
+
+        <!-- Style cho DataGridCell -->
+        <Style TargetType="DataGridCell">
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="Padding" Value="5,2"/>
+        </Style>
+
+        <!-- ============================= -->
+        <!-- PHẦN STYLE MỚI CHO DETAILS PANEL -->
+        <!-- ============================= -->
+
+        <!-- Style cho Border bao ngoài của form Add/Update -->
+        <Style x:Key="DetailsPanelBorderStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderBrush" Value="#97D3B8"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <!-- Dải màu xanh pastel -->
+                        <GradientStop Color="#ECFDF5" Offset="0"/>
+                        <GradientStop Color="#C9F2DF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <!-- Style cho các Label trong panel Add/Update -->
+        <Style x:Key="DetailsLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#006B38"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+        </Style>
+
+        <!-- Style cho TextBox -->
+        <Style x:Key="DetailsTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#97D3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <!-- Chiều cao thống nhất -->
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <!-- Style cho ComboBox -->
+        <Style x:Key="DetailsComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#97D3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <!-- Chiều cao thống nhất -->
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <!-- Style riêng cho DatePicker -->
+        <Style x:Key="DetailsDatePickerStyle" TargetType="DatePicker">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#97D3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <!-- Chiều cao thống nhất -->
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <!-- Style riêng cho Xceed TimePicker -->
+        <Style x:Key="DetailsTimePickerStyle" TargetType="xctk:TimePicker">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#97D3B8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <!-- Chiều cao thống nhất -->
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <!-- Style riêng cho Button trong panel Add/Update (nếu muốn khác biệt) -->
+        <Style x:Key="DetailsButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="#9DE2C8"/>
+            <Setter Property="Foreground" Value="#004C2E"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="10,5"/>
+            <Setter Property="BorderBrush" Value="#6BB199"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <!-- Chứa hai vùng: danh sách và thêm/chỉnh sửa -->
+        <Grid>
+            <!-- ListViewPanel: hiển thị danh sách kỳ thi -->
+            <Grid x:Name="ListViewPanel" Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Tiêu đề -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Tìm kiếm -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Nút thao tác -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- DataGrid -->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Vùng tiêu đề -->
+                <Border Grid.Row="0" Style="{StaticResource TitleBorderStyle}">
+                    <Label Content="Exam List" 
+                           FontSize="36" 
+                           Style="{StaticResource TitleLabelStyle}"/>
+                </Border>
+
+                <!-- KHU VỰC TÌM KIẾM (Search) - tất cả trong cùng một WrapPanel -->
+                <Border Grid.Row="1"
+        CornerRadius="5" 
+        Padding="10" 
+        Background="White" 
+        BorderBrush="Gray" 
+        BorderThickness="1"
+        Margin="0,0,0,10">
+
+                    <!-- WrapPanel: Chứa TẤT CẢ StackPanel con trong CÙNG MỘT HÀNG -->
+                    <WrapPanel Orientation="Horizontal"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center">
+
+                        <!-- Course -->
+                        <StackPanel Orientation="Horizontal" Margin="5" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Course:" 
+                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <ComboBox x:Name="courseComboBox" 
+                      Width="120"
+                      Style="{StaticResource DetailsComboBoxStyle}"/>
+                        </StackPanel>
+
+                        <!-- Exam Date -->
+                        <StackPanel Orientation="Horizontal" Margin="5" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Exam Date:" 
+                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <DatePicker x:Name="examDatePicker"
+                        Width="120"
+                        Style="{StaticResource DetailsDatePickerStyle}"/>
+                        </StackPanel>
+
+                        <!-- Exam Time -->
+                        <StackPanel Orientation="Horizontal" Margin="5" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Exam Time:" 
+                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <xctk:TimePicker x:Name="examTimeTextBox"
+                             Style="{StaticResource DetailsTimePickerStyle}"
+                             Format="ShortTime" 
+                             ShowButtonSpinner="True"/>
+                        </StackPanel>
+
+                        <!-- Duration -->
+                        <StackPanel Orientation="Horizontal" Margin="5" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Duration:" 
+                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <TextBox x:Name="durationTextBox"
+                     Width="80"
+                     Style="{StaticResource DetailsTextBoxStyle}"/>
+                        </StackPanel>
+
+                        <!-- Room -->
+                        <StackPanel Orientation="Horizontal" Margin="5" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Room:" 
+                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <TextBox x:Name="roomTextBox"
+                     Width="80"
+                     Style="{StaticResource DetailsTextBoxStyle}"/>
+                        </StackPanel>
+
+                        <!-- Teacher -->
+                        <StackPanel Orientation="Horizontal" Margin="5" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Teacher:" 
+                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <ComboBox x:Name="teacherComboBox"
+                      Width="120"
+                      Style="{StaticResource DetailsComboBoxStyle}"/>
+                        </StackPanel>
+
+                        <!-- Search + All Exam Buttons -->
+                        <StackPanel Orientation="Horizontal" Margin="5" 
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button x:Name="searchButton"
+                    Content="Search"
+                    Width="90" 
+                    Height="30" 
+                    Click="searchButton_Click"/>
+                            <Button x:Name="allExamButton"
+                    Content="All Exam"
+                    Width="90" 
+                    Height="30" 
+                    Margin="5,0,0,0"
+                    Click="allExamButton_Click"/>
+                        </StackPanel>
+                    </WrapPanel>
+                </Border>
+
+
+                <!-- Nút thao tác: Add, Update, Delete được căn giữa trong một Grid -->
+                <Grid Grid.Row="2" Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0" Content="Course:" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="cbCourseForm" Grid.Row="0" Grid.Column="1" />
-
-                    <Label Grid.Row="1" Grid.Column="0" Content="Exam Date:" VerticalAlignment="Center"/>
-                    <DatePicker x:Name="dpExamDateForm" Grid.Row="1" Grid.Column="1" />
-
-                    <Label Grid.Row="2" Grid.Column="0" Content="Exam Time (HH:mm):" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtExamTimeForm" Grid.Row="2" Grid.Column="1" />
-
-                    <Label Grid.Row="3" Grid.Column="0" Content="Duration (min):" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtDurationForm" Grid.Row="3" Grid.Column="1" />
-
-                    <Label Grid.Row="4" Grid.Column="0" Content="Room:" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtRoomForm" Grid.Row="4" Grid.Column="1" />
-
-                    <Label Grid.Row="5" Grid.Column="0" Content="Supervisor:" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="cbUserForm" Grid.Row="5" Grid.Column="1" />
-
-                    <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" 
-            HorizontalAlignment="Center" Margin="0,10,0,0">
-                        <!-- Giảm kích thước nút xuống -->
-                        <Button Content="Save" Width="70" Height="25" Margin="5" Click="FormSave_Click"/>
-                        <Button Content="Cancel" Width="70" Height="25" Margin="5" Click="FormCancel_Click"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="addButton" Content="Add" Width="90" Click="addButton_Click"/>
+                        <Button x:Name="updateButton" Content="Update" Width="90" Click="updateButton_Click"/>
+                        <Button x:Name="deleteButton" Content="Delete" Width="90" Click="deleteButton_Click"/>
                     </StackPanel>
-
                 </Grid>
+
+                <!-- DataGrid hiển thị danh sách Exam -->
+                <Border Grid.Row="4"
+                        CornerRadius="5" 
+                        Padding="10" 
+                        Background="White" 
+                        BorderBrush="Gray" 
+                        BorderThickness="1">
+                    <DataGrid x:Name="ExamDataGrid"
+                              AutoGenerateColumns="False" 
+                              CanUserAddRows="False"
+                              HorizontalAlignment="Stretch" 
+                              VerticalAlignment="Stretch">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Course Name" Binding="{Binding Course.CourseName}" Width="*"/>
+                            <DataGridTextColumn Header="Exam Date"   Binding="{Binding ExamDate}" Width="*"/>
+                            <DataGridTextColumn Header="Exam Time"   Binding="{Binding ExamTime}" Width="*"/>
+                            <DataGridTextColumn Header="Duration (min)" Binding="{Binding DurationMinutes}" Width="*"/>
+                            <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="*"/>
+                            <DataGridTextColumn Header="Teacher" Binding="{Binding User.FullName}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Grid>
+
+            <!-- DetailsPanel: form dùng cho Add/Update -->
+            <Grid x:Name="DetailsPanel" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!-- Tiêu đề form -->
+                <Border Grid.Row="0" Style="{StaticResource TitleBorderStyle}">
+                    <Label x:Name="detailsTitleLabel"
+                           Content="Exam Details"
+                           FontSize="24" 
+                           Style="{StaticResource TitleLabelStyle}"/>
+                </Border>
+
+                <!-- Form nhập được bọc trong Border để áp dụng Padding và hiệu ứng đổ bóng -->
+                <Border x:Name="detailsMainBorder"
+                        Grid.Row="1"
+                        Style="{StaticResource DetailsPanelBorderStyle}">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Gray" ShadowDepth="3" BlurRadius="5"/>
+                    </Border.Effect>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <!-- Course -->
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Course:" 
+                                   Width="120" 
+                                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <ComboBox x:Name="detailsCourseComboBox" 
+                                      Width="200" 
+                                      Style="{StaticResource DetailsComboBoxStyle}"
+                                      SelectionChanged="detailsCourseComboBox_SelectionChanged"/>
+                        </StackPanel>
+
+                        <!-- Exam Date -->
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Exam Date:" 
+                                   Width="120" 
+                                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <DatePicker x:Name="detailsExamDatePicker" 
+                                        Width="200" 
+                                        Style="{StaticResource DetailsDatePickerStyle}"/>
+                        </StackPanel>
+
+                        <!-- Exam Time -->
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Exam Time:" 
+                                   Width="120" 
+                                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <xctk:TimePicker x:Name="detailsExamTimePicker" 
+                                             Width="200" 
+                                             Format="ShortTime" 
+                                             ShowButtonSpinner="True"
+                                             Style="{StaticResource DetailsTimePickerStyle}"/>
+                        </StackPanel>
+
+                        <!-- Duration -->
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Duration (min):" 
+                                   Width="120" 
+                                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <TextBox x:Name="detailsDurationTextBox" 
+                                     Width="200" 
+                                     Style="{StaticResource DetailsTextBoxStyle}"/>
+                        </StackPanel>
+
+                        <!-- Room -->
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Room:" 
+                                   Width="120" 
+                                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <TextBox x:Name="detailsRoomTextBox" 
+                                     Width="200" 
+                                     Style="{StaticResource DetailsTextBoxStyle}"/>
+                        </StackPanel>
+
+                        <!-- Teacher -->
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Teacher:" 
+                                   Width="120" 
+                                   Style="{StaticResource DetailsLabelStyle}"/>
+                            <ComboBox x:Name="detailsTeacherComboBox" 
+                                      Width="200" 
+                                      Style="{StaticResource DetailsComboBoxStyle}"/>
+                        </StackPanel>
+
+                        <!-- Buttons Save/Cancel -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                            <Button x:Name="detailsSaveButton" 
+                                    Content="Save" 
+                                    Width="90" 
+                                    Style="{StaticResource DetailsButtonStyle}"
+                                    Click="detailsSaveButton_Click"/>
+                            <Button x:Name="detailsCancelButton" 
+                                    Content="Cancel" 
+                                    Width="90" 
+                                    Style="{StaticResource DetailsButtonStyle}"
+                                    Click="detailsCancelButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
             </Grid>
         </Grid>
     </Grid>
-
-
-
 </Window>

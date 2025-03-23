@@ -169,7 +169,7 @@ INSERT INTO Exams (CourseID, ExamDate, ExamTime, DurationMinutes, Room, UserID) 
 (1, '2025-04-15', '08:00:00', 60, 'Room 101', 2), 
 (2, '2025-04-25', '09:00:00', 60, 'Room 102', 1), 
 (3, '2025-04-20', '10:00:00', 60, 'Room 103', 1), 
-(4, '2025-05-05', '08:30:00', 90, 'Room 104', 3, 
+(4, '2025-05-05', '08:30:00', 90, 'Room 104', 3), 
 (5, '2025-04-30', '09:30:00', 60, 'Room 105', 5);
 
 INSERT INTO Results (ExamID, UserID, Score, Status, Notes) VALUES

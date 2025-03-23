@@ -28,6 +28,40 @@ namespace DriverLicenseApp.BLL.Service
             return ExamRepository.GetAllExamsWithDetails();
         }
 
+        // Phương thức tìm kiếm theo nhiều tiêu chí
+        public List<Exam> SearchExams(int? courseId, DateTime? examDate, TimeSpan? examTime, int? durationMinutes, string room, int? teacherId)
+        {
+            var exams = ExamRepository.GetAllExams();
+
+            if (courseId.HasValue)
+            {
+                exams = exams.Where(e => e.Course.CourseId == courseId.Value).ToList();
+            }
+            if (examDate.HasValue)
+            {
+                var dateOnly = DateOnly.FromDateTime(examDate.Value);
+                exams = exams.Where(e => e.ExamDate == dateOnly).ToList();
+            }
+            if (examTime.HasValue)
+            {
+                var timeOnly = TimeOnly.FromTimeSpan(examTime.Value);
+                exams = exams.Where(e => e.ExamTime == timeOnly).ToList();
+            }
+            if (durationMinutes.HasValue)
+            {
+                exams = exams.Where(e => e.DurationMinutes == durationMinutes.Value).ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(room))
+            {
+                exams = exams.Where(e => e.Room.IndexOf(room, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+            if (teacherId.HasValue)
+            {
+                exams = exams.Where(e => e.User.UserId == teacherId.Value).ToList();
+            }
+            return exams;
+        }
+
         public void AddExam(Exam exam)
         {
             ExamRepository.AddExam(exam);
@@ -42,5 +76,7 @@ namespace DriverLicenseApp.BLL.Service
         {
             ExamRepository.DeleteExam(examId);
         }
+
+
     }
 }
