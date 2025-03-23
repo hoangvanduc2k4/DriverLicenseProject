@@ -87,7 +87,7 @@ namespace DriverLicenseApp
             {
                 // Lấy CourseId từ anonymous object
                 int courseId = (int)dgCourses.SelectedItem.GetType().GetProperty("CourseId")?.GetValue(dgCourses.SelectedItem);
-                StudentExam studentExamByCourseWindom = new StudentExam(courseId);
+                StudentExam studentExamByCourseWindom = new StudentExam(courseId, _userId);
                 studentExamByCourseWindom.ShowDialog();
             }
             else
@@ -95,11 +95,5 @@ namespace DriverLicenseApp
                 MessageBox.Show("Please select a course first!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
-        private void btnMark_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
 }

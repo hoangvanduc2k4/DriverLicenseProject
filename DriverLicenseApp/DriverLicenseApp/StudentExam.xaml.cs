@@ -21,13 +21,17 @@ namespace DriverLicenseApp
     public partial class StudentExam : Window
     {
         private ExamService _examService;
+        private ResultsService _resultsService;
         public int _courseID;
+        private int _userId;
 
-        public StudentExam(int courseID)
+        public StudentExam(int courseID, int userId)
         {
             _courseID = courseID;
+            _userId = userId;
             InitializeComponent();
             _examService = new ExamService();
+            _resultsService = new ResultsService();
             LoadExams();
         }
 
@@ -36,7 +40,7 @@ namespace DriverLicenseApp
         {
             try
             {
-                var exams = _examService.GetAllExams().Where(x => x.CourseId == _courseID);
+                var exams = _resultsService.GetAllResults().Where(x => x.UserId == _userId).Where(a => a.Exam.CourseId == _courseID);
                 examDataGrid.ItemsSource = exams;
             }
             catch (Exception ex)

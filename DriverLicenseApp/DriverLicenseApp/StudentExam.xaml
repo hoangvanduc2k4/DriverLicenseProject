@@ -26,12 +26,15 @@
         <DataGrid x:Name="examDataGrid" Grid.Row="2" Margin="10" AutoGenerateColumns="False" IsReadOnly="true">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Exam ID" Binding="{Binding ExamId}" Width="80"/>
-                <DataGridTextColumn Header="Course Name" Binding="{Binding Course.CourseName}" Width="150"/>
-                <DataGridTextColumn Header="Exam Date" Binding="{Binding ExamDate}" Width="120"/>
-                <DataGridTextColumn Header="Exam Time" Binding="{Binding ExamTime}" Width="100"/>
-                <DataGridTextColumn Header="Duration Minutes" Binding="{Binding DurationMinutes}" Width="120"/>
-                <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="60"/>
-                <DataGridTextColumn Header="Teacher Supervisor" Binding="{Binding User.FullName}" Width="150"/>
+                <DataGridTextColumn Header="Course Name" Binding="{Binding Exam.Course.CourseName}" Width="150"/>
+                <DataGridTextColumn Header="Exam Date" Binding="{Binding Exam.ExamDate}" Width="120"/>
+                <DataGridTextColumn Header="Exam Time" Binding="{Binding Exam.ExamTime}" Width="100"/>
+                <DataGridTextColumn Header="Duration Minutes" Binding="{Binding Exam.DurationMinutes}" Width="120"/>
+                <DataGridTextColumn Header="Room" Binding="{Binding Exam.Room}" Width="60"/>
+                <DataGridTextColumn Header="Teacher Supervisor" Binding="{Binding Exam.User.FullName}" Width="150"/>
+                <DataGridTextColumn Header="Score" Binding="{Binding Score}" Width="80"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="80"/>
+                <DataGridTextColumn Header="Note" Binding="{Binding Notes}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

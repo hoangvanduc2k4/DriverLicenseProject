@@ -17,7 +17,7 @@ namespace DriverLicenseApp.DAL.Repository
             {
                 using var db = new LicenseDriverDbContext();
                 return db.Results.Include(u => u.User).Include(e => e.Exam).Where(r => r.ExamId == examId).ToList();
-                         
+
             }
             catch (Exception ex)
             {
@@ -44,6 +44,18 @@ namespace DriverLicenseApp.DAL.Repository
 
             return db.SaveChanges() > 0; // Trả về true nếu có thay đổi dữ liệu
         }
+        public static List<Result> GetResultsDetail()
+        {
+            try
+            {
+                using var db = new LicenseDriverDbContext();
+                return db.Results.Include(c => c.Exam.Course).Include(u => u.Exam.User).Include(e => e.Exam).ToList();
 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

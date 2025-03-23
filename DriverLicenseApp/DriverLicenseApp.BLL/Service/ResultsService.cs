@@ -19,5 +19,10 @@ namespace DriverLicenseApp.BLL.Service
         {
             return ResultsRepository.SaveResult(result);
         }
+
+        public List<Result> GetAllResults()
+        {
+            return ResultsRepository.GetResultsDetail();
+        }
     }
 }
