@@ -155,8 +155,8 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <TextBlock Text="Filter by Status:" Style="{StaticResource CustomLabelStyle}"/>
                 <ComboBox x:Name="cbStatusFilter" Width="150" Style="{StaticResource CustomComboBoxStyle}">
-                    <ComboBoxItem Content="All"/>
-                    <ComboBoxItem Content="Pending" IsSelected="True"/>
+                    <ComboBoxItem Content="All" IsSelected="True"/>
+                    <ComboBoxItem Content="Pending" />
                     <ComboBoxItem Content="Approved"/>
                     <ComboBoxItem Content="Rejected"/>
                 </ComboBox>
@@ -238,6 +238,7 @@
                     <TextBox x:Name="txtStudent" 
                              IsReadOnly="True" 
                              Style="{StaticResource CustomTextBoxStyle}" 
+                             IsEnabled="false"
                              Grid.Column="0"/>
                     <ComboBox x:Name="cbStatus" 
                               Style="{StaticResource CustomComboBoxStyle}" 
