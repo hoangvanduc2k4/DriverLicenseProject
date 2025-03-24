@@ -111,7 +111,7 @@
 
 INSERT INTO Users (FullName, Email, Password, Role, Class, School, Phone) VALUES
 -- Teachers
-('Nguyen Van H', 'h@teacher.com', '123456', 2, NULL, NULL, '0911112222'),
+('Nguyen Van H', 'duc@gmail.com', '123456', 2, NULL, NULL, '0911112222'),
 ('Tran Thi I', 'i@teacher.com', '123456', 2, NULL, NULL, '0922223333'),
 ('John Doe', 'johndoe@example.com', '123', 2, NULL, NULL, '1234567890'),
 ('Jane Smith', 'janesmith@example.com', '456', 2, NULL, NULL, '0987654321'),
@@ -169,39 +169,53 @@ INSERT INTO Exams (CourseID, ExamDate, ExamTime, DurationMinutes, Room, UserID) 
 (1, '2025-04-15', '08:00:00', 60, 'Room 101', 2), 
 (2, '2025-04-25', '09:00:00', 60, 'Room 102', 1), 
 (3, '2025-04-20', '10:00:00', 60, 'Room 103', 1), 
-(4, '2025-05-05', '08:30:00', 90, 'Room 104', 3, 
+(4, '2025-05-05', '08:30:00', 90, 'Room 104', 3), 
 (5, '2025-04-30', '09:30:00', 60, 'Room 105', 5);
 
 INSERT INTO Results (ExamID, UserID, Score, Status, Notes) VALUES
-(1, 5, 8.5, 'Pass', 'Good performance'), (1, 6, 7.0, 'Pass', 'Meets requirements'), 
-(1, 7, 6.5, 'Pass', 'Needs improvement'), (1, 8, 5.0, 'Not Pass', 'Retake required'),
-(2, 9, 9.0, 'Pass', 'Excellent'), (2, 10, 7.5, 'Pass', 'Meets requirements'), 
-(2, 11, 6.0, 'Pass', 'Needs more effort'), (2, 12, 4.5, 'Not Pass', 'Retake required'),
-(3, 13, 8.0, 'Pass', 'Good performance'), (3, 14, 7.2, 'Pass', 'Stable performance'), 
-(3, 15, 6.8, 'Pass', 'Could improve'), (3, 16, 4.0, 'Not Pass', 'Retake required'),
-(4, 17, 9.5, 'Pass', 'Excellent'), (4, 18, 7.8, 'Pass', 'Meets requirements'), 
-(4, 19, 6.2, 'Pass', 'Needs improvement'), (4, 20, 3.5, 'Not Pass', 'Retake required'),
-(5, 21, 8.7, 'Pass', 'Very good'), (5, 22, 7.3, 'Pass', 'Meets requirements'), 
+(1, 5, 8.5, 'Pass', 'Good performance'), 
+(1, 6, 7.0, 'Pass', 'Meets requirements'), 
+(1, 7, 6.5, 'Pass', 'Needs improvement'), 
+(1, 8, 5.0, 'Not Pass', 'Retake required'),
+(2, 9, 9.0, 'Pass', 'Excellent'), 
+(2, 10, 7.5, 'Pass', 'Meets requirements'), 
+(2, 11, 6.0, 'Pass', 'Needs more effort'), 
+(2, 12, 4.5, 'Not Pass', 'Retake required'),
+(3, 13, 8.0, 'Pass', 'Good performance'),
+(3, 14, 7.2, 'Pass', 'Stable performance'), 
+(3, 15, 6.8, 'Pass', 'Could improve'), 
+(3, 16, 4.0, 'Not Pass', 'Retake required'),
+(4, 17, 9.5, 'Pass', 'Excellent'),
+(4, 18, 7.8, 'Pass', 'Meets requirements'), 
+(4, 19, 6.2, 'Pass', 'Needs improvement'), 
+(4, 20, 3.5, 'Not Pass', 'Retake required'),
+(5, 21, 8.7, 'Pass', 'Very good'), 
+(5, 22, 7.3, 'Pass', 'Meets requirements'), 
+(1, 5, 9.5, 'Pass', 'Good Good'),  
 (5, 23, 6.7, 'Pass', 'Acceptable'), (5, 24, 5.2, 'Not Pass', 'Retake required');
+
 
 
 INSERT INTO Certificates (UserID, IssuedDate, ExpirationDate, CertificateCode, Status)
 VALUES
-(5, '2025-05-10', '2035-05-10', 'CERT-5', 'Inactive'),
-(6, '2025-05-10', '2035-05-10', 'CERT-6', 'Inactive'),
-(7, '2025-05-10', '2035-05-10', 'CERT-7', 'Inactive'),
-(9, '2025-05-10', '2035-05-10', 'CERT-9', 'Inactive'),
-(10, '2025-05-10', '2035-05-10', 'CERT-10', 'Inactive'),
-(11, '2025-05-10', '2035-05-10', 'CERT-11', 'Inactive'),
-(13, '2025-05-10', '2035-05-10', 'CERT-13', 'Inactive'),
-(14, '2025-05-10', '2035-05-10', 'CERT-14','Inactive'),
-(15, '2025-05-10', '2035-05-10', 'CERT-15', 'Inactive'),
-(17, '2025-05-10', '2035-05-10', 'CERT-17', 'Inactive'),
-(18, '2025-05-10', '2035-05-10', 'CERT-18', 'Active'),
-(19, '2025-05-10', '2035-05-10', 'CERT-19', 'Active'),
-(21, '2025-05-10', '2035-05-10', 'CERT-21', 'Active'),
-(22, '2025-05-10', '2035-05-10', 'CERT-22', 'Active'),
-(23, '2025-05-10', '2035-05-10', 'CERT-23', 'Active');
+-- Nhóm Inactive với ngày khác nhau
+(5,  '2025-05-10', '2035-05-10', 'CERT5',  'Inactive'),
+(6,  '2025-06-10', '2035-06-10', 'CERT6',  'Inactive'),
+(7,  '2025-07-10', '2035-07-10', 'CERT7',  'Inactive'),
+(9,  '2025-08-10', '2035-08-10', 'CERT9',  'Inactive'),
+(10, '2025-09-10', '2035-09-10', 'CERT10', 'Inactive'),
+(11, '2025-10-10', '2035-10-10', 'CERT11', 'Inactive'),
+(13, '2025-11-10', '2035-11-10', 'CERT13', 'Inactive'),
+(14, '2025-12-10', '2035-12-10', 'CERT14', 'Inactive'),
+(15, '2026-01-10', '2036-01-10', 'CERT15', 'Inactive'),
+(17, '2026-02-10', '2036-02-10', 'CERT17', 'Inactive'),
+-- Nhóm Active với ngày khác nhau
+(18, '2023-06-15', '2030-06-15', 'CERT18', 'Active'),
+(19, '2023-07-15', '2030-07-15', 'CERT19', 'Active'),
+(21, '2023-08-15', '2030-08-15', 'CERT21', 'Active'),
+(22, '2023-09-15', '2030-09-15', 'CERT22', 'Active'),
+(23, '2023-10-15', '2030-10-15', 'CERT23', 'Active');
+
 
 INSERT INTO Notifications (UserID, Message, SentDate, IsRead)
 VALUES

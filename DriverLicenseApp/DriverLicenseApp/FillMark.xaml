@@ -1,8 +1,80 @@
 ﻿<Window x:Class="DriverLicenseApp.FillMark"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Fill Mark" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid Background="aliceblue">
+        Title="Fill Mark" 
+        Height="450" 
+        Width="800" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="#CEFAE3" Margin="0,0,-23,0">
+        <Grid.Resources>
+            <!-- Style cho TextBlock/Label -->
+            <Style x:Key="CustomLabelStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="Margin" Value="0,0,5,5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Style cho TextBox -->
+            <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5,5,0,5"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+
+            <!-- Style cho Button -->
+            <Style x:Key="CustomButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Background" Value="#B2E3C4"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="8,4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#A1D1B7"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#8CB89F"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style cho DataGrid -->
+            <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </Grid.Resources>
+
         <!-- Chia layout thành 3 hàng -->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -12,6 +84,7 @@
             <RowDefinition Height="Auto"/>
             <!-- Form nhập điểm -->
         </Grid.RowDefinitions>
+
         <!-- Hàng 1: Tiêu đề + Nút Export + Nút Import -->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -20,22 +93,37 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="lblName" FontSize="20" FontWeight="Bold"
-           HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
+            <TextBlock x:Name="lblName" 
+                       Text="Fill Mark" 
+                       FontSize="26" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       Foreground="#006B38" 
+                       VerticalAlignment="Center" 
+                       Grid.Column="0"/>
 
-            <Button x:Name="btnExportCSV" Content="Export" Width="80" Height="30"
-            HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"
-            Click="btnExportCSV_Click" Grid.Column="1"/>
+            <Button x:Name="btnExportCSV" 
+                    Content="Export" 
+                    Style="{StaticResource CustomButtonStyle}" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    Click="btnExportCSV_Click" Grid.ColumnSpan="2" Margin="608,0,0,0"/>
 
-            <Button x:Name="btnImportCSV" Content="Import" Width="80" Height="30"
-            HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"
-            Grid.Column="2" Click="btnImportCSV_Click"/>
+            <Button x:Name="btnImportCSV" 
+                    Content="Import" 
+                    Style="{StaticResource CustomButtonStyle}" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    Click="btnImportCSV_Click" RenderTransformOrigin="-0.026,0.445" Grid.ColumnSpan="3" Margin="698,0,0,0"/>
         </Grid>
 
         <!-- Hàng 2: DataGrid hiển thị danh sách học sinh -->
-        <DataGrid x:Name="dgStudents" Grid.Row="1" AutoGenerateColumns="False"
-                  SelectionMode="Single" SelectionChanged="dgStudents_SelectionChanged"
-                  Margin="10">
+        <DataGrid x:Name="dgStudents" 
+                  Grid.Row="1" 
+                  Style="{StaticResource CustomDataGridStyle}" 
+                  AutoGenerateColumns="False" 
+                  SelectionMode="Single" 
+                  SelectionChanged="dgStudents_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="StudentID" Binding="{Binding UserId}" Width="80"/>
                 <DataGridTextColumn Header="Full Name" Binding="{Binding User.FullName}" Width="200"/>
@@ -46,41 +134,56 @@
         </DataGrid>
 
         <!-- Hàng 3: Form nhập điểm -->
-        <Grid Grid.Row="2" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="40"/>
-                <!-- StudentID nhỏ lại -->
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="150"/>
-                <!-- Full Name giữ nguyên -->
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="50"/>
-                <!-- Score nhỏ lại -->
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <!-- Notes mở rộng -->
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+        <Border Grid.Row="2" 
+                Background="White" 
+                BorderBrush="#006B38" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                Padding="10" 
+                Margin="10">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" ShadowDepth="3" BlurRadius="5"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="60"/>
+                    <!-- StudentID -->
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <!-- Full Name -->
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="60"/>
+                    <!-- Score -->
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <!-- Notes -->
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <!-- StudentID -->
-            <Label Content="StudentID:" Grid.Column="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="txtStudentID" Grid.Column="1" Width="40" IsReadOnly="True" />
+                <!-- StudentID -->
+                <TextBlock Text="StudentID:"  VerticalAlignment="Center" Grid.Column="0"/>
+                <TextBox x:Name="txtStudentID" Style="{StaticResource CustomTextBoxStyle}" IsReadOnly="True" Grid.Column="1" Margin="5,5,5,5"/>
 
-            <!-- Full Name -->
-            <Label Content="Full Name:" Grid.Column="2" VerticalAlignment="Center"/>
-            <TextBox x:Name="txtFullName" Grid.Column="3" Width="150" IsReadOnly="True" />
+                <!-- Full Name -->
+                <TextBlock Text="Full Name:"  VerticalAlignment="Center" Grid.Column="2"/>
+                <TextBox x:Name="txtFullName" Style="{StaticResource CustomTextBoxStyle}" IsReadOnly="True" Grid.Column="3" Margin="5,5,10,5"/>
 
-            <!-- Score -->
-            <Label Content="Score:" Grid.Column="4" VerticalAlignment="Center"/>
-            <TextBox x:Name="txtScore" Grid.Column="5" Width="50"/>
+                <!-- Score -->
+                <TextBlock Text="Score:"  VerticalAlignment="Center" Grid.Column="4"/>
+                <TextBox x:Name="txtScore" Style="{StaticResource CustomTextBoxStyle}" Grid.Column="5" Margin="5,5,5,5"/>
 
-            <!-- Notes -->
-            <Label Content="Notes:" Grid.Column="6" VerticalAlignment="Center"/>
-            <TextBox x:Name="txtNotes" Grid.Column="7" Height="25" Margin="0 0 10 0" />
+                <!-- Notes -->
+                <TextBlock Text="Notes:"  VerticalAlignment="Center" Grid.Column="6"/>
+                <TextBox x:Name="txtNotes" Style="{StaticResource CustomTextBoxStyle}" Grid.Column="7"/>
 
-            <!-- Button Save -->
-            <Button x:Name="btnSave" Content="Save" Grid.Column="8" Width="80" Click="btnSave_Click"/>
-        </Grid>
+                <!-- Button Save -->
+                <Button x:Name="btnSave" 
+                        Content="Save" 
+                        Style="{StaticResource CustomButtonStyle}" 
+                        Click="btnSave_Click" 
+                        Grid.Column="8"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

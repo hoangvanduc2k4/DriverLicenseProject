@@ -5,54 +5,125 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
-        Title="Profile" Height="510" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid Background="AliceBlue">
-        <!-- Grid định nghĩa các hàng -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- Hàng cho tiêu đề -->
-            <RowDefinition Height="*"/>
-            <!-- Hàng cho Form -->
-            <RowDefinition Height="Auto"/>
-            <!-- Hàng cho Button -->
-        </Grid.RowDefinitions>
+        Title="Profile" 
+        Height="510" 
+        Width="400" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen">
 
-        <!-- Tiêu đề Profile -->
-        <Label Content="Profile" Grid.Row="0"
-               HorizontalAlignment="Center" VerticalAlignment="Center"
-               FontSize="20" FontWeight="Bold" Margin="0,20,0,10"/>
+    <!-- Màu nền cửa sổ: #CEFAE3 -->
+    <Grid Background="#CEFAE3">
 
-        <!-- Phần Form nhập liệu -->
-        <StackPanel Grid.Row="1" Margin="20,0,20,0">
-            <!-- Full Name -->
-            <TextBlock Text="Full Name" FontSize="14" Margin="0,10,0,5"/>
-            <TextBox x:Name="txtName" Height="30" FontSize="14" Padding="5" 
-                     BorderBrush="#D3D3D3" BorderThickness="1" Background="White" Margin="0,0,0,5"/>
+        <Grid.Resources>
+            <!-- Style cho TextBlock (label) -->
+            <Style x:Key="CustomLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
 
-            <!-- Email -->
-            <TextBlock Text="Email" FontSize="14" Margin="0,10,0,5"/>
-            <TextBox x:Name="txtMail" Height="30" FontSize="14" Padding="5" 
-                     BorderBrush="#D3D3D3" BorderThickness="1" Background="White" Margin="0,0,0,5"/>
+            <!-- Style cho TextBox -->
+            <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="0,5,0,10"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
 
-            <!-- Phone -->
-            <TextBlock Text="Phone" FontSize="14" Margin="0,10,0,5"/>
-            <TextBox x:Name="txtPhone" Height="30" FontSize="14" Padding="5" 
-                     BorderBrush="#D3D3D3" BorderThickness="1" Background="White" Margin="0,0,0,5"/>
+            <!-- Style cho Button -->
+            <Style x:Key="CustomButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="130"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Background" Value="#B2E3C4"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="10,5"/>
+                <Setter Property="Padding" Value="8,4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#A1D1B7"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#8CB89F"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
-            <!-- Class (chỉ dành cho học sinh) -->
-            <TextBlock Text="Class" FontSize="14" Margin="0,10,0,5"/>
-            <TextBox x:Name="txtClass" Height="30" FontSize="14" Padding="5" 
-                     BorderBrush="#D3D3D3" BorderThickness="1" Background="White" Margin="0,0,0,5"/>
+            <!-- Style cho Border chính (form) -->
+            <Style x:Key="MainFormBorderStyle" TargetType="Border">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="Width" Value="350"/>
+                <Setter Property="Height" Value="460"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="Gray" ShadowDepth="3" BlurRadius="5"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
 
-            <!-- School (chỉ dành cho học sinh) -->
-            <TextBlock Text="School" FontSize="14" Margin="0,10,0,5"/>
-            <TextBox x:Name="txtSchool" Height="30" FontSize="14" Padding="5" 
-                     BorderBrush="#D3D3D3" BorderThickness="1" Background="White" Margin="0,0,0,5"/>
-        </StackPanel>
+        <!-- Form chính -->
+        <Border Style="{StaticResource MainFormBorderStyle}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" Height="485">
+            <StackPanel>
+                <!-- Tiêu đề Profile -->
+                <TextBlock Text="Profile" 
+                           FontSize="26" 
+                           FontWeight="Bold" 
+                           HorizontalAlignment="Center" 
+                           Margin="10"
+                           Foreground="#006B38"/>
 
-        <!-- Nút Update Profile -->
-        <Button Content="Update Profile" Grid.Row="2" Margin="20,10,20,20"
-                Height="35" FontSize="14"  
-                 Click="UpdateButton_Click"/>
+                <!-- Full Name -->
+                <TextBlock Text="Full Name:" Style="{StaticResource CustomLabelStyle}"/>
+                <TextBox x:Name="txtName" Style="{StaticResource CustomTextBoxStyle}"/>
+
+                <!-- Email -->
+                <TextBlock Text="Email:" Style="{StaticResource CustomLabelStyle}"/>
+                <TextBox x:Name="txtMail" Style="{StaticResource CustomTextBoxStyle}"/>
+
+                <!-- Phone -->
+                <TextBlock Text="Phone:" Style="{StaticResource CustomLabelStyle}"/>
+                <TextBox x:Name="txtPhone" Style="{StaticResource CustomTextBoxStyle}"/>
+
+                <!-- Class (chỉ dành cho học sinh) -->
+                <TextBlock Text="Class:" Style="{StaticResource CustomLabelStyle}"/>
+                <TextBox x:Name="txtClass" Style="{StaticResource CustomTextBoxStyle}"/>
+
+                <!-- School (chỉ dành cho học sinh) -->
+                <TextBlock Text="School:" Style="{StaticResource CustomLabelStyle}"/>
+                <TextBox x:Name="txtSchool" Style="{StaticResource CustomTextBoxStyle}"/>
+
+                <!-- Nút Update Profile -->
+                <Button Content="Update Profile" 
+                        Style="{StaticResource CustomButtonStyle}" 
+                        Click="UpdateButton_Click"
+                        HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

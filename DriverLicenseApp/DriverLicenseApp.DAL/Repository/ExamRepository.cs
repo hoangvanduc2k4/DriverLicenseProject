@@ -8,16 +8,13 @@ namespace DriverLicenseApp.DAL.Repository
 {
     public class ExamRepository
     {
-
         private readonly LicenseDriverDbContext _context = new LicenseDriverDbContext();
 
         public static List<Exam> GetAllExams()
         {
             using (var context = new LicenseDriverDbContext())
             {
-                return context.Exams.Include(c => c.Course)
-                                    .Include(u => u.User)
-                                    .ToList();
+                return context.Exams.Include(c => c.Course).Include(u => u.User).ToList();
             }
         }
 
@@ -25,19 +22,17 @@ namespace DriverLicenseApp.DAL.Repository
         {
             using (var context = new LicenseDriverDbContext())
             {
-                return context.Exams.Include(e => e.Course)
-                                    .Include(e => e.User)
-                                    .Select(e => new Exam
-                                    {
-                                        ExamId = e.ExamId,
-                                        ExamDate = e.ExamDate,
-                                        ExamTime = e.ExamTime,
-                                        DurationMinutes = e.DurationMinutes,
-                                        Room = e.Room,
-                                        Course = new Course { CourseName = e.Course.CourseName },
-                                        User = new User { FullName = e.User.FullName }
-                                    })
-                                    .ToList();
+                return context.Exams.Include(e => e.Course).Include(e => e.User).Select(e => new Exam
+                {
+                    ExamId = e.ExamId,
+                    ExamDate = e.ExamDate,
+                    ExamTime = e.ExamTime,
+                    DurationMinutes = e.DurationMinutes,
+                    Room = e.Room,
+                    Course = new Course { CourseName = e.Course.CourseName },
+                    User = new User { FullName = e.User.FullName }
+                }
+                ).ToList();
             }
         }
 
@@ -45,15 +40,6 @@ namespace DriverLicenseApp.DAL.Repository
         {
             using (var context = new LicenseDriverDbContext())
             {
-                // Attach các đối tượng liên quan nếu chúng tồn tại
-                if (exam.Course != null)
-                {
-                    context.Courses.Attach(exam.Course);
-                }
-                if (exam.User != null)
-                {
-                    context.Users.Attach(exam.User);
-                }
                 context.Exams.Add(exam);
                 context.SaveChanges();
             }
@@ -63,15 +49,6 @@ namespace DriverLicenseApp.DAL.Repository
         {
             using (var context = new LicenseDriverDbContext())
             {
-                // Attach các đối tượng liên quan dưới trạng thái Unchanged để không cập nhật lại chúng
-                if (exam.Course != null)
-                {
-                    context.Courses.Attach(exam.Course);
-                }
-                if (exam.User != null)
-                {
-                    context.Users.Attach(exam.User);
-                }
                 context.Exams.Update(exam);
                 context.SaveChanges();
             }
@@ -89,6 +66,5 @@ namespace DriverLicenseApp.DAL.Repository
                 }
             }
         }
-
     }
 }

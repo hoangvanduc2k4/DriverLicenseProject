@@ -1,0 +1,220 @@
+﻿<Window x:Class="DriverLicenseApp.CertificateManage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Certificate Manage" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen" Background="#D2FFE8">
+    <Window.Resources>
+        <!-- Primary Color Brush -->
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#CEFAE3"/>
+        <!-- Secondary Light Brush -->
+        <SolidColorBrush x:Key="SecondaryBrush" Color="WhiteSmoke"/>
+        <!-- Text Style -->
+        <Style x:Key="LabelText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <!-- TextBox Style -->
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <!-- Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#90C29A"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4" 
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- DatePicker Style -->
+        <Style TargetType="DatePicker">
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <!-- ComboBox Style -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <!-- Border Style for Panels -->
+        <Style x:Key="PanelBorder" TargetType="Border">
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Gray" BlurRadius="8" ShadowDepth="3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- DataGrid Style -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="{StaticResource SecondaryBrush}"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Transparent"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <!-- Detail Section Border Style -->
+        <Style x:Key="DetailSectionBorder" TargetType="Border">
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Gray" BlurRadius="6" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- ListPanel: Contains search, DataGrid, ViewDetail -->
+        <Grid x:Name="ListPanel" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Search panel -->
+                <RowDefinition Height="*"/>
+                <!-- DataGrid -->
+                <RowDefinition Height="Auto"/>
+                <!-- View Detail Button -->
+            </Grid.RowDefinitions>
+
+            <!-- Search Panel -->
+            <Border Style="{StaticResource PanelBorder}" Background="{StaticResource PrimaryBrush}" Margin="10">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Search by User Name -->
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="User Name:" Style="{StaticResource LabelText}"/>
+                        <TextBox x:Name="txtSearchUserName" Width="150"/>
+                    </StackPanel>
+                    <!-- Search by Issued Date -->
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Issued Date:" Style="{StaticResource LabelText}"/>
+                        <DatePicker x:Name="dpSearchIssuedDate" Width="130"/>
+                    </StackPanel>
+                    <!-- Search by Expiration Date -->
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Expiration Date:" Style="{StaticResource LabelText}"/>
+                        <DatePicker x:Name="dpSearchExpirationDate" Width="130"/>
+                    </StackPanel>
+                    <!-- Search by Certificate Code -->
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Certificate Code:" Style="{StaticResource LabelText}"/>
+                        <TextBox x:Name="txtSearchCertificateCode" Width="150"/>
+                    </StackPanel>
+                    <!-- Search by Status -->
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Status:" Style="{StaticResource LabelText}"/>
+                        <ComboBox x:Name="cbSearchStatus" Width="130">
+                            <ComboBoxItem Content="All" Tag="" IsSelected="True"/>
+                            <ComboBoxItem Content="Certificate Not Issued" Tag="inactive"/>
+                            <ComboBoxItem Content="Certificate Issued" Tag="active"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <!-- Search Button -->
+                    <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
+                        <Button Content="Search" Click="SearchButton_Click" Width="80" Height="30"/>
+                    </StackPanel>
+                    <!-- Reset Button -->
+                    <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
+                        <Button Content="Reset" Click="ResetSearchButton_Click" Width="80" Height="30"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- DataGrid Container -->
+            <Border Grid.Row="1" CornerRadius="8" Padding="10" Margin="10,0,10,0" 
+                    Background="{StaticResource PrimaryBrush}" Effect="{DynamicResource DropShadow}">
+                <DataGrid x:Name="dgCertificates" AutoGenerateColumns="False" 
+                          CanUserAddRows="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Certificate ID" Binding="{Binding CertificateID}" Width="Auto"/>
+                        <DataGridTextColumn Header="User Name" Binding="{Binding UserName}" Width="*"/>
+                        <DataGridTextColumn Header="Issued Date" Binding="{Binding IssuedDate}" Width="Auto"/>
+                        <DataGridTextColumn Header="Expiration Date" Binding="{Binding ExpirationDate}" Width="Auto"/>
+                        <DataGridTextColumn Header="Certificate Code" Binding="{Binding CertificateCode}" Width="*"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding StatusDisplay}" Width="Auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <!-- View Detail Button -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0">
+                <Button Content="View Detail" Click="ViewDetailButton_Click" Width="100" Height="30"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- DetailPanel: Contains detailed information -->
+        <Grid x:Name="DetailPanel" Visibility="Collapsed" Background="{StaticResource PrimaryBrush}" >
+            <!-- Adding a ScrollViewer for long content -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="10">
+                    <!-- Certificate Section -->
+                    <Border Style="{StaticResource DetailSectionBorder}">
+                        <StackPanel>
+                            <TextBlock Text="Certificate:" Style="{StaticResource LabelText}" Margin="0,0,0,5"/>
+                            <TextBlock x:Name="txtCertificateInfo" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exam Result Section -->
+                    <Border Style="{StaticResource DetailSectionBorder}">
+                        <StackPanel>
+                            <TextBlock Text="Exam Results:" Style="{StaticResource LabelText}" Margin="0,0,0,5"/>
+                            <TextBlock x:Name="txtResultInfo" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Exam Information Section -->
+                    <Border Style="{StaticResource DetailSectionBorder}">
+                        <StackPanel>
+                            <TextBlock Text="Exam:" Style="{StaticResource LabelText}" Margin="0,0,0,5"/>
+                            <TextBlock x:Name="txtExamInfo" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Course Information Section -->
+                    <Border Style="{StaticResource DetailSectionBorder}">
+                        <StackPanel>
+                            <TextBlock Text="Course:" Style="{StaticResource LabelText}" Margin="0,0,0,5"/>
+                            <TextBlock x:Name="txtCourseInfo" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Navigation Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
+                        <Button Content="Back" Click="BackButton_Click" Width="80" Height="30"/>
+                        <Button Content="Issue Certificate" Click="IssueCertificateButton_Click" Width="120" Height="30" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>
