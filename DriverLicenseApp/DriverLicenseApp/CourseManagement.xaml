@@ -36,7 +36,7 @@
         <DataGrid x:Name="dgCourses" AutoGenerateColumns="False" Margin="10" IsReadOnly="True" 
                   Grid.Row="1" Grid.Column="0" SelectionChanged="dgCourses_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="CourseId" Binding="{Binding CourseId}" Width="60"/>
+                <DataGridTextColumn Header="Course ID" Binding="{Binding CourseId}" Width="60"/>
                 <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" Width="150"/>
                 <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate}" Width="70"/>
                 <DataGridTextColumn Header="End Date" Binding="{Binding EndDate}" Width="70"/>

@@ -29,6 +29,10 @@ namespace DriverLicenseApp.BLL.Service
 
             NotificationsRepository.AddNotification(notification);
         }
+        public bool UpdateNotification(Notification updatedNotification)
+        {
 
+            return NotificationsRepository.UpdateNotification(updatedNotification);
+        }
     }
 }

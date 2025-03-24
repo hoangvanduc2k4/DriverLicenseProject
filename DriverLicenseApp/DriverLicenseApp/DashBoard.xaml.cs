@@ -43,6 +43,8 @@ namespace DriverLicenseApp
                 //Student
                 case 1:
                     AddMenuButton("My Courses", ViewCoursesOfStudent_Click);
+                    AddMenuButton("Registration", SRegistration_Click);
+                    AddMenuButton("Notifications", Notifications_Click);
                     break;
                 //Teacher
                 case 2:
@@ -119,6 +121,16 @@ namespace DriverLicenseApp
         private void ViewCoursesOfStudent_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new StudentCourses(currentUser.UserId));
+        }
+
+        private void Notifications_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new StudentNotifications(currentUser.UserId));
+        }
+
+        private void SRegistration_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new StudentRegistration(currentUser.UserId));
         }
 
         private void OpenWindow(Window window)

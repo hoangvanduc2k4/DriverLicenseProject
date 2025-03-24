@@ -39,5 +39,18 @@ namespace DriverLicenseApp.DAL.Repository
                 throw new Exception("Error adding notification: " + ex.Message);
             }
         }
+
+        public static bool UpdateNotification(Notification _notification)
+        {
+            LicenseDriverDbContext context = new();
+            var notification = context.Notifications.FirstOrDefault(u => u.NotificationId == _notification.NotificationId);
+            if (notification == null)
+            {
+                return false;
+            }
+            notification.IsRead = _notification.IsRead;
+            context.SaveChanges();
+            return true;
+        }
     }
 }
