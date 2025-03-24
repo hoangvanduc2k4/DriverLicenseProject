@@ -5,37 +5,161 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
-        Title="My Courses" Height="550" Width="800" Background="AliceBlue" 
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="My Courses" 
+        Height="736" 
+        Width="800" 
+        Background="#CEFAE3" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize">
     <Grid Margin="10">
+        <Grid.Resources>
+            <!-- Style cho TextBlock -->
+            <Style x:Key="CustomLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="Margin" Value="0,0,5,5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Style cho TextBox -->
+            <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5,5,0,5"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+
+            <!-- Style cho DatePicker -->
+            <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5,5,0,5"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+
+            <!-- Style cho ComboBox -->
+            <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5,5,0,5"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+
+            <!-- Style cho Button -->
+            <Style x:Key="CustomButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="Background" Value="#B2E3C4"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="8,4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#A1D1B7"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#8CB89F"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style riêng cho nút Close -->
+            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CustomButtonStyle}">
+                <Setter Property="Background" Value="#FF6B6B"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FF8787"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FF5252"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style cho DataGrid -->
+            <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </Grid.Resources>
 
         <!-- Định nghĩa hàng và cột -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Hàng mới cho ô tìm kiếm -->
-            <RowDefinition Height="1.6*"/>
+            <!-- Hàng cho tiêu đề và nút Close -->
+            <RowDefinition Height="2*"/>
             <!-- DataGrid -->
-            <RowDefinition Height="1*"/>
-            <!-- Khu vực CRUD -->
+            <RowDefinition Height="1.5*"/>
+            <!-- Khu vực thông tin -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel Margin="10" Grid.Row="0" Grid.Column="0">
+        <!-- Tiêu đề và nút Close -->
+        <DockPanel Grid.Row="0" Margin="10">
 
-            <!-- Phần tìm kiếm nằm bên trái -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="My Courses " VerticalAlignment="Center" Margin="5 0 0 0"  FontSize="20" FontWeight="Bold"/>
-
-            </StackPanel>
+            <TextBlock Text="My Courses" 
+                       Foreground="#006B38" 
+                       FontSize="26" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center"/>
         </DockPanel>
 
-
-
         <!-- DataGrid hiển thị danh sách khóa học -->
-        <DataGrid x:Name="dgCourses" AutoGenerateColumns="False" Margin="10" IsReadOnly="True" 
-              Grid.Row="1" Grid.Column="0" SelectionChanged="dgCourses_SelectionChanged">
+        <DataGrid x:Name="dgCourses" 
+                  Style="{StaticResource CustomDataGridStyle}" 
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True" 
+                  Grid.Row="1" 
+                  Grid.Column="0" 
+                  SelectionChanged="dgCourses_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="CourseId" Binding="{Binding CourseId}" Width="60"/>
                 <DataGridTextColumn Header="Course Name" Binding="{Binding Course.CourseName}" Width="280"/>
@@ -46,9 +170,18 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Khung CRUD -->
-        <Border BorderThickness="1" BorderBrush="Gray" CornerRadius="5" Background="White" Padding="5" Margin="5"
-            Grid.Row="2" Grid.Column="0">
+        <!-- Khung thông tin khóa học -->
+        <Border BorderThickness="1" 
+                BorderBrush="#006B38" 
+                CornerRadius="5" 
+                Background="White" 
+                Padding="10" 
+                Margin="10" 
+                Grid.Row="2" 
+                Grid.Column="0">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" ShadowDepth="3" BlurRadius="5"/>
+            </Border.Effect>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -56,36 +189,32 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <!-- Thêm hàng cho Teacher -->
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
+                <TextBlock Text="Course Name:" Style="{StaticResource CustomLabelStyle}" Grid.Row="0" Grid.Column="0"/>
+                <TextBox x:Name="txtCourseName" Style="{StaticResource CustomTextBoxStyle}" Width="200" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
 
-                <TextBlock Text="Course Name:" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
-                <TextBox x:Name="txtCourseName" Width="200" Grid.Row="1" Grid.Column="1" Margin="1"/>
+                <TextBlock Text="Start Date:" Style="{StaticResource CustomLabelStyle}" Grid.Row="1" Grid.Column="0"/>
+                <DatePicker x:Name="dpStartDate" Style="{StaticResource CustomDatePickerStyle}" Width="200" Grid.Row="1" Grid.Column="1" IsEnabled="False"/>
 
-                <TextBlock Text="Start Date:" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
-                <DatePicker x:Name="dpStartDate" Width="200" Grid.Row="2" Grid.Column="1" Margin="1"/>
+                <TextBlock Text="End Date:" Style="{StaticResource CustomLabelStyle}" Grid.Row="2" Grid.Column="0"/>
+                <DatePicker x:Name="dpEndDate" Style="{StaticResource CustomDatePickerStyle}" Width="200" Grid.Row="2" Grid.Column="1" IsEnabled="False"/>
 
-                <TextBlock Text="End Date:" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0"/>
-                <DatePicker x:Name="dpEndDate" Width="200" Grid.Row="3" Grid.Column="1" Margin="1"/>
-
-                <TextBlock Text="Status:" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0"/>
-                <ComboBox x:Name="cbStatus" Width="200" Grid.Row="4" Grid.Column="1" Margin="1">
+                <TextBlock Text="Status:" Style="{StaticResource CustomLabelStyle}" Grid.Row="3" Grid.Column="0"/>
+                <ComboBox x:Name="cbStatus" Style="{StaticResource CustomComboBoxStyle}" Width="200" Grid.Row="3" Grid.Column="1" IsEnabled="False">
                     <ComboBoxItem Content="Active"/>
                     <ComboBoxItem Content="Closed"/>
                     <ComboBoxItem Content="Cancelled"/>
                 </ComboBox>
 
-                <!-- Các nút CRUD -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" Margin="10">
-                    <Button x:Name="btnExam" Content="View exam" Width="100" Margin="5" Click="btnExam_Click"/>
-                    <Button x:Name="btnCertificate" Content="My Certificates" Width="100" Margin="5" Click="btnCertificate_Click"/>
+                <!-- Các nút chức năng -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="4" Margin="221,10,0,10" Grid.Column="1">
+                    <Button x:Name="btnExam" Content="View Exam" Style="{StaticResource CustomButtonStyle}" Click="btnExam_Click"/>
+                    <Button x:Name="btnCertificate" Content="My Certificates" Style="{StaticResource CustomButtonStyle}" Click="btnCertificate_Click"/>
                 </StackPanel>
             </Grid>
         </Border>

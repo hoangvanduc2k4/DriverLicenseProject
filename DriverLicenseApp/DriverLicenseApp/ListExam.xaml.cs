@@ -48,28 +48,6 @@ namespace DriverLicenseApp
             }
         }
 
-        // Xử lý sự kiện khi nhấn nút Search
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            try
-            {
-                string teacherName = NormalizeString(txtSearch.Text.Trim().ToLower());
-                var exams = _examService.GetExamsByTeacher(teacherName);
-                examDataGrid.ItemsSource = exams;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error searching exams: " + ex.Message);
-            }
-        }
-
-        private string NormalizeString(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return string.Empty;
-            return string.Join(" ", input.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)).ToLower();
-        }
-
 
 
 
@@ -90,6 +68,7 @@ namespace DriverLicenseApp
 
                 // Giả sử có một cửa sổ StudentMarkWindow nhận courseId để load danh sách học sinh và nhập điểm
                 FillMark fillMark = new FillMark(courseId);
+                this.Hide();
                 fillMark.Show();
             }
             catch (Exception ex)

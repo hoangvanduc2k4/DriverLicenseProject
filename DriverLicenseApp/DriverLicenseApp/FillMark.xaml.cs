@@ -26,7 +26,7 @@ namespace DriverLicenseApp
             InitializeComponent();
             _examId = examId;
             string title = _examService.GetAllExams().FirstOrDefault(x => x.ExamId == _examId).Course.CourseName;
-            lblName.Content = title;
+            lblName.Text = title;
             LoadStudents();
         }
 
@@ -126,7 +126,7 @@ namespace DriverLicenseApp
                 // Tạo SaveFileDialog
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
-                saveFileDialog.FileName = $"Course_{lblName.Content}_Results.csv"; // Tên file mặc định
+                saveFileDialog.FileName = $"Course_{lblName.Text}_Results.csv"; // Tên file mặc định
                 saveFileDialog.Title = "Save CSV File";
 
                 // Hiển thị dialog và kiểm tra nếu người dùng chọn OK

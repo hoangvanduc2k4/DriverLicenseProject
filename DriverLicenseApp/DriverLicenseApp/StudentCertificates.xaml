@@ -5,30 +5,128 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
-        Title="My Certificates" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid Background="AliceBlue">
+        Title="My Certificates" 
+        Height="450" 
+        Width="800" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize">
+    <Grid Background="#CEFAE3">
+        <Grid.Resources>
+            <!-- Style cho TextBlock -->
+            <Style x:Key="CustomLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="Margin" Value="0,0,5,5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Style cho Button -->
+            <Style x:Key="CustomButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Background" Value="#B2E3C4"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="8,4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#A1D1B7"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#8CB89F"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style riêng cho nút Close -->
+            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CustomButtonStyle}">
+                <Setter Property="Background" Value="#FF6B6B"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FF8787"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FF5252"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style cho DataGrid -->
+            <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </Grid.Resources>
+
         <!-- Định nghĩa 3 hàng -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Row 1: Label -->
+            <!-- Row 1: Tiêu đề + Nút Close -->
             <RowDefinition Height="Auto"/>
-            <!-- Row 2: StackPanel -->
+            <!-- Row 2: (Dự phòng cho StackPanel nếu cần) -->
             <RowDefinition Height="*"/>
             <!-- Row 3: DataGrid -->
         </Grid.RowDefinitions>
 
-        <!-- Row 1: Label "List Exam" -->
-        <Label Content="My Certificates" Grid.Row="0" 
-       HorizontalAlignment="Center" VerticalAlignment="Center"
-       FontSize="24" FontWeight="Bold" Margin="10"/>
+        <!-- Row 1: Tiêu đề "My Certificates" và Nút Close -->
+        <DockPanel Grid.Row="0" Margin="10">
+            <TextBlock Text="My Certificates" 
+                       Grid.Row="0" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       FontSize="26" 
+                       FontWeight="Bold" 
+                       Foreground="#006B38"/>
+        </DockPanel>
 
-        <!-- Row 3: DataGrid hiển thị danh sách kỳ thi -->
-        <DataGrid x:Name="certificatesDataGrid" Grid.Row="2" Margin="10" AutoGenerateColumns="False" IsReadOnly="true">
+        <!-- Row 3: DataGrid hiển thị danh sách chứng chỉ -->
+        <DataGrid x:Name="certificatesDataGrid" 
+                  Grid.Row="2" 
+                  Style="{StaticResource CustomDataGridStyle}" 
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Certificate ID" Binding="{Binding CertificateId}" Width="80"/>
-                <DataGridTextColumn Header="IssuedDate" Binding="{Binding IssuedDate}" Width="120"/>
-                <DataGridTextColumn Header="ExpirationDate" Binding="{Binding ExpirationDate}" Width="120"/>
-                <DataGridTextColumn Header="CertificateCode" Binding="{Binding CertificateCode}" Width="120"/>
+                <DataGridTextColumn Header="Issued Date" Binding="{Binding IssuedDate}" Width="120"/>
+                <DataGridTextColumn Header="Expiration Date" Binding="{Binding ExpirationDate}" Width="120"/>
+                <DataGridTextColumn Header="Certificate Code" Binding="{Binding CertificateCode}" Width="120"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="60"/>
             </DataGrid.Columns>
         </DataGrid>

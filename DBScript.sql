@@ -111,7 +111,7 @@
 
 INSERT INTO Users (FullName, Email, Password, Role, Class, School, Phone) VALUES
 -- Teachers
-('Nguyen Van H', 'h@teacher.com', '123456', 2, NULL, NULL, '0911112222'),
+('Nguyen Van H', 'duc@gmail.com', '123456', 2, NULL, NULL, '0911112222'),
 ('Tran Thi I', 'i@teacher.com', '123456', 2, NULL, NULL, '0922223333'),
 ('John Doe', 'johndoe@example.com', '123', 2, NULL, NULL, '1234567890'),
 ('Jane Smith', 'janesmith@example.com', '456', 2, NULL, NULL, '0987654321'),

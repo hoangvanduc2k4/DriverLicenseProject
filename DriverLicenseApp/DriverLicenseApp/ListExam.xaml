@@ -5,34 +5,106 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
-       Title="Exam List" Height="500" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid Background="AliceBlue">
+        Title="Exam List" 
+        Height="500" 
+        Width="800" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize">
+    <Grid Background="#CEFAE3">
+        <Grid.Resources>
+            <!-- Style cho TextBlock/Label -->
+            <Style x:Key="CustomLabelStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="Margin" Value="0,0,5,5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Style cho TextBox -->
+            <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+
+            <!-- Style cho Button -->
+            <Style x:Key="CustomButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Background" Value="#B2E3C4"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="8,4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#A1D1B7"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#8CB89F"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style cho DataGrid -->
+            <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+        </Grid.Resources>
+
         <!-- Định nghĩa 3 hàng -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- Row 1: Label -->
-            <RowDefinition Height="Auto"/>
-            <!-- Row 2: StackPanel -->
             <RowDefinition Height="*"/>
-            <!-- Row 3: DataGrid -->
+            <!-- Row 2: DataGrid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 3: Button -->
         </Grid.RowDefinitions>
 
-        <!-- Row 1: Label "List Exam" -->
-        <Label Content="List Exam" Grid.Row="0" 
-               HorizontalAlignment="Center" VerticalAlignment="Center"
-               FontSize="24" FontWeight="Bold" Margin="10"/>
+        <!-- Row 1: Tiêu đề "List Exam" -->
+        <TextBlock Text="List Exam" 
+                   Grid.Row="0" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   FontSize="26" 
+                   FontWeight="Bold" 
+                   Margin="10" 
+                   Foreground="#006B38"/>
 
-        <!-- Row 2: StackPanel chứa các điều khiển tìm kiếm -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" 
-                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-            <Label Content="Search Teacher:" VerticalAlignment="Center" Margin="5"/>
-            <TextBox x:Name="txtSearch" Width="200" Height="30" Margin="5"/>
-            <Button Content="Search" Width="80" Height="30" Margin="5" Click="SearchButton_Click"/>
-            <Button Content="Fill Mark" Width="80" Height="30" Margin="5" Click="FillMarkButton_Click"/>
-        </StackPanel>
-
-        <!-- Row 3: DataGrid hiển thị danh sách kỳ thi -->
-        <DataGrid x:Name="examDataGrid" Grid.Row="2" Margin="10" AutoGenerateColumns="False" IsReadOnly="true">
+        <!-- Row 2: DataGrid hiển thị danh sách kỳ thi -->
+        <DataGrid x:Name="examDataGrid" 
+                  Grid.Row="1" 
+                  Style="{StaticResource CustomDataGridStyle}" 
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Exam ID" Binding="{Binding ExamId}" Width="80"/>
                 <DataGridTextColumn Header="Course Name" Binding="{Binding Course.CourseName}" Width="150"/>
@@ -43,5 +115,14 @@
                 <DataGridTextColumn Header="Teacher Supervisor" Binding="{Binding User.FullName}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <!-- Row 3: Nút Fill Mark ở góc phải dưới -->
+        <Button Content="Fill Mark" 
+                Grid.Row="2" 
+                Style="{StaticResource CustomButtonStyle}" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Bottom" 
+                Margin="10" 
+                Click="FillMarkButton_Click"/>
     </Grid>
 </Window>

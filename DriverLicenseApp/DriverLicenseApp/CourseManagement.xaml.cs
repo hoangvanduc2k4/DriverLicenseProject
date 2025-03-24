@@ -13,39 +13,67 @@ namespace DriverLicenseApp
         private readonly CourseService courseService = new CourseService();
         private readonly LicenseDriverDbContext context = new LicenseDriverDbContext();
         public int _userId;
+
         public CourseManagement(int userId)
         {
             _userId = userId;
             InitializeComponent();
             LoadDataGridCourse();
-   
         }
-
 
         public void LoadDataGridCourse()
         {
-            var courses = context.Courses
+            var query = context.Courses
                 .Include(c => c.Registrations)
                 .Include(c => c.Teacher)
-                .Where(c => c.TeacherId == _userId) // Lọc trước khi Select
-                .Select(c => new
-                {
-                    c.CourseId,
-                    c.CourseName,
-                    c.StartDate,
-                    c.EndDate,
-                    c.Status,
-                    ApprovedCount = c.Registrations.Count(r => r.Status == "Approved"),
-                    PendingCount = c.Registrations.Count(r => r.Status == "Pending"),
-                    RejectedCount = c.Registrations.Count(r => r.Status == "Rejected")
-                })
-                .ToList();
+                .Where(c => c.TeacherId == _userId);
+
+            // Get filter values
+            string filterStatus = cbFilterStatus.SelectedItem is ComboBoxItem statusItem
+                ? statusItem.Content.ToString()
+                : "All";
+            DateOnly? filterStartDate = dpFilterStartDate.SelectedDate.HasValue
+                ? DateOnly.FromDateTime(dpFilterStartDate.SelectedDate.Value)
+                : null;
+
+            // Apply filters
+            if (filterStatus != "All" && filterStartDate.HasValue)
+            {
+                // Filter by both Status and StartDate
+                query = query.Where(c => c.Status == filterStatus && c.StartDate == filterStartDate.Value);
+            }
+            else if (filterStatus != "All")
+            {
+                // Filter by Status only
+                query = query.Where(c => c.Status == filterStatus);
+            }
+            else if (filterStartDate.HasValue)
+            {
+                // Filter by StartDate only
+                query = query.Where(c => c.StartDate >= filterStartDate.Value);
+            }
+            // If both are empty/null, show all courses (no additional filtering)
+
+            var courses = query.Select(c => new
+            {
+                c.CourseId,
+                c.CourseName,
+                c.StartDate,
+                c.EndDate,
+                c.Status,
+                ApprovedCount = c.Registrations.Count(r => r.Status == "Approved"),
+                PendingCount = c.Registrations.Count(r => r.Status == "Pending"),
+                RejectedCount = c.Registrations.Count(r => r.Status == "Rejected")
+            })
+            .ToList();
 
             dgCourses.ItemsSource = courses;
         }
 
-
-  
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            LoadDataGridCourse();
+        }
 
         private void dgCourses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -60,11 +88,9 @@ namespace DriverLicenseApp
                     dpStartDate.SelectedDate = course.StartDate.ToDateTime(TimeOnly.MinValue);
                     dpEndDate.SelectedDate = course.EndDate.ToDateTime(TimeOnly.MinValue);
 
-                    // Cách 1: Dùng SelectedItem
                     cbStatus.SelectedItem = cbStatus.Items.Cast<ComboBoxItem>()
                         .FirstOrDefault(item => item.Content.ToString() == course.Status);
 
-                    // Cách 2: Dùng SelectedIndex
                     cbStatus.SelectedIndex = course.Status switch
                     {
                         "Active" => 0,
@@ -72,11 +98,9 @@ namespace DriverLicenseApp
                         "Cancelled" => 2,
                         _ => -1
                     };
-
                 }
             }
         }
-
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -160,6 +184,10 @@ namespace DriverLicenseApp
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             ResetForm();
+            // Reset filter controls
+            cbFilterStatus.SelectedIndex = 0; // Set to "All"
+            dpFilterStartDate.SelectedDate = null;
+            LoadDataGridCourse();
         }
 
         private void ResetForm()
@@ -207,9 +235,6 @@ namespace DriverLicenseApp
             return true;
         }
 
-     
-
-
         private string NormalizeString(string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return string.Empty;
@@ -220,7 +245,6 @@ namespace DriverLicenseApp
         {
             if (dgCourses.SelectedItem is not null)
             {
-                // Lấy CourseId từ anonymous object
                 int courseId = (int)dgCourses.SelectedItem.GetType().GetProperty("CourseId")?.GetValue(dgCourses.SelectedItem);
                 string courseName = (string)dgCourses.SelectedItem.GetType().GetProperty("CourseName")?.GetValue(dgCourses.SelectedItem);
 
@@ -237,7 +261,5 @@ namespace DriverLicenseApp
         {
             this.Close();
         }
-
-
     }
 }
