@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DriverLicenseApp.BLL.Service;
 using DriverLicenseApp.DAL.Models;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic.ApplicationServices;
 
 namespace DriverLicenseApp
@@ -48,6 +49,33 @@ namespace DriverLicenseApp
             }
         }
 
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            string courseNameFilter = txtCourseNameFilter.Text?.Trim();
+            string examDateFilter = txtExamDateFilter.Text?.Trim();
+            try
+            {
+                var filteredExams = _examService.GetAllExams()
+                    .Where(x => x.UserId == _userId);
+
+                if (!courseNameFilter.IsNullOrEmpty())
+                {
+                    filteredExams = filteredExams.Where(x => x.Course.CourseName.ToLower().Contains(courseNameFilter.ToLower()));
+                }
+
+                if (!examDateFilter.IsNullOrEmpty())
+                {
+                    filteredExams = filteredExams.Where(x => x.ExamDate.ToString("yyyy-MM-dd").Contains(examDateFilter));
+                }
+                   
+                  
+                examDataGrid.ItemsSource = filteredExams;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error filtering exams: " + ex.Message);
+            }
+        }
 
 
 

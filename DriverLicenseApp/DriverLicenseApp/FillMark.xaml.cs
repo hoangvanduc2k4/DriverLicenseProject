@@ -10,9 +10,7 @@ using DriverLicenseApp.DAL.Models;
 using Microsoft.Win32; 
 namespace DriverLicenseApp
 {
-    /// <summary>
-    /// Interaction logic for FillMark.xaml
-    /// </summary>
+
     public partial class FillMark : Window
     {
         private readonly ExamService _examService = new ExamService();
@@ -30,17 +28,13 @@ namespace DriverLicenseApp
             LoadStudents();
         }
 
-        /// <summary>
-        /// Load danh sách học sinh của khóa học vào DataGrid
-        /// </summary>
+
         private void LoadStudents()
         {
             dgStudents.ItemsSource = _resultsService.GetResults(_examId);
         }
 
-        /// <summary>
-        /// Khi chọn một học sinh, hiển thị thông tin vào TextBox
-        /// </summary>
+
         private void dgStudents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (dgStudents.SelectedItem is Result selectedResult)
@@ -51,9 +45,7 @@ namespace DriverLicenseApp
                 txtNotes.Text = selectedResult.Notes;
             }
         }
-        /// <summary>
-        /// Lưu điểm số của học sinh
-        /// </summary>
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (!int.TryParse(txtStudentID.Text, out int userId))
@@ -68,7 +60,6 @@ namespace DriverLicenseApp
                 return;
             }
             string status = "";
-            // Xác định trạng thái Pass / Not Pass
             if (score >= 107)
             {
                status = "Pass";
@@ -91,7 +82,6 @@ namespace DriverLicenseApp
 
             if (isSaved)
             {
-                // Nếu lưu điểm thành công → Chèn vào Notifications
                 var notification = new Notification
                 {
                     UserId = userId,
@@ -100,7 +90,6 @@ namespace DriverLicenseApp
 
                 _notificationsService.AddNotification(notification.UserId, notification.Message);
 
-                // Nếu đậu (Pass) thì chèn vào Certificates
                 if (score >= 107)
                 {
                     _certificatesService.InsertCertificate(userId);
@@ -165,7 +154,6 @@ namespace DriverLicenseApp
                 {
                     using (var reader = new StreamReader(openFileDialog.FileName))
                     {
-                        // Bỏ qua header
                         bool isFirstLine = true;
 
                         while (!reader.EndOfStream)
@@ -174,39 +162,33 @@ namespace DriverLicenseApp
                             if (isFirstLine)
                             {
                                 isFirstLine = false;
-                                continue; // Bỏ qua dòng header: StudentId,Name,Score,Notes
+                                continue; 
                             }
 
-                            // Split dòng CSV với 4 cột
                             var values = line.Split(',');
 
-                            if (values.Length < 3) // Cần ít nhất StudentId, Score
+                            if (values.Length < 3) 
                             {
                                 MessageBox.Show($"Invalid data format in line: {line}");
                                 continue;
                             }
 
-                            // Validate StudentId (UserId)
                             if (!int.TryParse(values[0].Trim(), out int userId))
                             {
                                 MessageBox.Show($"Invalid Student ID in line: {line}");
                                 continue;
                             }
 
-                            // Validate Score
                             if (!decimal.TryParse(values[2].Trim(), out decimal score) || score < 0 || score > 130)
                             {
                                 MessageBox.Show($"Score must be between 0 and 130 in line: {line}");
                                 continue;
                             }
 
-                            // Xác định trạng thái Pass/Not Pass
                             string status = score >= 107 ? "Pass" : "Not Pass";
 
-                            // Lấy Notes nếu có, nếu không thì để empty
                             string notes = values.Length > 3 ? values[3].Trim() : "";
 
-                            // Tạo object Result
                             var result = new Result
                             {
                                 UserId = userId,
@@ -216,12 +198,10 @@ namespace DriverLicenseApp
                                 Notes = notes
                             };
 
-                            // Sử dụng hàm SaveResult có sẵn
                             bool isSaved = _resultsService.SaveResult(result);
 
                             if (isSaved)
                             {
-                                // Thêm notification
                                 var notification = new Notification
                                 {
                                     UserId = userId,
@@ -229,7 +209,6 @@ namespace DriverLicenseApp
                                 };
                                 _notificationsService.AddNotification(notification.UserId, notification.Message);
 
-                                // Nếu Pass thì thêm certificate
                                 if (score >= 107)
                                 {
                                     _certificatesService.InsertCertificate(userId);
@@ -239,12 +218,40 @@ namespace DriverLicenseApp
                     }
 
                     MessageBox.Show("Import completed successfully!");
-                    LoadStudents(); // Refresh DataGrid
+                    LoadStudents(); 
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error during import: {ex.Message}");
                 }
+            }
+        }
+
+
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            string selectedStatus = (cbStatusFilter.SelectedItem as ComboBoxItem)?.Content?.ToString();
+            string fullNameFilter = txtFullNameFilter.Text?.Trim();
+
+            try
+            {
+                var filteredMarks = _resultsService.GetResults(_examId).ToList();
+
+                if (!string.IsNullOrEmpty(selectedStatus) && selectedStatus != "All")
+                {
+                    filteredMarks = filteredMarks.Where(m => m.Status == selectedStatus).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(fullNameFilter))
+                {
+                    filteredMarks = filteredMarks.Where(m => m.User.FullName.ToLower().Contains(fullNameFilter.ToLower())).ToList();
+                }
+
+                dgStudents.ItemsSource = filteredMarks.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error filtering students: " + ex.Message);
             }
         }
     }

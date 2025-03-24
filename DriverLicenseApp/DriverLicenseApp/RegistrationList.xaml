@@ -9,7 +9,6 @@
         Background="#CEFAE3">
     <Grid Margin="10">
         <Grid.Resources>
-            <!-- Style cho TextBlock -->
             <Style x:Key="CustomLabelStyle" TargetType="TextBlock">
                 <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="FontFamily" Value="Segoe UI"/>
@@ -17,8 +16,6 @@
                 <Setter Property="Margin" Value="0,0,5,3"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-
-            <!-- Style cho TextBox -->
             <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
                 <Setter Property="Height" Value="30"/>
                 <Setter Property="Margin" Value="0,5,5,5"/>
@@ -28,8 +25,6 @@
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="Foreground" Value="#006B38"/>
             </Style>
-
-            <!-- Style cho ComboBox -->
             <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
                 <Setter Property="Height" Value="30"/>
                 <Setter Property="Margin" Value="0,5,5,5"/>
@@ -39,8 +34,6 @@
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="Foreground" Value="#006B38"/>
             </Style>
-
-            <!-- Style cho Button -->
             <Style x:Key="CustomButtonStyle" TargetType="Button">
                 <Setter Property="Width" Value="100"/>
                 <Setter Property="Height" Value="35"/>
@@ -75,8 +68,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
-            <!-- Style riêng cho nút Close -->
             <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CustomButtonStyle}">
                 <Setter Property="Width" Value="70"/>
                 <Setter Property="Height" Value="25"/>
@@ -104,8 +95,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
-            <!-- Style cho DataGrid -->
             <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
                 <Setter Property="BorderBrush" Value="#006B38"/>
                 <Setter Property="BorderThickness" Value="1.5"/>
@@ -115,19 +104,12 @@
                 <Setter Property="Margin" Value="0,0,0,10"/>
             </Style>
         </Grid.Resources>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Tên khóa học + Nút Close -->
             <RowDefinition Height="Auto"/>
-            <!-- Bộ lọc trạng thái -->
             <RowDefinition Height="*"/>
-            <!-- DataGrid -->
             <RowDefinition Height="Auto"/>
-            <!-- Form chỉnh sửa trạng thái -->
         </Grid.RowDefinitions>
-
-        <!-- Button Close và Tên khóa học -->
         <DockPanel Grid.Row="0" Margin="0,0,0,10">
             <Button Content="Close" 
                     Style="{StaticResource CloseButtonStyle}" 
@@ -140,8 +122,6 @@
                        Foreground="#006B38" 
                        HorizontalAlignment="Center"/>
         </DockPanel>
-
-        <!-- Bộ lọc trạng thái -->
         <Border Grid.Row="1" 
                 Background="White" 
                 BorderBrush="#006B38" 
@@ -156,10 +136,12 @@
                 <TextBlock Text="Filter by Status:" Style="{StaticResource CustomLabelStyle}"/>
                 <ComboBox x:Name="cbStatusFilter" Width="150" Style="{StaticResource CustomComboBoxStyle}">
                     <ComboBoxItem Content="All" IsSelected="True"/>
-                    <ComboBoxItem Content="Pending" />
+                    <ComboBoxItem Content="Pending"/>
                     <ComboBoxItem Content="Approved"/>
                     <ComboBoxItem Content="Rejected"/>
                 </ComboBox>
+                <TextBlock Text="Filter by Student Name:" Style="{StaticResource CustomLabelStyle}"/>
+                <TextBox x:Name="txtStudentNameFilter" Width="150" Style="{StaticResource CustomTextBoxStyle}"/>
                 <Button x:Name="btnFilter" 
                         Content="Filter" 
                         Style="{StaticResource CustomButtonStyle}" 
@@ -167,8 +149,6 @@
                         Click="btnFilter_Click"/>
             </StackPanel>
         </Border>
-
-        <!-- Danh sách đăng ký -->
         <DataGrid x:Name="dgRegistrations" 
                   Style="{StaticResource CustomDataGridStyle}" 
                   AutoGenerateColumns="False" 
@@ -182,8 +162,6 @@
                 <DataGridTextColumn Header="Comments" Binding="{Binding Comments}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-
-        <!-- Form chỉnh sửa trạng thái -->
         <Border Grid.Row="3" 
                 Margin="0,10,0,0" 
                 Padding="10" 
@@ -198,16 +176,10 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <!-- Tiêu đề -->
                     <RowDefinition Height="Auto"/>
-                    <!-- Nhãn -->
                     <RowDefinition Height="Auto"/>
-                    <!-- Các trường nhập liệu -->
                     <RowDefinition Height="Auto"/>
-                    <!-- Nút Update -->
                 </Grid.RowDefinitions>
-
-                <!-- Tiêu đề -->
                 <TextBlock Text="Update Status" 
                            FontSize="14" 
                            FontWeight="Bold" 
@@ -215,8 +187,6 @@
                            HorizontalAlignment="Center" 
                            Grid.Row="0" 
                            Margin="0,0,0,8"/>
-
-                <!-- Nhãn -->
                 <Grid Grid.Row="1" Margin="0,0,0,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -227,8 +197,6 @@
                     <TextBlock Text="Status:" Style="{StaticResource CustomLabelStyle}" Grid.Column="1"/>
                     <TextBlock Text="Comments:" Style="{StaticResource CustomLabelStyle}" Grid.Column="2"/>
                 </Grid>
-
-                <!-- Các trường nhập liệu -->
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -253,8 +221,6 @@
                              AcceptsReturn="True" 
                              Grid.Column="2" HorizontalAlignment="Left" Margin="0,5,0,5" Width="267"/>
                 </Grid>
-
-                <!-- Button Update -->
                 <Button x:Name="btnSubmit" 
                         Content="Update" 
                         Style="{StaticResource CustomButtonStyle}" 

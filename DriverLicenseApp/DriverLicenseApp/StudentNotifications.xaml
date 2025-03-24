@@ -5,40 +5,121 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
-        Title="Notification" Height="560" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Background="AliceBlue">
+        Title="Notification" 
+        Height="560" 
+        Width="800" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        Background="#CEFAE3">
     <Grid Margin="10">
+        <Grid.Resources>
+            <Style x:Key="CustomLabelStyle" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="Margin" Value="0,0,5,3"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="0,5,5,5"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
+            <Style x:Key="CustomButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="Background" Value="#B2E3C4"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="8,4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" 
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#A1D1B7"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#8CB89F"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Height" Value="380"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <TextBlock Text="Notifications" FontSize="20" FontWeight="Bold" Foreground="DarkBlue"
-               HorizontalAlignment="Center" Margin="0,0,0,10" Grid.Row="0"/>
-
-        <!-- Bộ lọc trạng thái -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10" Grid.Row="1">
-            <TextBlock Text="Filter by Status:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <ComboBox x:Name="cbStatusFilter" Width="150">
-                <ComboBoxItem Content="All" IsSelected="True" Tag="2"/>
-                <ComboBoxItem Content="Unread" Tag="0"/>
-            </ComboBox>
-            <Button Margin="10 0 0 0" Width="50" x:Name="btnFilter" Click="btnFilter_Click">Filter</Button>
-        </StackPanel>
-
-        <!-- Danh sách đăng ký -->
-        <DataGrid x:Name="dgNotifications" AutoGenerateColumns="False" IsReadOnly="True"
-              Grid.Row="2" Height="380" Background="White" BorderBrush="Gray" BorderThickness="1"
-              SelectionChanged="dgNotifications_SelectionChanged">
+        <TextBlock Text="Notifications" 
+                   FontSize="26" 
+                   FontWeight="Bold" 
+                   Foreground="#006B38" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,0,0,10" 
+                   Grid.Row="0"/>
+        <Border Grid.Row="1" 
+                Background="White" 
+                BorderBrush="#006B38" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                Padding="10" 
+                Margin="0,0,0,10">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" ShadowDepth="3" BlurRadius="5"/>
+            </Border.Effect>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Text="Filter by Status:" Style="{StaticResource CustomLabelStyle}"/>
+                <ComboBox x:Name="cbStatusFilter" Style="{StaticResource CustomComboBoxStyle}">
+                    <ComboBoxItem Content="All" IsSelected="True" Tag="2"/>
+                    <ComboBoxItem Content="Unread" Tag="0"/>
+                </ComboBox>
+                <Button x:Name="btnFilter" 
+                        Content="Filter" 
+                        Style="{StaticResource CustomButtonStyle}" 
+                        Click="btnFilter_Click"/>
+            </StackPanel>
+        </Border>
+        <DataGrid x:Name="dgNotifications" 
+                  Style="{StaticResource CustomDataGridStyle}"
+                  AutoGenerateColumns="False" 
+                  IsReadOnly="True" 
+                  Grid.Row="2"
+                  SelectionChanged="dgNotifications_SelectionChanged">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
-                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Background" Value="White"/>
                     <Style.Triggers>
-                        <!-- Nếu IsRead == false, đổi nền thành LightBlue -->
                         <DataTrigger Binding="{Binding IsRead}" Value="False">
-                            <Setter Property="Background" Value="LightBlue" />
+                            <Setter Property="Background" Value="LightBlue"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

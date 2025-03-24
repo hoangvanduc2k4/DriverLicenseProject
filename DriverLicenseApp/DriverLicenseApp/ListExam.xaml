@@ -12,7 +12,6 @@
         ResizeMode="NoResize">
     <Grid Background="#CEFAE3">
         <Grid.Resources>
-            <!-- Style cho TextBlock/Label -->
             <Style x:Key="CustomLabelStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="FontFamily" Value="Segoe UI"/>
@@ -20,8 +19,6 @@
                 <Setter Property="Margin" Value="0,0,5,5"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-
-            <!-- Style cho TextBox -->
             <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
                 <Setter Property="Height" Value="30"/>
                 <Setter Property="Margin" Value="5"/>
@@ -31,8 +28,6 @@
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="Foreground" Value="#006B38"/>
             </Style>
-
-            <!-- Style cho Button -->
             <Style x:Key="CustomButtonStyle" TargetType="Button">
                 <Setter Property="Width" Value="80"/>
                 <Setter Property="Height" Value="30"/>
@@ -67,8 +62,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
-            <!-- Style cho DataGrid -->
             <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
                 <Setter Property="BorderBrush" Value="#006B38"/>
                 <Setter Property="BorderThickness" Value="1.5"/>
@@ -78,18 +71,12 @@
                 <Setter Property="Margin" Value="10"/>
             </Style>
         </Grid.Resources>
-
-        <!-- Định nghĩa 3 hàng -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Row 1: Label -->
-            <RowDefinition Height="*"/>
-            <!-- Row 2: DataGrid -->
             <RowDefinition Height="Auto"/>
-            <!-- Row 3: Button -->
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <!-- Row 1: Tiêu đề "List Exam" -->
         <TextBlock Text="List Exam" 
                    Grid.Row="0" 
                    HorizontalAlignment="Center" 
@@ -98,10 +85,29 @@
                    FontWeight="Bold" 
                    Margin="10" 
                    Foreground="#006B38"/>
-
-        <!-- Row 2: DataGrid hiển thị danh sách kỳ thi -->
+        <Border Grid.Row="1" 
+                Background="White" 
+                BorderBrush="#006B38" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                Padding="10" 
+                Margin="10">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" ShadowDepth="3" BlurRadius="5"/>
+            </Border.Effect>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Text="Filter by Course Name:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtCourseNameFilter" Width="150" Style="{StaticResource CustomTextBoxStyle}"/>
+                <TextBlock Text="Filter by Exam Date:" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtExamDateFilter" Width="150" Style="{StaticResource CustomTextBoxStyle}"/>
+                <Button x:Name="btnFilter" 
+                        Content="Filter" 
+                        Style="{StaticResource CustomButtonStyle}" 
+                        Click="btnFilter_Click"/>
+            </StackPanel>
+        </Border>
         <DataGrid x:Name="examDataGrid" 
-                  Grid.Row="1" 
+                  Grid.Row="2" 
                   Style="{StaticResource CustomDataGridStyle}" 
                   AutoGenerateColumns="False" 
                   IsReadOnly="True">
@@ -115,10 +121,8 @@
                 <DataGridTextColumn Header="Teacher Supervisor" Binding="{Binding User.FullName}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
-
-        <!-- Row 3: Nút Fill Mark ở góc phải dưới -->
         <Button Content="Fill Mark" 
-                Grid.Row="2" 
+                Grid.Row="3" 
                 Style="{StaticResource CustomButtonStyle}" 
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Bottom" 
