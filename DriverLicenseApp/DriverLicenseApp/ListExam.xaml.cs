@@ -19,9 +19,7 @@ using Microsoft.VisualBasic.ApplicationServices;
 namespace DriverLicenseApp
 {
 
-    /// <summary>
-    /// Interaction logic for ListExam.xaml
-    /// </summary>
+
     public partial class ListExam : Window
     {
         private ExamService _examService;
@@ -35,7 +33,6 @@ namespace DriverLicenseApp
             LoadExams();
         }
 
-        // Load tất cả kỳ thi vào DataGrid
         private void LoadExams()
         {
             try
@@ -52,24 +49,23 @@ namespace DriverLicenseApp
         private void btnFilter_Click(object sender, RoutedEventArgs e)
         {
             string courseNameFilter = txtCourseNameFilter.Text?.Trim();
-            string examDateFilter = txtExamDateFilter.Text?.Trim();
+            DateOnly? examDateFilter = dpExamDate.SelectedDate.HasValue ? DateOnly.FromDateTime(dpExamDate.SelectedDate.Value) : null;
+
             try
             {
-                var filteredExams = _examService.GetAllExams()
-                    .Where(x => x.UserId == _userId);
+                var filteredExams = _examService.GetAllExams().Where(x => x.UserId == _userId);
 
-                if (!courseNameFilter.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(courseNameFilter))
                 {
                     filteredExams = filteredExams.Where(x => x.Course.CourseName.ToLower().Contains(courseNameFilter.ToLower()));
                 }
 
-                if (!examDateFilter.IsNullOrEmpty())
+                if (examDateFilter.HasValue)
                 {
-                    filteredExams = filteredExams.Where(x => x.ExamDate.ToString("yyyy-MM-dd").Contains(examDateFilter));
+                    filteredExams = filteredExams.Where(x => x.ExamDate >= examDateFilter);
                 }
-                   
-                  
-                examDataGrid.ItemsSource = filteredExams;
+
+                examDataGrid.ItemsSource = filteredExams.ToList();
             }
             catch (Exception ex)
             {
@@ -79,7 +75,6 @@ namespace DriverLicenseApp
 
 
 
-        // Xử lý sự kiện khi nhấn nút Fill Mark
         private void FillMarkButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -90,11 +85,9 @@ namespace DriverLicenseApp
                     return;
                 }
 
-                // Ép kiểu selected item thành dynamic để lấy CourseID
                 dynamic selectedExam = examDataGrid.SelectedItem;
                 int examId = selectedExam.ExamId;
 
-                // Giả sử có một cửa sổ StudentMarkWindow nhận courseId để load danh sách học sinh và nhập điểm
                 FillMark fillMark = new FillMark(examId);
                 this.Hide();
                 fillMark.Show();

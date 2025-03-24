@@ -70,6 +70,15 @@
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="Margin" Value="10"/>
             </Style>
+            <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5,5,0,5"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BorderBrush" Value="#006B38"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="Foreground" Value="#006B38"/>
+            </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -99,7 +108,11 @@
                 <TextBlock Text="Filter by Course Name:" VerticalAlignment="Center"/>
                 <TextBox x:Name="txtCourseNameFilter" Width="150" Style="{StaticResource CustomTextBoxStyle}"/>
                 <TextBlock Text="Filter by Exam Date:" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtExamDateFilter" Width="150" Style="{StaticResource CustomTextBoxStyle}"/>
+                <DatePicker x:Name="dpExamDate" 
+                     Style="{StaticResource CustomDatePickerStyle}" 
+                     Width="150" 
+                     Grid.Column="3"
+                     Margin="5,0,15,0"/>
                 <Button x:Name="btnFilter" 
                         Content="Filter" 
                         Style="{StaticResource CustomButtonStyle}" 

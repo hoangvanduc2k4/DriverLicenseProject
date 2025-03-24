@@ -28,7 +28,6 @@ namespace DriverLicenseApp
                 .Include(c => c.Teacher)
                 .Where(c => c.TeacherId == _userId);
 
-            // Get filter values
             string filterStatus = cbFilterStatus.SelectedItem is ComboBoxItem statusItem
                 ? statusItem.Content.ToString()
                 : "All";
@@ -36,23 +35,18 @@ namespace DriverLicenseApp
                 ? DateOnly.FromDateTime(dpFilterStartDate.SelectedDate.Value)
                 : null;
 
-            // Apply filters
             if (filterStatus != "All" && filterStartDate.HasValue)
             {
-                // Filter by both Status and StartDate
                 query = query.Where(c => c.Status == filterStatus && c.StartDate == filterStartDate.Value);
             }
             else if (filterStatus != "All")
             {
-                // Filter by Status only
                 query = query.Where(c => c.Status == filterStatus);
             }
             else if (filterStartDate.HasValue)
             {
-                // Filter by StartDate only
                 query = query.Where(c => c.StartDate >= filterStartDate.Value);
             }
-            // If both are empty/null, show all courses (no additional filtering)
 
             var courses = query.Select(c => new
             {
@@ -184,8 +178,7 @@ namespace DriverLicenseApp
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             ResetForm();
-            // Reset filter controls
-            cbFilterStatus.SelectedIndex = 0; // Set to "All"
+            cbFilterStatus.SelectedIndex = 0; 
             dpFilterStartDate.SelectedDate = null;
             LoadDataGridCourse();
         }

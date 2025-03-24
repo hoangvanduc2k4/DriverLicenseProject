@@ -139,6 +139,7 @@
                   Style="{StaticResource CustomDataGridStyle}" 
                   AutoGenerateColumns="False" 
                   SelectionMode="Single" 
+                  IsReadOnly="True"
                   SelectionChanged="dgStudents_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="StudentID" Binding="{Binding UserId}" Width="80"/>
