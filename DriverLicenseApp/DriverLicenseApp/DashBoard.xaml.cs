@@ -54,6 +54,7 @@ namespace DriverLicenseApp
                 //Police
                 case 3:
                     AddMenuButton("Exam Management", EC_Click);
+                    AddMenuButton("Certificate Management", CertificateManage_Click);
                     break;
                 //Admin
                 case 4:
@@ -126,6 +127,11 @@ namespace DriverLicenseApp
         private void Notifications_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new StudentNotifications(currentUser.UserId));
+        }
+
+        private void CertificateManage_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new CertificateManage());
         }
 
         private void SRegistration_Click(object sender, RoutedEventArgs e)
