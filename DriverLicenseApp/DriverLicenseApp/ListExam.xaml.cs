@@ -64,10 +64,10 @@ namespace DriverLicenseApp
 
                 // Ép kiểu selected item thành dynamic để lấy CourseID
                 dynamic selectedExam = examDataGrid.SelectedItem;
-                int courseId = selectedExam.CourseId;
+                int examId = selectedExam.ExamId;
 
                 // Giả sử có một cửa sổ StudentMarkWindow nhận courseId để load danh sách học sinh và nhập điểm
-                FillMark fillMark = new FillMark(courseId);
+                FillMark fillMark = new FillMark(examId);
                 this.Hide();
                 fillMark.Show();
             }
