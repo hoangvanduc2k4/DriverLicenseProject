@@ -111,39 +111,39 @@
 
 INSERT INTO Users (FullName, Email, Password, Role, Class, School, Phone) VALUES
 -- Teachers
-('Nguyen Van H', 'duc@gmail.com', '123456', 2, NULL, NULL, '0911112222'),
-('Tran Thi I', 'i@teacher.com', '123456', 2, NULL, NULL, '0922223333'),
-('John Doe', 'johndoe@example.com', '123', 2, NULL, NULL, '1234567890'),
-('Jane Smith', 'janesmith@example.com', '456', 2, NULL, NULL, '0987654321'),
-('Anthony', 'athony@example.com', '123', 2, NULL, NULL, '0985554321'),
+('Nguyen Van H', 'teacher@gmail.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 2, NULL, NULL, '0911112222'),
+('Tran Thi I', 'i@teacher.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 2, NULL, NULL, '0922223333'),
+('John Doe', 'johndoe@example.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 2, NULL, NULL, '1234567890'),
+('Jane Smith', 'janesmith@example.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 2, NULL, NULL, '0987654321'),
+('Anthony', 'athony@example.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 2, NULL, NULL, '0985554321'),
 
 -- Traffic Police
-('Pham Minh J', 'j@police.com', '123456', 3, NULL, NULL, '0933334444'),
+('Pham Minh J', 'police@gmail.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 3, NULL, NULL, '0933334444'),
 
 -- Admin
-('Le Quoc K', 'k@admin.com', '123456', 4, NULL, NULL, '0944445555'),
+('Le Quoc K', 'admin@gmail.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 4, NULL, NULL, '0944445555'),
 
 -- Students
-('Student 01', 'student01@student.com', '123456', 1, '12A1', 'Le Hong Phong High School', '0955556661'),
-('Student 02', 'student02@student.com', '123456', 1, '11A2', 'Nguyen Du High School', '0955556662'),
-('Student 03', 'student03@student.com', '123456', 1, '10B1', 'Tran Phu High School', '0955556663'),
-('Student 04', 'student04@student.com', '123456', 1, '12A3', 'Le Hong Phong High School', '0955556664'),
-('Student 05', 'student05@student.com', '123456', 1, '11C1', 'Nguyen Du High School', '0955556665'),
-('Student 06', 'student06@student.com', '123456', 1, '10B3', 'Tran Phu High School', '0955556666'),
-('Student 07', 'student07@student.com', '123456', 1, '12B2', 'Le Hong Phong High School', '0955556667'),
-('Student 08', 'student08@student.com', '123456', 1, '11A3', 'Nguyen Du High School', '0955556668'),
-('Student 09', 'student09@student.com', '123456', 1, '10C2', 'Tran Phu High School', '0955556669'),
-('Student 10', 'student10@student.com', '123456', 1, '12C3', 'Le Hong Phong High School', '0955556670'),
-('Student 11', 'student11@student.com', '123456', 1, '11B3', 'Nguyen Du High School', '0955556671'),
-('Student 12', 'student12@student.com', '123456', 1, '10A1', 'Tran Phu High School', '0955556672'),
-('Student 13', 'student13@student.com', '123456', 1, '12A2', 'Le Hong Phong High School', '0955556673'),
-('Student 14', 'student14@student.com', '123456', 1, '11C2', 'Nguyen Du High School', '0955556674'),
-('Student 15', 'student15@student.com', '123456', 1, '10B2', 'Tran Phu High School', '0955556675'),
-('Student 16', 'student16@student.com', '123456', 1, '12B1', 'Le Hong Phong High School', '0955556676'),
-('Student 17', 'student17@student.com', '123456', 1, '11A1', 'Nguyen Du High School', '0955556677'),
-('Student 18', 'student18@student.com', '123456', 1, '10C3', 'Tran Phu High School', '0955556678'),
-('Student 19', 'student19@student.com', '123456', 1, '12C1', 'Le Hong Phong High School', '0955556679'),
-('Student 20', 'student20@student.com', '123456', 1, '11B1', 'Nguyen Du High School', '0955556680');
+('Student 01', 'student@gmail.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '12A1', 'Le Hong Phong High School', '0955556661'),
+('Student 02', 'student02@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '11A2', 'Nguyen Du High School', '0955556662'),
+('Student 03', 'student03@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '10B1', 'Tran Phu High School', '0955556663'),
+('Student 04', 'student04@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '12A3', 'Le Hong Phong High School', '0955556664'),
+('Student 05', 'student05@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '11C1', 'Nguyen Du High School', '0955556665'),
+('Student 06', 'student06@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '10B3', 'Tran Phu High School', '0955556666'),
+('Student 07', 'student07@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '12B2', 'Le Hong Phong High School', '0955556667'),
+('Student 08', 'student08@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '11A3', 'Nguyen Du High School', '0955556668'),
+('Student 09', 'student09@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '10C2', 'Tran Phu High School', '0955556669'),
+('Student 10', 'student10@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '12C3', 'Le Hong Phong High School', '0955556670'),
+('Student 11', 'student11@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '11B3', 'Nguyen Du High School', '0955556671'),
+('Student 12', 'student12@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '10A1', 'Tran Phu High School', '0955556672'),
+('Student 13', 'student13@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '12A2', 'Le Hong Phong High School', '0955556673'),
+('Student 14', 'student14@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '11C2', 'Nguyen Du High School', '0955556674'),
+('Student 15', 'student15@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '10B2', 'Tran Phu High School', '0955556675'),
+('Student 16', 'student16@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '12B1', 'Le Hong Phong High School', '0955556676'),
+('Student 17', 'student17@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '11A1', 'Nguyen Du High School', '0955556677'),
+('Student 18', 'student18@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '10C3', 'Tran Phu High School', '0955556678'),
+('Student 19', 'student19@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '12C1', 'Le Hong Phong High School', '0955556679'),
+('Student 20', 'student20@student.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=', 1, '11B1', 'Nguyen Du High School', '0955556680');
 
 INSERT INTO Courses (CourseName, TeacherID, StartDate, EndDate, Status) VALUES
 ('Theory and Practice for A1 License', 1, '2025-03-10', '2025-04-10', 'Active'),
