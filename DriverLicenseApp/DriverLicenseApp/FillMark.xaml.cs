@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DriverLicenseApp.BLL.Service;
 using DriverLicenseApp.DAL.Models;
-using Microsoft.Win32; 
+using Microsoft.Win32;
 namespace DriverLicenseApp
 {
 
@@ -62,7 +62,7 @@ namespace DriverLicenseApp
             string status = "";
             if (score >= 107)
             {
-               status = "Pass";
+                status = "Pass";
             }
             else
             {
@@ -162,12 +162,12 @@ namespace DriverLicenseApp
                             if (isFirstLine)
                             {
                                 isFirstLine = false;
-                                continue; 
+                                continue;
                             }
 
                             var values = line.Split(',');
 
-                            if (values.Length < 3) 
+                            if (values.Length < 3)
                             {
                                 MessageBox.Show($"Invalid data format in line: {line}");
                                 continue;
@@ -187,7 +187,7 @@ namespace DriverLicenseApp
 
                             string status = score >= 107 ? "Pass" : "Not Pass";
 
-                            string notes = values.Length > 3 ? values[3].Trim() : "";
+                            string notes = values[4].Trim();
 
                             var result = new Result
                             {
@@ -218,7 +218,7 @@ namespace DriverLicenseApp
                     }
 
                     MessageBox.Show("Import completed successfully!");
-                    LoadStudents(); 
+                    LoadStudents();
                 }
                 catch (Exception ex)
                 {
