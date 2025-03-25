@@ -77,20 +77,33 @@ namespace DriverLicenseApp
                 return;
             }
 
+            if (_userService.IsEmailTaken(email, _currentUser.UserId))
+            {
+                MessageBox.Show("This email is already taken by another user.");
+                return;
+            }
+
             _currentUser.FullName = fullName;
             _currentUser.Email = email;
             _currentUser.Phone = phone;
             _currentUser.Class = classInfo;
             _currentUser.School = school;
 
-            bool isUpdated = _userService.UpdateUserProfile(_currentUser);
-            if (isUpdated)
+            try
             {
-                MessageBox.Show("Profile Updated Successfully!");
+                bool isUpdated = _userService.UpdateUserProfile(_currentUser);
+                if (isUpdated)
+                {
+                    MessageBox.Show("Profile Updated Successfully!");
+                }
+                else
+                {
+                    MessageBox.Show("Error updating profile.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Error updating profile.");
+                MessageBox.Show($"Error updating profile: {ex.Message}");
             }
         }
 

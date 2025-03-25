@@ -75,5 +75,11 @@ namespace DriverLicenseApp.BLL.Service
         }
 
 
+        public bool IsEmailTaken(string email, int currentUserId)
+        {
+            return UserRepository.IsEmailTaken(email, currentUserId);
+        }
+
+
     }
 }
