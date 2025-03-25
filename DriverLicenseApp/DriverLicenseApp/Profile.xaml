@@ -8,7 +8,7 @@
         Title="Profile" 
         Height="510" 
         Width="400" 
-        ResizeMode="NoResize" 
+       
         WindowStartupLocation="CenterScreen">
 
     <!-- Màu nền cửa sổ: #CEFAE3 -->

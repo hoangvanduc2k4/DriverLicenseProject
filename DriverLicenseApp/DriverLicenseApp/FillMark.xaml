@@ -4,7 +4,6 @@
         Title="Fill Mark" 
         Height="450" 
         Width="800" 
-        ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen">
     <Grid Background="#CEFAE3" Margin="0,0,-23,0">
         <Grid.Resources>

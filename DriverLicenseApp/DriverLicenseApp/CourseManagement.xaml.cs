@@ -155,22 +155,43 @@ namespace DriverLicenseApp
 
             int selectedCourseId = (int)dgCourses.SelectedItem.GetType().GetProperty("CourseId")?.GetValue(dgCourses.SelectedItem);
 
-            var courseToDelete = context.Courses.Include(c => c.Registrations).FirstOrDefault(c => c.CourseId == selectedCourseId);
-            if (courseToDelete != null)
-            {
-                if (courseToDelete.Registrations.Any())
-                {
-                    MessageBox.Show("Cannot delete course with existing registrations.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+            var courseToDelete = context.Courses
+                .Include(c => c.Registrations)
+                .Include(c => c.Exams) // Thêm kiểm tra bảng Exams
+                .FirstOrDefault(c => c.CourseId == selectedCourseId);
 
-                var result = MessageBox.Show("Are you sure you want to delete this course?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
+            if (courseToDelete == null)
+            {
+                MessageBox.Show("Selected course not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Kiểm tra các bảng liên quan
+            if (courseToDelete.Registrations.Any())
+            {
+                MessageBox.Show("Cannot delete course with existing registrations.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (courseToDelete.Exams.Any())
+            {
+                MessageBox.Show("Cannot delete course with existing exams.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var result = MessageBox.Show("Are you sure you want to delete this course?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
                 {
                     courseService.RemoveCourse(courseToDelete);
                     MessageBox.Show("Course deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     LoadDataGridCourse();
                     ResetForm();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting course: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
