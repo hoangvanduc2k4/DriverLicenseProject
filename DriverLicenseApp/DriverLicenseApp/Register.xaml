@@ -116,7 +116,7 @@
         <!-- Form chính -->
         <Border Style="{StaticResource MainFormBorderStyle}"
                 HorizontalAlignment="Center" 
-                VerticalAlignment="Center">
+                VerticalAlignment="Center" Height="494">
 
             <StackPanel>
                 <!-- Title -->
@@ -166,7 +166,7 @@
                         Style="{StaticResource CustomButtonStyle}" Height="29"/>
 
                 <!-- "Already have an account?" + "Login" link -->
-                <TextBlock HorizontalAlignment="Center" Margin="15" Foreground="#006B38">
+                <TextBlock HorizontalAlignment="Center" Margin="0" Foreground="#006B38">
                     <Run Text="Already have an account? " />
                     <Run Text="Login" 
                          TextDecorations="Underline" 
