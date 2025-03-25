@@ -69,12 +69,7 @@ namespace DriverLicenseApp
                 MessageBox.Show("Invalid email address.");
                 return;
             }
-            using LicenseDriverDbContext context = new();
-            if (context.Users.Any(u => u.Email == email)) // Giả sử bảng Users có cột Email
-            {
-                MessageBox.Show("Email đã được sử dụng. Vui lòng chọn email khác!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+
             Regex phoneRegex = new Regex(@"^\d+$");
             if (!phoneRegex.IsMatch(phone))
             {
