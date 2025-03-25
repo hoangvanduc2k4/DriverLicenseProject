@@ -208,7 +208,7 @@ namespace DriverLicenseApp
                 var courseInfos = (from reg in db.Registrations
                                    join course in db.Courses on reg.CourseId equals course.CourseId
                                    join teacher in db.Users on course.TeacherId equals teacher.UserId
-                                   where reg.UserId == userId
+                                   where reg.UserId == userId && reg.Status == "Approved"
                                    select new
                                    {
                                        course.CourseName,
@@ -217,6 +217,7 @@ namespace DriverLicenseApp
                                        course.Status,
                                        TeacherName = teacher.FullName
                                    }).ToList();
+
 
                 if (courseInfos.Any())
                 {
