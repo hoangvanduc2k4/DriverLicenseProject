@@ -33,7 +33,12 @@ namespace DriverLicenseApp
         {
             string email = txtEmail.Text;
             string password = txtPassword.Password;
-
+            // 2. Kiểm tra mật khẩu hợp lệ không
+            if (string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Please enter password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             User? user = AuthenticateUser(email, password);
             if (user != null)
             {

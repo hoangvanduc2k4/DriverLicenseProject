@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using DriverLicenseApp.DAL.Models;
 
 namespace DriverLicenseApp
@@ -49,13 +51,39 @@ namespace DriverLicenseApp
         {
             string email = txtEmail.Text;
             string password = txtPassword.Password;
-            string fullName = txtFullName.Text;
+            string fullName = NormalizeName(txtFullName.Text);
             string confirmPassword = txtConfirmPassword.Password;
+            // Kiểm tra xem người dùng đã chọn role trong ComboBox chưa
+            if (cbRole.SelectedItem == null)
+            {
+                MessageBox.Show("Vui lòng chọn vai trò.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             int role = Convert.ToInt32(((ComboBoxItem)cbRole.SelectedItem).Tag);
+
+            // Validate Email (định dạng hợp lệ)
+            Regex emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+            if (!emailRegex.IsMatch(email))
+            {
+                MessageBox.Show("Invalid email address.");
+                return;
+            }
+            // 2. Kiểm tra mật khẩu hợp lệ không
+            if (string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Please enter password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             if (password != confirmPassword)
             {
-                MessageBox.Show("Mật khẩu xác nhận không khớp!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Mật khẩu xác nhận không khớp!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            using LicenseDriverDbContext context = new();
+            if (context.Users.Any(u => u.Email == email)) // Giả sử bảng Users có cột Email
+            {
+                MessageBox.Show("Email đã được sử dụng. Vui lòng chọn email khác!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             RegisterUser(fullName, email, password, role);
@@ -73,6 +101,27 @@ namespace DriverLicenseApp
             this.Hide(); // Ẩn 
             Window login = new Login();
             login.ShowDialog();
+        }
+        private string NormalizeName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return string.Empty;
+
+            // Loại bỏ khoảng trắng ở đầu và cuối
+            name = name.Trim();
+
+            // Tách các từ, loại bỏ khoảng trắng thừa
+            string[] words = name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Viết hoa chữ cái đầu của mỗi từ, phần còn lại viết thường
+            for (int i = 0; i < words.Length; i++)
+            {
+                string word = words[i].ToLower();
+                words[i] = char.ToUpper(word[0]) + word.Substring(1);
+            }
+
+            // Nối lại các từ với một khoảng trắng
+            return string.Join(" ", words);
         }
     }
 }

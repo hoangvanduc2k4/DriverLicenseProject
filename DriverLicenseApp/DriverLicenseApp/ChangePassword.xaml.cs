@@ -59,9 +59,9 @@ namespace DriverLicenseApp
             }
 
             // 2. Kiểm tra mật khẩu mới hợp lệ không
-            if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < 6)
+            if (string.IsNullOrEmpty(newPassword))
             {
-                MessageBox.Show("New password must be at least 6 characters long.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter new password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
