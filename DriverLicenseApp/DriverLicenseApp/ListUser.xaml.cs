@@ -14,11 +14,9 @@ namespace DriverLicenseApp
     public partial class ListUser : Window
     {
         private UserService _userService;
-        private List<User> _allUsers;  // Stores the original list of users
+        private List<User> _allUsers;  
 
-        // To distinguish between Add or Update mode
         private bool isUpdateMode = false;
-        // Stores the selected user for update
         private User selectedUserForUpdate;
 
         public ListUser()
@@ -28,7 +26,6 @@ namespace DriverLicenseApp
             _userService = new UserService();
             LoadUsers();
 
-            // Assign converter for the Role column (using approach 2)
             if (roleColumn.Binding is Binding binding)
             {
                 binding.Converter = new RoleToStringConverter();
@@ -43,14 +40,11 @@ namespace DriverLicenseApp
 
         #region Validation Methods
 
-        // Validation for search fields
         private bool ValidateSearchFields()
         {
-            // Validate search Full Name: do not allow special characters, digits, or input with only spaces
             string searchFullName = txtSearchFullName.Text;
             if (!string.IsNullOrWhiteSpace(searchFullName))
             {
-                // Allow only letters and spaces
                 if (!Regex.IsMatch(searchFullName, @"^[\p{L}\s]+$"))
                 {
                     MessageBox.Show("Search Full Name may only contain letters and spaces (no digits or special characters allowed).",
@@ -65,7 +59,6 @@ namespace DriverLicenseApp
                 }
             }
 
-            // Validate search Email: input cannot be all spaces
             string searchEmail = txtSearchEmail.Text;
             if (!string.IsNullOrEmpty(searchEmail) && string.IsNullOrWhiteSpace(searchEmail.Trim()))
             {
@@ -74,7 +67,6 @@ namespace DriverLicenseApp
                 return false;
             }
 
-            // Validate search Class: if provided, allow letters, digits and spaces; no special characters or input with only spaces
             string searchClass = txtSearchClass.Text;
             if (!string.IsNullOrEmpty(searchClass))
             {
@@ -92,7 +84,6 @@ namespace DriverLicenseApp
                 }
             }
 
-            // Validate search School: if provided, do not allow special characters or input with only spaces
             string searchSchool = txtSearchSchool.Text;
             if (!string.IsNullOrEmpty(searchSchool))
             {
@@ -110,7 +101,6 @@ namespace DriverLicenseApp
                 }
             }
 
-            // Validate search Phone: only digits allowed, maximum 10 digits, no letters, special characters, or negative numbers, cannot be all spaces
             string searchPhone = txtSearchPhone.Text;
             if (!string.IsNullOrEmpty(searchPhone))
             {
@@ -131,10 +121,8 @@ namespace DriverLicenseApp
             return true;
         }
 
-        // Validation for Add/Update user details
         private bool ValidateUserDetails()
         {
-            // Full Name: cannot be empty or only spaces, only letters allowed, each word must be separated by a single space
             string fullName = txtFullNameDetail.Text.Trim();
             if (string.IsNullOrEmpty(fullName))
             {
@@ -142,7 +130,6 @@ namespace DriverLicenseApp
                     "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
-            // Regex: words containing letters separated by a single space; no digits or special characters allowed
             if (!Regex.IsMatch(fullName, @"^(?!\s*$)[\p{L}]+(?: [\p{L}]+)*$"))
             {
                 MessageBox.Show("Full Name may only contain letters and words separated by a single space (no digits or special characters allowed).",
@@ -150,7 +137,6 @@ namespace DriverLicenseApp
                 return false;
             }
 
-            // Email: cannot be empty or all spaces, must be in a valid email format
             string email = txtEmailDetail.Text.Trim();
             if (string.IsNullOrEmpty(email))
             {
@@ -173,7 +159,6 @@ namespace DriverLicenseApp
                 return false;
             }
 
-            // Role: must be selected (cannot be empty)
             if (cbRoleDetail.SelectedItem == null)
             {
                 MessageBox.Show("Role must be selected.",
@@ -181,18 +166,15 @@ namespace DriverLicenseApp
                 return false;
             }
 
-            // Class: if provided, allow letters, digits and spaces; no special characters or input with only spaces
             string classInfo = txtClassDetail.Text;
             if (!string.IsNullOrEmpty(classInfo))
             {
-                // Allow letters, digits, and spaces only (no special characters)
                 if (!Regex.IsMatch(classInfo, @"^[a-zA-Z0-9\s]+$"))
                 {
                     MessageBox.Show("Class may only contain letters, digits, and spaces (no special characters allowed).",
                         "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
-                // Check that the trimmed value is not empty (i.e., not only spaces)
                 if (string.IsNullOrWhiteSpace(classInfo))
                 {
                     MessageBox.Show("Class cannot consist entirely of spaces.",
@@ -202,7 +184,6 @@ namespace DriverLicenseApp
             }
 
 
-            // School: if provided, do not allow special characters or input with only spaces
             string school = txtSchoolDetail.Text;
             if (!string.IsNullOrEmpty(school))
             {
@@ -220,7 +201,6 @@ namespace DriverLicenseApp
                 }
             }
 
-            // Password: cannot be empty
             if (string.IsNullOrEmpty(txtPasswordDetail.Password))
             {
                 MessageBox.Show("Password cannot be empty.",
@@ -228,7 +208,6 @@ namespace DriverLicenseApp
                 return false;
             }
 
-            // Phone: cannot be empty, only digits allowed (up to 10), no letters, special characters, or negative numbers, cannot be all spaces
             string phone = txtPhoneDetail.Text.Trim();
             if (string.IsNullOrEmpty(phone))
             {
@@ -250,7 +229,6 @@ namespace DriverLicenseApp
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validate search fields before processing
             if (!ValidateSearchFields())
                 return;
 
@@ -281,7 +259,6 @@ namespace DriverLicenseApp
         private void AllUsersButton_Click(object sender, RoutedEventArgs e)
         {
             LoadUsers();
-            // Reset search fields
             txtSearchFullName.Text = "";
             txtSearchEmail.Text = "";
             cbSearchRole.SelectedIndex = 0;
@@ -313,15 +290,12 @@ namespace DriverLicenseApp
             }
         }
 
-        // Hide list panel & show details panel
         private void ShowDetailsPanel()
         {
-            // Here, DetailsPanel covers the entire screen
             ListViewPanel.Visibility = Visibility.Collapsed;
             DetailsPanel.Visibility = Visibility.Visible;
         }
 
-        // Hide details panel & show list panel
         private void HideDetailsPanel()
         {
             DetailsPanel.Visibility = Visibility.Collapsed;
@@ -335,7 +309,7 @@ namespace DriverLicenseApp
             txtPhoneDetail.Text = "";
             txtClassDetail.Text = "";
             txtSchoolDetail.Text = "";
-            txtPasswordDetail.Password = ""; // Reset password
+            txtPasswordDetail.Password = ""; 
             cbRoleDetail.SelectedIndex = 0;
         }
 
@@ -346,7 +320,6 @@ namespace DriverLicenseApp
             txtPhoneDetail.Text = user.Phone;
             txtClassDetail.Text = user.Class;
             txtSchoolDetail.Text = user.School;
-            // Display current password or leave blank if none
             txtPasswordDetail.Password = user.Password ?? "";
             foreach (ComboBoxItem item in cbRoleDetail.Items)
             {
@@ -360,7 +333,6 @@ namespace DriverLicenseApp
 
         private void SaveDetailButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validate user details before saving
             if (!ValidateUserDetails())
                 return;
 
@@ -410,8 +382,6 @@ namespace DriverLicenseApp
         {
             HideDetailsPanel();
         }
-
-        // Back button to return to the list screen without saving changes
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             HideDetailsPanel();
@@ -422,14 +392,12 @@ namespace DriverLicenseApp
         {
             if (txtPasswordDetail.Visibility == Visibility.Visible)
             {
-                // Show the password: copy password from PasswordBox to TextBox
                 txtPasswordVisible.Text = txtPasswordDetail.Password;
                 txtPasswordVisible.Visibility = Visibility.Visible;
                 txtPasswordDetail.Visibility = Visibility.Collapsed;
             }
             else
             {
-                // Hide the password: copy text from TextBox back to PasswordBox
                 txtPasswordDetail.Password = txtPasswordVisible.Text;
                 txtPasswordDetail.Visibility = Visibility.Visible;
                 txtPasswordVisible.Visibility = Visibility.Collapsed;
@@ -438,7 +406,6 @@ namespace DriverLicenseApp
 
     }
 
-    // Converter implemented in the code-behind
     public class RoleToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -11,7 +11,7 @@ namespace DriverLicenseApp
     public partial class ExamPolice : Window
     {
         private ExamService _examService = new ExamService();
-        private Exam currentExam = null; // Dùng cho update; null nếu đang add
+        private Exam currentExam = null;
 
         public ExamPolice()
         {
@@ -61,7 +61,6 @@ namespace DriverLicenseApp
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validate Duration (nếu nhập)
             if (!string.IsNullOrWhiteSpace(durationTextBox.Text))
             {
                 if (!int.TryParse(durationTextBox.Text, out int parsedDuration) || parsedDuration < 0)
@@ -71,10 +70,8 @@ namespace DriverLicenseApp
                 }
             }
 
-            // Validate Room (nếu nhập): không cho ký tự đặc biệt, và không toàn khoảng trắng
             if (!string.IsNullOrWhiteSpace(roomTextBox.Text))
             {
-                // Kiểm tra ký tự đặc biệt: Chỉ cho phép chữ, số và khoảng trắng.
                 if (System.Text.RegularExpressions.Regex.IsMatch(roomTextBox.Text, @"[^a-zA-Z0-9\s]"))
                 {
                     MessageBox.Show("Room must not contain special characters.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -85,7 +82,6 @@ namespace DriverLicenseApp
             int? courseId = courseComboBox.SelectedValue as int?;
             DateTime? examDate = examDatePicker.SelectedDate;
 
-            // Lấy giá trị examTime từ thuộc tính Value của xctk:TimePicker
             TimeSpan? examTime = examTimeTextBox.Value.HasValue
                 ? examTimeTextBox.Value.Value.TimeOfDay
                 : (TimeSpan?)null;
@@ -112,7 +108,6 @@ namespace DriverLicenseApp
         {
             if (ExamDataGrid.SelectedItem is Exam selectedExam)
             {
-                // Chuyển sang chế độ cập nhật với dữ liệu đã chọn
                 ShowDetailsView(selectedExam);
             }
             else
@@ -141,11 +136,9 @@ namespace DriverLicenseApp
         private void ShowDetailsView(Exam exam)
         {
             currentExam = exam;
-            // Ẩn ListViewPanel và hiển thị DetailsPanel
             ListViewPanel.Visibility = Visibility.Collapsed;
             DetailsPanel.Visibility = Visibility.Visible;
 
-            // Load danh sách khóa học vào combobox của chi tiết
             using (var context = new LicenseDriverDbContext())
             {
                 var courses = context.Courses.ToList();
@@ -156,18 +149,15 @@ namespace DriverLicenseApp
 
             if (exam != null)
             {
-                // Update mode
                 detailsTitleLabel.Content = "Update Exam";
                 detailsCourseComboBox.SelectedValue = exam.Course.CourseId;
                 detailsExamDatePicker.SelectedDate = exam.ExamDate.ToDateTime(new TimeOnly(0, 0));
                 detailsExamTimePicker.Value = DateTime.Today.Add(exam.ExamTime.ToTimeSpan());
                 detailsDurationTextBox.Text = exam.DurationMinutes.ToString();
                 detailsRoomTextBox.Text = exam.Room;
-                // Khi chọn khóa học, event detailsCourseComboBox_SelectionChanged sẽ load lại detailsTeacherComboBox
             }
             else
             {
-                // Add mode
                 detailsTitleLabel.Content = "Add New Exam";
                 detailsCourseComboBox.SelectedIndex = -1;
                 detailsExamDatePicker.SelectedDate = null;
@@ -184,7 +174,6 @@ namespace DriverLicenseApp
             {
                 using (var context = new LicenseDriverDbContext())
                 {
-                    // Load tất cả giáo viên (Role == 2) ngoại trừ giáo viên dạy của khóa học được chọn
                     var teachers = context.Users
                                           .Where(u => u.Role == 2 && u.UserId != selectedCourse.TeacherId)
                                           .ToList();
@@ -193,8 +182,7 @@ namespace DriverLicenseApp
                     detailsTeacherComboBox.SelectedValuePath = "UserId";
 
                     if (currentExam != null)
-                    {
-                        // Update mode: nếu giáo viên của kỳ thi không phải là giáo viên dạy của khóa học, tự động chọn giáo viên đó nếu có trong danh sách
+                    {                 
                         int examTeacherId = currentExam.User?.UserId ?? -1;
                         if (teachers.Any(t => t.UserId == examTeacherId))
                         {
@@ -207,7 +195,6 @@ namespace DriverLicenseApp
                     }
                     else
                     {
-                        // Add mode: reset lựa chọn
                         detailsTeacherComboBox.SelectedIndex = -1;
                     }
                 }
@@ -218,14 +205,12 @@ namespace DriverLicenseApp
 
         private void detailsSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validate Course
             if (!(detailsCourseComboBox.SelectedItem is DAL.Models.Course selectedCourse))
             {
                 MessageBox.Show("Please select a course.");
                 return;
             }
 
-            // Validate Exam Date: không được chọn ngày trong quá khứ
             if (!detailsExamDatePicker.SelectedDate.HasValue || detailsExamDatePicker.SelectedDate.Value.Date < DateTime.Today)
             {
                 MessageBox.Show("Exam date cannot be in the past.", "Invalid Date", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -247,8 +232,6 @@ namespace DriverLicenseApp
                 return;
             }
 
-
-            // Validate Duration: không để trống, chỉ số, không âm, không toàn khoảng trắng
             if (string.IsNullOrWhiteSpace(detailsDurationTextBox.Text) ||
                 !int.TryParse(detailsDurationTextBox.Text, out int duration) ||
                 duration < 0)
@@ -257,7 +240,6 @@ namespace DriverLicenseApp
                 return;
             }
 
-            // Validate Room: không để trống, không toàn khoảng trắng, không cho ký tự đặc biệt
             if (string.IsNullOrWhiteSpace(detailsRoomTextBox.Text))
             {
                 MessageBox.Show("Please enter room.", "Invalid Room", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -269,23 +251,19 @@ namespace DriverLicenseApp
                 return;
             }
 
-            // Validate Teacher: chọn giáo viên
             if (!(detailsTeacherComboBox.SelectedItem is DAL.Models.User selectedTeacher))
             {
                 MessageBox.Show("Please select a teacher.");
                 return;
             }
-            // Kiểm tra giáo viên được chọn không được là giáo viên dạy của khóa học đó
             if (selectedTeacher.UserId == selectedCourse.TeacherId)
             {
                 MessageBox.Show("The selected teacher cannot be the same as the teacher in charge of the course.");
                 return;
             }
 
-            // Nếu tất cả các validate đều ok, tiến hành thêm/sửa
             if (currentExam != null)
             {
-                // Update mode: cập nhật thông tin kỳ thi
                 currentExam.Course = selectedCourse;
                 currentExam.ExamDate = DateOnly.FromDateTime(detailsExamDatePicker.SelectedDate.Value);
 
@@ -298,23 +276,20 @@ namespace DriverLicenseApp
             }
             else
             {
-                // Add mode: tạo mới kỳ thi
                 Exam newExam = new Exam
                 {
-                    CourseId = selectedCourse.CourseId,  // chỉ gán khóa ngoại
+                    CourseId = selectedCourse.CourseId,  
                     ExamDate = DateOnly.FromDateTime(detailsExamDatePicker.SelectedDate.Value),
                     ExamTime = TimeOnly.FromTimeSpan(dateTimeValue.TimeOfDay),
                     DurationMinutes = duration,
                     Room = detailsRoomTextBox.Text,
-                    UserId = selectedTeacher.UserId       // chỉ gán khóa ngoại
+                    UserId = selectedTeacher.UserId       
                 };
                 _examService.AddExam(newExam);
             }
 
             ShowListView();
         }
-
-
 
         private void detailsCancelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -323,7 +298,6 @@ namespace DriverLicenseApp
 
         private void ShowListView()
         {
-            // Ẩn DetailsPanel và hiển thị lại ListViewPanel, đồng thời load lại dữ liệu
             DetailsPanel.Visibility = Visibility.Collapsed;
             ListViewPanel.Visibility = Visibility.Visible;
             LoadExams();
