@@ -22,25 +22,21 @@ namespace DriverLicenseApp
             try
             {
                 using var db = new LicenseDriverDbContext();
-                // Join Certificates with Users to get the corresponding user name.
                 var query = from cert in db.Certificates
                             join user in db.Users on cert.UserId equals user.UserId
                             select new
                             {
                                 CertificateID = cert.CertificateId,
-                                UserID = user.UserId, // to retrieve userId
+                                UserID = user.UserId, 
                                 UserName = user.FullName,
                                 IssuedDate = cert.IssuedDate.ToString("yyyy-MM-dd"),
                                 ExpirationDate = cert.ExpirationDate.ToString("yyyy-MM-dd"),
                                 CertificateCode = cert.CertificateCode,
-                                // Map status: active => "Certificate Issued", inactive => "Certificate Not Issued"
                                 StatusDisplay = cert.Status.ToLower() == "active" ? "Certificate Issued" : "Certificate Not Issued",
                                 Status = cert.Status.ToLower()
                             };
 
                 var list = query.ToList();
-
-                // Apply search filters
                 if (!string.IsNullOrWhiteSpace(txtSearchUserName.Text))
                 {
                     list = list.Where(x => x.UserName.IndexOf(txtSearchUserName.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
@@ -100,40 +96,32 @@ namespace DriverLicenseApp
                 return;
             }
 
-            // Get userId from the anonymous object
             dynamic item = selectedItem;
             int userId = item.UserID;
-            currentUserId = userId; // save the current userId
+            currentUserId = userId;
 
-            // Load detailed data based on userId
             LoadDetail(userId);
 
-            // Hide the list panel and display the detail panel
             ListPanel.Visibility = Visibility.Collapsed;
             DetailPanel.Visibility = Visibility.Visible;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            // When the Back button is pressed, return to the list screen
             DetailPanel.Visibility = Visibility.Collapsed;
             ListPanel.Visibility = Visibility.Visible;
         }
 
-        // "Issue Certificate" button in the detail section – event handler
         private void IssueCertificateButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 using var db = new LicenseDriverDbContext();
-                // Retrieve the certificate of the current user
                 var certificate = db.Certificates.FirstOrDefault(c => c.UserId == currentUserId);
                 if (certificate != null)
                 {
-                    // Update status to Active
                     certificate.Status = "Active";
 
-                    // Create notification
                     var notification = new Notification
                     {
                         UserId = certificate.UserId,
@@ -146,7 +134,6 @@ namespace DriverLicenseApp
                     db.SaveChanges();
 
                     MessageBox.Show("Certificate has been issued successfully.");
-                    // Reload detail after update
                     LoadDetail(currentUserId);
                 }
                 else
@@ -166,7 +153,6 @@ namespace DriverLicenseApp
             {
                 using var db = new LicenseDriverDbContext();
 
-                // 1. Certificate information (excluding CertificateID)
                 var certificate = db.Certificates.FirstOrDefault(c => c.UserId == userId);
                 if (certificate != null)
                 {
@@ -180,7 +166,6 @@ namespace DriverLicenseApp
                     txtCertificateInfo.Text = "Certificate information not found.";
                 }
 
-                // 2. Exam results information (excluding ResultID and ExamID)
                 var results = db.Results.Where(r => r.UserId == userId).ToList();
                 if (results.Any())
                 {
@@ -195,7 +180,6 @@ namespace DriverLicenseApp
                     txtResultInfo.Text = "No exam results available.";
                 }
 
-                // 3. Exam information (excluding ExamID and CourseID)
                 var examInfos = (from r in db.Results
                                  join ex in db.Exams on r.ExamId equals ex.ExamId
                                  where r.UserId == userId
@@ -221,7 +205,6 @@ namespace DriverLicenseApp
                     txtExamInfo.Text = "No exam information available.";
                 }
 
-                // 4. Course information (excluding CourseID) and including teacher's name
                 var courseInfos = (from reg in db.Registrations
                                    join course in db.Courses on reg.CourseId equals course.CourseId
                                    join teacher in db.Users on course.TeacherId equals teacher.UserId
