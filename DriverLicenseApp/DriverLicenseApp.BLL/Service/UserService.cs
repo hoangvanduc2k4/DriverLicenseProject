@@ -15,22 +15,18 @@ namespace DriverLicenseApp.BLL.Service
         {
             return UserRepository.GetAllUsers();
         }
-
         public List<User> GetAllTeacher()
         {
             return UserRepository.GetAllTeacher();
         }
 
-        // Lấy thông tin người dùng theo userId
         public User GetUserProfile(int userId)
         {
             return UserRepository.GetUserById(userId);
         }
 
-        // Cập nhật thông tin người dùng
         public bool UpdateUserProfile(User updatedUser)
         {
-            // Thực hiện validation cơ bản
             if (string.IsNullOrWhiteSpace(updatedUser.FullName) || string.IsNullOrWhiteSpace(updatedUser.Email))
             {
                 throw new ArgumentException("FullName and Email are required.");
@@ -40,10 +36,8 @@ namespace DriverLicenseApp.BLL.Service
         }
 
 
-        // Thêm người dùng mới
         public bool AddUser(User newUser)
         {
-            // Validation cơ bản
             if (newUser == null)
                 throw new ArgumentNullException(nameof(newUser));
 
@@ -55,10 +49,8 @@ namespace DriverLicenseApp.BLL.Service
             return UserRepository.AddUser(newUser);
         }
 
-        // Cập nhật thông tin người dùng (UpdateUser mới)
         public bool UpdateUser(User updatedUser)
         {
-            // Validation cơ bản cho cập nhật
             if (updatedUser == null)
                 throw new ArgumentNullException(nameof(updatedUser));
 

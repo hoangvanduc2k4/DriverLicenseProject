@@ -24,7 +24,6 @@ namespace DriverLicenseApp.DAL.Repository
             }
         }
 
-        // Tìm kiếm người dùng theo UserID
         public static User GetUserById(int userId)
         {
             using (var context = new LicenseDriverDbContext())
@@ -33,7 +32,6 @@ namespace DriverLicenseApp.DAL.Repository
             }
         }
 
-        // Thêm người dùng mới
         public static bool AddUser(User newUser)
         {
             if (newUser == null)
@@ -57,16 +55,15 @@ namespace DriverLicenseApp.DAL.Repository
                 var user = context.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
                 if (user == null)
                 {
-                    return false; // Không tìm thấy người dùng cần cập nhật
+                    return false;
                 }
 
-                // Cập nhật các trường dữ liệu, bao gồm Password
                 user.FullName = updatedUser.FullName;
                 user.Email = updatedUser.Email;
                 user.Phone = updatedUser.Phone;
                 user.Class = updatedUser.Class;
                 user.School = updatedUser.School;
-                user.Password = updatedUser.Password; // <-- Thêm dòng này để cập nhật password
+                user.Password = updatedUser.Password; 
                 user.Role = updatedUser.Role;
 
                 context.SaveChanges();
@@ -106,47 +103,36 @@ namespace DriverLicenseApp.DAL.Repository
             {
                 var stats = new Dictionary<string, object>();
 
-                // --- Thống kê Người dùng ---
                 stats["TotalUsers"] = _context.Users.Count();
                 stats["TotalStudents"] = _context.Users.Count(u => u.Role == 1);
                 stats["TotalTeachers"] = _context.Users.Count(u => u.Role == 2);
                 stats["TotalTrafficPolice"] = _context.Users.Count(u => u.Role == 3);
                 stats["TotalAdmins"] = _context.Users.Count(u => u.Role == 4);
 
-                // --- Thống kê Khóa học ---
                 stats["TotalCourses"] = _context.Courses.Count();
                 stats["ActiveCourses"] = _context.Courses.Count(c => c.Status == "Active");
                 stats["ClosedCourses"] = _context.Courses.Count(c => c.Status == "Closed");
                 stats["CancelledCourses"] = _context.Courses.Count(c => c.Status == "Cancelled");
 
-                // --- Thống kê Đăng ký ---
                 stats["ApprovedRegistrations"] = _context.Registrations.Count(r => r.Status == "Approved");
                 stats["PendingRegistrations"] = _context.Registrations.Count(r => r.Status == "Pending");
                 stats["RejectedRegistrations"] = _context.Registrations.Count(r => r.Status == "Rejected");
 
                 var today = DateOnly.FromDateTime(DateTime.Today);
-                // So sánh
                 stats["UpcomingExams"] = _context.Exams.Count(e => e.ExamDate >= today);
                 stats["PastExams"] = _context.Exams.Count(e => e.ExamDate < today);
 
-                decimal avgScore = (decimal)(_context.Results.Any()
-     ? _context.Results.Average(r => r.Score)
-     : 0m);
+                decimal avgScore = (decimal)(_context.Results.Any()? _context.Results.Average(r => r.Score): 0m);
                 stats["AverageScore"] = avgScore;
 
-
-                // Tỷ lệ đỗ: số kết quả "Pass" chia cho tổng số kết quả
                 int totalResults = _context.Results.Count();
                 int passResults = _context.Results.Count(r => r.Status == "Pass");
                 stats["PassRate"] = (totalResults > 0) ? (double)passResults / totalResults * 100 : 0.0;
 
-                // --- Thống kê Chứng chỉ ---
                 stats["ActiveCertificates"] = _context.Certificates.Count(c => c.Status == "Active");
                 stats["InactiveCertificates"] = _context.Certificates.Count(c => c.Status == "Inactive");
-                // Đếm thông báo "đã đọc" (IsRead = true)
                 stats["ReadNotifications"] = _context.Notifications.Count(n => n.IsRead == true);
 
-                // Đếm thông báo "chưa đọc" (IsRead = false hoặc null, tùy logic)
                 stats["UnreadNotifications"] = _context.Notifications.Count(n => n.IsRead == false);
 
                 return stats;

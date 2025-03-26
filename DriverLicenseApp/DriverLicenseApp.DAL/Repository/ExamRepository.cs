@@ -18,9 +18,6 @@ namespace DriverLicenseApp.DAL.Repository
             }
         }
 
-
-
-
         public static List<Exam> GetAllExamsWithDetails()
         {
             using (var context = new LicenseDriverDbContext())
