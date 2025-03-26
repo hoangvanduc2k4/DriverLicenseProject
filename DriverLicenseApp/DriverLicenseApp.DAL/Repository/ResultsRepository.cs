@@ -27,10 +27,10 @@ namespace DriverLicenseApp.DAL.Repository
                               {
                                   UserId = u.UserId,
                                   ExamId = examId,
-                                  Score = r != null ? r.Score : 0,           // Giá trị mặc định nếu null
-                                  Status = r != null ? r.Status : "Not Pass", // Giá trị mặc định
-                                  Notes = r != null ? r.Notes : "",           // Giá trị mặc định
-                                  User = u                                   // Gán User để lấy FullName
+                                  Score = r != null ? r.Score : -1,          
+                                  Status = r != null ? r.Status : "", 
+                                  Notes = r != null ? r.Notes : "",        
+                                  User = u                                   
                               };
 
                 return results.ToList();
