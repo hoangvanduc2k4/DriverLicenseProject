@@ -69,5 +69,15 @@ namespace DriverLicenseApp.DAL.Repository
                 }
             }
         }
+
+        public static List<Exam> GetAllExamsByStudentWithResults(int uId)
+        {
+            using (var context = new LicenseDriverDbContext())
+            {
+                return context.Exams
+                           .Where(e => e.Results.Any(r => r.UserId == uId) || !e.Results.Any())
+                           .ToList();
+            }
+        }
     }
 }

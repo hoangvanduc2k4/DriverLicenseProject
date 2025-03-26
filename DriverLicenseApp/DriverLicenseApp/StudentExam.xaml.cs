@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DriverLicenseApp.BLL.Service;
+using DriverLicenseApp.DAL.Models;
 
 namespace DriverLicenseApp
 {
@@ -24,7 +25,7 @@ namespace DriverLicenseApp
         private ResultsService _resultsService;
         public int _courseID;
         private int _userId;
-
+        private readonly LicenseDriverDbContext context = new LicenseDriverDbContext();
         public StudentExam(int courseID, int userId)
         {
             _courseID = courseID;
@@ -40,12 +41,35 @@ namespace DriverLicenseApp
         {
             try
             {
-                var exams = _resultsService.GetAllResults().Where(x => x.UserId == _userId).Where(a => a.Exam.CourseId == _courseID);
+                var exams = _examService.GetAllExams().Where(a => a.CourseId == _courseID);
+
                 examDataGrid.ItemsSource = exams;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading exams: " + ex.Message);
+            }
+        }
+
+        private void examDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (examDataGrid.SelectedItem is not null)
+            {
+                int selectedExamId = (int)examDataGrid.SelectedItem.GetType().GetProperty("ExamId")?.GetValue(examDataGrid.SelectedItem);
+                var _result = context.Results.Find(selectedExamId);
+
+                if (_result != null)
+                {
+                    txtScore.Text = _result.Score.ToString();
+                    txtStatus.Text = _result.Status;
+                    txtNote.Text = _result.Notes;
+                }
+                else
+                {
+                    txtScore.Text = "Chưa cập nhật";
+                    txtStatus.Text = "Chưa cập nhật";
+                    txtNote.Text = "Chưa cập nhật";
+                }
             }
         }
     }

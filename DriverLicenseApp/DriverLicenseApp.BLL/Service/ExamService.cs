@@ -12,7 +12,10 @@ namespace DriverLicenseApp.BLL.Service
         {
             return ExamRepository.GetAllExams();
         }
-
+        public List<Exam> GetAllExamsWithResults(int uID)
+        {
+            return ExamRepository.GetAllExamsByStudentWithResults(uID);
+        }
         public List<Exam> GetExamsByTeacher(string teacherName)
         {
             var exams = ExamRepository.GetAllExams();

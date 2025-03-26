@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
         Title="My Exam" 
-        Height="500" 
+        Height="600" 
         Width="800" 
         WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize">
@@ -57,33 +57,6 @@
                 </Setter>
             </Style>
 
-            <!-- Style riêng cho nút Close -->
-            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CustomButtonStyle}">
-                <Setter Property="Background" Value="#FF6B6B"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border CornerRadius="6"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Background="{TemplateBinding Background}">
-                                <ContentPresenter HorizontalAlignment="Center" 
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#FF8787"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Background" Value="#FF5252"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
             <!-- Style cho DataGrid -->
             <Style x:Key="CustomDataGridStyle" TargetType="DataGrid">
                 <Setter Property="BorderBrush" Value="#006B38"/>
@@ -95,19 +68,18 @@
             </Style>
         </Grid.Resources>
 
-        <!-- Định nghĩa 3 hàng -->
+        <!-- Định nghĩa 4 hàng -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Row 1: Tiêu đề + Nút Close -->
-            <RowDefinition Height="Auto"/>
-            <!-- Row 2: (Dự phòng nếu cần thêm chức năng) -->
+            <!-- Row 1: Tiêu đề -->
             <RowDefinition Height="*"/>
-            <!-- Row 3: DataGrid -->
+            <!-- Row 2: Danh sách kỳ thi -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 3: Kết quả chi tiết -->
         </Grid.RowDefinitions>
 
-        <!-- Row 1: Tiêu đề "My Exams" và Nút Close -->
+        <!-- Row 1: Tiêu đề "My Exams" -->
         <DockPanel Grid.Row="0" Margin="10">
-
             <TextBlock Text="My Exams" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
@@ -116,24 +88,43 @@
                        Foreground="#006B38"/>
         </DockPanel>
 
-        <!-- Row 3: DataGrid hiển thị danh sách kỳ thi -->
+        <!-- Row 2: DataGrid hiển thị danh sách kỳ thi -->
         <DataGrid x:Name="examDataGrid" 
-                  Grid.Row="2" 
+                  Grid.Row="1" 
                   Style="{StaticResource CustomDataGridStyle}" 
                   AutoGenerateColumns="False" 
-                  IsReadOnly="True">
+                  IsReadOnly="True"
+                  SelectionChanged="examDataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Exam ID" Binding="{Binding ExamId}" Width="80"/>
-                <DataGridTextColumn Header="Course Name" Binding="{Binding Exam.Course.CourseName}" Width="150"/>
-                <DataGridTextColumn Header="Exam Date" Binding="{Binding Exam.ExamDate}" Width="120"/>
-                <DataGridTextColumn Header="Exam Time" Binding="{Binding Exam.ExamTime}" Width="100"/>
-                <DataGridTextColumn Header="Duration Minutes" Binding="{Binding Exam.DurationMinutes}" Width="120"/>
-                <DataGridTextColumn Header="Room" Binding="{Binding Exam.Room}" Width="60"/>
-                <DataGridTextColumn Header="Teacher Supervisor" Binding="{Binding Exam.User.FullName}" Width="150"/>
-                <DataGridTextColumn Header="Score" Binding="{Binding Score}" Width="80"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="80"/>
-                <DataGridTextColumn Header="Note" Binding="{Binding Notes}" Width="150"/>
+                <DataGridTextColumn Header="Course Name" Binding="{Binding Course.CourseName}" Width="150"/>
+                <DataGridTextColumn Header="Exam Date" Binding="{Binding ExamDate}" Width="120"/>
+                <DataGridTextColumn Header="Exam Time" Binding="{Binding ExamTime}" Width="100"/>
+                <DataGridTextColumn Header="Duration Minutes" Binding="{Binding DurationMinutes}" Width="120"/>
+                <DataGridTextColumn Header="Room" Binding="{Binding Room}" Width="60"/>
+                <DataGridTextColumn Header="Teacher Supervisor" Binding="{Binding User.FullName}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <!-- Row 3: Hiển thị thông tin kết quả -->
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10">
+            <TextBlock Text="Exam Result" FontSize="18" FontWeight="Bold" Foreground="#006B38"/>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Score: " Style="{StaticResource CustomLabelStyle}"/>
+                <TextBlock x:Name="txtScore" MinWidth="100"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Status: " Style="{StaticResource CustomLabelStyle}"/>
+                <TextBlock x:Name="txtStatus" MinWidth="100"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Note: " Style="{StaticResource CustomLabelStyle}"/>
+                <TextBlock x:Name="txtNote" MinWidth="300"/>
+            </StackPanel>
+        </StackPanel>
+
     </Grid>
 </Window>
