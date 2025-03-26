@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DriverLicenseApp.DAL.Models;
 using DriverLicenseApp.DAL.Repository;
+using static DriverLicenseApp.DAL.Repository.UserRepository;
 
 namespace DriverLicenseApp.BLL.Service
 {
@@ -80,6 +81,26 @@ namespace DriverLicenseApp.BLL.Service
             return UserRepository.IsEmailTaken(email, currentUserId);
         }
 
+
+        public interface IStatisticsService
+        {
+            Dictionary<string, object> GetStatistics();
+        }
+
+        public class StatisticsService : IStatisticsService
+        {
+            private readonly IStatisticsRepository _repository;
+
+            public StatisticsService(IStatisticsRepository repository)
+            {
+                _repository = repository;
+            }
+
+            public Dictionary<string, object> GetStatistics()
+            {
+                return _repository.GetStatistics();
+            }
+        }
 
     }
 }

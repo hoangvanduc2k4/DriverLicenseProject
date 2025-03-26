@@ -172,9 +172,9 @@
         </Grid>
 
         <!-- DetailPanel: Contains detailed information -->
-        <Grid x:Name="DetailPanel" Visibility="Collapsed" Background="{StaticResource PrimaryBrush}" >
+        <Grid x:Name="DetailPanel" Visibility="Collapsed"  Background="{StaticResource PrimaryBrush}" >
             <!-- Adding a ScrollViewer for long content -->
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" >
                 <StackPanel Margin="10">
                     <!-- Certificate Section -->
                     <Border Style="{StaticResource DetailSectionBorder}">

@@ -59,6 +59,8 @@ namespace DriverLicenseApp
                 //Admin
                 case 4:
                     AddMenuButton("User Management", EC1_Click);
+                    AddMenuButton("Statistics", EC2_Click);
+
                     break;
             }
             AddMenuButton("Logout", Logout_Click);
@@ -67,6 +69,10 @@ namespace DriverLicenseApp
         private void EC_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new ExamPolice());
+        }
+        private void EC2_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new DetailedStatistics());
         }
 
         private void EC1_Click(object sender, RoutedEventArgs e)
