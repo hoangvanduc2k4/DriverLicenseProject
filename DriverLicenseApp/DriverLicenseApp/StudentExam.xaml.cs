@@ -56,7 +56,7 @@ namespace DriverLicenseApp
             if (examDataGrid.SelectedItem is not null)
             {
                 int selectedExamId = (int)examDataGrid.SelectedItem.GetType().GetProperty("ExamId")?.GetValue(examDataGrid.SelectedItem);
-                var _result = context.Results.Find(selectedExamId);
+                var _result = context.Results.Where(r => r.ExamId == selectedExamId).Where(r => r.UserId == _userId).FirstOrDefault();
 
                 if (_result != null)
                 {
