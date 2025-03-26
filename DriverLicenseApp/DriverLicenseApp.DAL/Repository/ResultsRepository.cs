@@ -27,7 +27,7 @@ namespace DriverLicenseApp.DAL.Repository
                               {
                                   UserId = u.UserId,
                                   ExamId = examId,
-                                  Score = r != null ? r.Score : -1,          
+                                  Score = r.Score,          
                                   Status = r != null ? r.Status : "", 
                                   Notes = r != null ? r.Notes : "",        
                                   User = u                                   

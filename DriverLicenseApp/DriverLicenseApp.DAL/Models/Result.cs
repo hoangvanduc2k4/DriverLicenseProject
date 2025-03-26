@@ -11,7 +11,7 @@ public partial class Result
 
     public int UserId { get; set; }
 
-    public decimal Score { get; set; }
+    public decimal? Score { get; set; }
 
     public string Status { get; set; } = null!;
 
