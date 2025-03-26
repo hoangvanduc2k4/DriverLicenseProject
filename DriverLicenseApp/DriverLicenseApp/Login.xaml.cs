@@ -36,7 +36,7 @@ namespace DriverLicenseApp
             // 2. Kiểm tra mật khẩu hợp lệ không
             if (string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Please enter password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter password!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             User? user = AuthenticateUser(email, password);
@@ -46,7 +46,7 @@ namespace DriverLicenseApp
             }
             else
             {
-                MessageBox.Show("Sai tài khoản hoặc mật khẩu.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid email or password!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

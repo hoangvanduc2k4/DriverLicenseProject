@@ -66,9 +66,9 @@ namespace DriverLicenseApp
                 }
                 else
                 {
-                    txtScore.Text = "Chưa cập nhật";
-                    txtStatus.Text = "Chưa cập nhật";
-                    txtNote.Text = "Chưa cập nhật";
+                    txtScore.Text = "N/A";
+                    txtStatus.Text = "N/A";
+                    txtNote.Text = "N/A";
                 }
             }
         }

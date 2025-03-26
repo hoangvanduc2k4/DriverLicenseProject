@@ -42,7 +42,7 @@ namespace DriverLicenseApp
             context.Users.Add(newUser);
             context.SaveChanges();
 
-            MessageBox.Show("Đăng ký thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Register Successfully!", "Notice", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
 
@@ -56,7 +56,7 @@ namespace DriverLicenseApp
             // Kiểm tra xem người dùng đã chọn role trong ComboBox chưa
             if (cbRole.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn vai trò.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please choose a role.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             int role = Convert.ToInt32(((ComboBoxItem)cbRole.SelectedItem).Tag);
@@ -77,13 +77,13 @@ namespace DriverLicenseApp
 
             if (password != confirmPassword)
             {
-                MessageBox.Show("Mật khẩu xác nhận không khớp!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Confirm password not match!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             using LicenseDriverDbContext context = new();
             if (context.Users.Any(u => u.Email == email)) // Giả sử bảng Users có cột Email
             {
-                MessageBox.Show("Email đã được sử dụng. Vui lòng chọn email khác!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Email existed, please cho other email!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             RegisterUser(fullName, email, password, role);
