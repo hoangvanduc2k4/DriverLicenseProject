@@ -1,0 +1,345 @@
+﻿<Window x:Class="DriverLicenseApp.DetailedStatistics"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="Admin Dashboard - Statistics"
+        Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+
+    <!-- =====================  RESOURCE DICTIONARY  ===================== -->
+    <Window.Resources>
+        <!-- Main background brush -->
+        <LinearGradientBrush x:Key="MainBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#B8DDC9" Offset="0"/>
+            <GradientStop Color="#FFFFFFFF" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#90C29A"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#4FB8DDC9"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- GroupBox Style -->
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Background" Value="#E0FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#4FB8DDC9"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="#2A2A2A"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="8" Opacity="0.2" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TextBlock Style -->
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Margin" Value="5,0,0,5"/>
+            <Setter Property="Foreground" Value="#2A2A2A"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- PieChart Style -->
+        <Style TargetType="lvc:PieChart">
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="LegendLocation" Value="Bottom"/>
+            <Setter Property="DisableAnimations" Value="False"/>
+            <Setter Property="InnerRadius" Value="40"/>
+            <Setter Property="HoverPushOut" Value="8"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- CartesianChart Style -->
+        <Style TargetType="lvc:CartesianChart">
+            <Setter Property="Background" Value="#FFFFFFFF"/>
+            <Setter Property="LegendLocation" Value="Bottom"/>
+            <Setter Property="DisableAnimations" Value="False"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+    </Window.Resources>
+
+    <!-- =====================  WINDOW BACKGROUND  ===================== -->
+    <Window.Background>
+        <StaticResource ResourceKey="MainBackgroundBrush"/>
+    </Window.Background>
+
+    <!-- =====================  MAIN LAYOUT  ===================== -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Row containing the button bar -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row containing the GroupBox content -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ========== Button Bar (3 buttons) ========== -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Grid.Row="0"
+                    Margin="10">
+            <Button x:Name="btnUserCourseStats" Content="Users &amp; Courses" 
+                    Click="btnUserCourseStats_Click"/>
+            <Button x:Name="btnRegistrationExamStats" Content="Registrations &amp; Exams"
+                    Click="btnRegistrationExamStats_Click"/>
+            <Button x:Name="btnCertificateNotificationStats" Content="Certificates &amp; Notifications"
+                    Click="btnCertificateNotificationStats_Click"/>
+        </StackPanel>
+
+        <!-- Layout 3 GroupBoxes vertically -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- =====================  1) GroupBox Users & Courses  ===================== -->
+            <GroupBox x:Name="gbUserCourseStats" Header="User Statistics" 
+                      Visibility="Collapsed"
+                      Grid.Row="0">
+                <StackPanel>
+                    <!-- StackPanel for text statistics -->
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- User Information -->
+                        <StackPanel Grid.Column="0">
+                            <!-- Each item: a label + a value -->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Total:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtTotalUsers" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Students:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtStudents" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Teachers:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtTeachers" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Traffic Police:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtTrafficPolice" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Admins:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtAdmins" Text="0" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Course Information -->
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Total:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtTotalCourses" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Active:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtActiveCourses" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Closed:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtClosedCourses" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Cancelled:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtCancelledCourses" Text="0" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Charts -->
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- PieChart for Roles -->
+                        <lvc:PieChart Grid.Column="0" Height="250" Margin="10">
+                            <lvc:PieChart.Series>
+                                <lvc:PieSeries x:Name="pieSeriesStudents" Title="Students" Values="0" DataLabels="True"/>
+                                <lvc:PieSeries x:Name="pieSeriesTeachers" Title="Teachers" Values="0" DataLabels="True"/>
+                                <lvc:PieSeries x:Name="pieSeriesTraffic" Title="Traffic Police" Values="0" DataLabels="True"/>
+                                <lvc:PieSeries x:Name="pieSeriesAdmins" Title="Admins" Values="0" DataLabels="True"/>
+                            </lvc:PieChart.Series>
+                        </lvc:PieChart>
+
+                        <!-- Courses Column Chart -->
+                        <lvc:CartesianChart Grid.Column="1" Height="250" Margin="10">
+                            <lvc:CartesianChart.Series>
+                                <lvc:ColumnSeries x:Name="colSeriesCourses" Title="Courses" Values="0"/>
+                            </lvc:CartesianChart.Series>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Labels="Active,Closed,Cancelled"/>
+                            </lvc:CartesianChart.AxisX>
+                        </lvc:CartesianChart>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- =====================  2) GroupBox Registrations & Exams  ===================== -->
+            <GroupBox x:Name="gbRegistrationExamStats" Header="Registration Statistics"
+                      Visibility="Collapsed"
+                      Grid.Row="1">
+                <StackPanel>
+                    <!-- Text statistics -->
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Registrations -->
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Approved:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtApprovedRegs" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Pending:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtPendingRegs" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Rejected:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtRejectedRegs" Text="0" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Exams -->
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Upcoming:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtUpcomingExams" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Past:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtPastExams" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Average Score:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtAvgScore" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Pass Rate:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtPassRate" Text="0 %" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Charts -->
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- PieChart Registrations -->
+                        <lvc:PieChart Grid.Column="0" Height="250" Margin="10">
+                            <lvc:PieChart.Series>
+                                <lvc:PieSeries x:Name="pieSeriesApproved" Title="Approved" Values="0" DataLabels="True"/>
+                                <lvc:PieSeries x:Name="pieSeriesPending" Title="Pending" Values="0" DataLabels="True"/>
+                                <lvc:PieSeries x:Name="pieSeriesRejected" Title="Rejected" Values="0" DataLabels="True"/>
+                            </lvc:PieChart.Series>
+                        </lvc:PieChart>
+
+                        <!-- Exams Line Chart -->
+                        <lvc:CartesianChart Grid.Column="1" Height="250" Margin="10">
+                            <lvc:CartesianChart.Series>
+                                <lvc:LineSeries x:Name="lineSeriesExams" Title="Number of Exams" Values="0" PointGeometrySize="8"/>
+                            </lvc:CartesianChart.Series>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Title="Month" Labels="Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec"/>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Number of Exams"/>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- =====================  3) GroupBox Certificates & Notifications  ===================== -->
+            <GroupBox x:Name="gbCertificateNotificationStats" Header="Certificate Statistics"
+                      Visibility="Collapsed"
+                      Grid.Row="2">
+                <StackPanel>
+                    <!-- Text statistics -->
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Certificates -->
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Active:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtActiveCertificates" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Inactive:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtInactiveCertificates" Text="0" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Notifications -->
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Read:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtReadNotifications" Text="0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Unread:" Margin="0,0,5,0"/>
+                                <TextBlock x:Name="txtUnreadNotifications" Text="0" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Charts -->
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Certificates Column Chart -->
+                        <lvc:CartesianChart Grid.Column="0" Height="250" Margin="10">
+                            <lvc:CartesianChart.Series>
+                                <lvc:ColumnSeries x:Name="colSeriesCertificates" Title="Certificates" Values="0"/>
+                            </lvc:CartesianChart.Series>
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Labels="Active,Inactive"/>
+                            </lvc:CartesianChart.AxisX>
+                        </lvc:CartesianChart>
+
+                        <!-- Notifications Pie Chart -->
+                        <lvc:PieChart Grid.Column="1" Height="250" Margin="10">
+                            <lvc:PieChart.Series>
+                                <lvc:PieSeries x:Name="pieSeriesRead" Title="Read" Values="0" DataLabels="True"/>
+                                <lvc:PieSeries x:Name="pieSeriesUnread" Title="Unread" Values="0" DataLabels="True"/>
+                            </lvc:PieChart.Series>
+                        </lvc:PieChart>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>
