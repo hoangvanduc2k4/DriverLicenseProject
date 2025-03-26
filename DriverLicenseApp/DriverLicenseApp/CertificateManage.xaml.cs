@@ -8,7 +8,6 @@ namespace DriverLicenseApp
 {
     public partial class CertificateManage : Window
     {
-        // Store the userId of the selected certificate for the issue certificate button
         private int currentUserId = 0;
 
         public CertificateManage()

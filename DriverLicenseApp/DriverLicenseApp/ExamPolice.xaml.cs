@@ -123,8 +123,17 @@ namespace DriverLicenseApp
                 MessageBoxResult result = MessageBox.Show("Do you really want to delete this exam?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    _examService.DeleteExam(selectedExam.ExamId);
-                    LoadExams();
+                    // Kiểm tra xem kỳ thi có đang được tham chiếu bởi các bảng khác không
+                    if (_examService.IsExamReferenced(selectedExam.ExamId))
+                    {
+                        MessageBox.Show("This exam cannot be deleted because it is referenced by other records.",
+                                        "Delete Exam", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        _examService.DeleteExam(selectedExam.ExamId);
+                        LoadExams();
+                    }
                 }
             }
             else
@@ -132,6 +141,7 @@ namespace DriverLicenseApp
                 MessageBox.Show("Please select an exam to delete.", "Delete Exam", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
         private void ShowDetailsView(Exam exam)
         {

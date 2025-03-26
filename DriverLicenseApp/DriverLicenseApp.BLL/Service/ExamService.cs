@@ -77,6 +77,14 @@ namespace DriverLicenseApp.BLL.Service
             ExamRepository.DeleteExam(examId);
         }
 
+        public bool IsExamReferenced(int examId)
+        {
+            using (var context = new LicenseDriverDbContext())
+            {
+                // Kiểm tra nếu có bất kỳ kết quả nào trong bảng Results tham chiếu đến examId
+                return context.Results.Any(r => r.ExamId == examId);
+            }
+        }
 
     }
 }
