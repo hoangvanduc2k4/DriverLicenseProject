@@ -12,13 +12,15 @@ namespace DriverLicenseApp
     {
         private readonly NotificationsService _notificationsService = new NotificationsService();
         private readonly RegistrationService _registrationService = new RegistrationService();
-        private int _courseId;
+        public int _courseId { get; set; }
+        public string _courseName { get; set; }
         private Registration _selectedRegistration;
 
         public RegistrationList(int courseId, string courseName)
         {
             InitializeComponent();
             _courseId = courseId;
+            _courseName = courseName;
             txtCourseName.Text = courseName;
             LoadRegistrations();
         }
@@ -46,7 +48,6 @@ namespace DriverLicenseApp
             {
                 try
                 {
-                    string courseName = _selectedRegistration.Course?.CourseName ?? "Unknown Course";
                     string newStatus = cbStatus.Text;
                     int studentId = _selectedRegistration.UserId;
 
@@ -56,7 +57,7 @@ namespace DriverLicenseApp
                         string.IsNullOrWhiteSpace(txtComments.Text) ? null : txtComments.Text
                     );
 
-                    string notificationMessage = $"Your course registration in {courseName} has been {newStatus}!";
+                    string notificationMessage = $"Your course registration in {_courseName} has been {newStatus}!";
                     _notificationsService.AddNotification(studentId, notificationMessage);
 
                     MessageBox.Show("Status updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -9,7 +9,7 @@
         Height="500" 
         Width="800" 
         WindowStartupLocation="CenterScreen" 
-        ResizeMode="NoResize">
+        >
     <Grid Background="#CEFAE3">
         <Grid.Resources>
             <Style x:Key="CustomLabelStyle" TargetType="{x:Type Control}" BasedOn="{StaticResource {x:Type TextBlock}}">

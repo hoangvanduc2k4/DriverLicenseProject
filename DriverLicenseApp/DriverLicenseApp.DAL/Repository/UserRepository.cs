@@ -73,5 +73,18 @@ namespace DriverLicenseApp.DAL.Repository
             }
         }
 
+        public static bool IsEmailTaken(string email, int currentUserId)
+        {
+            LicenseDriverDbContext context = new LicenseDriverDbContext();
+            try
+            {
+                return context.Users.Any(u => u.Email == email && u.UserId != currentUserId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error checking email: {ex.Message}");
+            }
+        }
+
     }
 }

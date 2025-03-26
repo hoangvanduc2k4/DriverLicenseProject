@@ -16,12 +16,28 @@ namespace DriverLicenseApp.DAL.Repository
             try
             {
                 using var db = new LicenseDriverDbContext();
-                return db.Results.Include(u => u.User).Include(e => e.Exam).Where(r => r.ExamId == examId).ToList();
+                var results = from u in db.Users
+                              join reg in db.Registrations on u.UserId equals reg.UserId
+                              join c in db.Courses on reg.CourseId equals c.CourseId
+                              join e in db.Exams on c.CourseId equals e.CourseId
+                              join r in db.Results on new { u.UserId, e.ExamId } equals new { r.UserId, r.ExamId } into resultGroup
+                              from r in resultGroup.DefaultIfEmpty()
+                              where reg.Status == "Approved" && e.ExamId == examId
+                              select new Result
+                              {
+                                  UserId = u.UserId,
+                                  ExamId = examId,
+                                  Score = r != null ? r.Score : -1,          
+                                  Status = r != null ? r.Status : "", 
+                                  Notes = r != null ? r.Notes : "",        
+                                  User = u                                   
+                              };
 
+                return results.ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"Error retrieving results: {ex.Message}");
             }
         }
 

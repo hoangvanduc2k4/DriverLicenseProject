@@ -4,7 +4,6 @@
         Title="Registration List" 
         Height="560" 
         Width="800" 
-        ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen" 
         Background="#CEFAE3">
     <Grid Margin="10">

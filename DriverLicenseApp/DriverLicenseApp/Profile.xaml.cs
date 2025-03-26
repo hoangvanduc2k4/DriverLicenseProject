@@ -69,16 +69,17 @@ namespace DriverLicenseApp
                 MessageBox.Show("Invalid email address.");
                 return;
             }
-            using LicenseDriverDbContext context = new();
-            if (context.Users.Any(u => u.Email == email)) // Giả sử bảng Users có cột Email
-            {
-                MessageBox.Show("Email đã được sử dụng. Vui lòng chọn email khác!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+
             Regex phoneRegex = new Regex(@"^\d+$");
             if (!phoneRegex.IsMatch(phone))
             {
                 MessageBox.Show("Invalid phone number. It must contain digits only.");
+                return;
+            }
+
+            if (_userService.IsEmailTaken(email, _currentUser.UserId))
+            {
+                MessageBox.Show("This email is already taken by another user.");
                 return;
             }
 
@@ -88,14 +89,21 @@ namespace DriverLicenseApp
             _currentUser.Class = classInfo;
             _currentUser.School = school;
 
-            bool isUpdated = _userService.UpdateUserProfile(_currentUser);
-            if (isUpdated)
+            try
             {
-                MessageBox.Show("Profile Updated Successfully!");
+                bool isUpdated = _userService.UpdateUserProfile(_currentUser);
+                if (isUpdated)
+                {
+                    MessageBox.Show("Profile Updated Successfully!");
+                }
+                else
+                {
+                    MessageBox.Show("Error updating profile.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Error updating profile.");
+                MessageBox.Show($"Error updating profile: {ex.Message}");
             }
         }
 

@@ -6,7 +6,7 @@
         Width="716" 
         Background="#CEFAE3" 
         WindowStartupLocation="CenterScreen" 
-        ResizeMode="NoResize">
+        >
     <Grid Margin="10">
         <Grid.Resources>
             <!-- Style cho TextBlock (label) -->
