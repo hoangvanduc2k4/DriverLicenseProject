@@ -18,8 +18,8 @@ namespace DriverLicenseApp.DAL.Repository
                 var certificate = new Certificate
                 {
                     UserId = userId,
-                    IssuedDate = DateOnly.FromDateTime(DateTime.Now), // Chuyển đổi DateTime -> DateOnly
-                    ExpirationDate = DateOnly.FromDateTime(DateTime.Now.AddYears(5)), // Chuyển đổi DateTime -> DateOnly
+                    IssuedDate = DateOnly.FromDateTime(DateTime.Now), 
+                    ExpirationDate = DateOnly.FromDateTime(DateTime.Now.AddYears(5)),
                     CertificateCode = GenerateCertificateCode(userId),
                     Status = "Inactive"
                 };

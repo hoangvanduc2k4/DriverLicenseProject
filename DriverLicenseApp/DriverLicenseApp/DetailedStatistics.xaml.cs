@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows;
 using LiveCharts;
 using LiveCharts.Wpf;
-// Assume you have a namespace for Service & Repository
 using DriverLicenseApp.BLL.Service;
 using DriverLicenseApp.DAL.Repository;
 using static DriverLicenseApp.BLL.Service.UserService;
@@ -15,7 +14,7 @@ namespace DriverLicenseApp
     public partial class DetailedStatistics : Window
     {
         private IStatisticsService _statisticsService;
-        private bool _dataLoaded = false; // To track whether data has been loaded once
+        private bool _dataLoaded = false; 
 
         public DetailedStatistics()
         {
