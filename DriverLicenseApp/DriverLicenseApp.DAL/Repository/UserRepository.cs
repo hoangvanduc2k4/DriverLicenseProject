@@ -129,9 +129,9 @@ namespace DriverLicenseApp.DAL.Repository
                 stats["UpcomingExams"] = _context.Exams.Count(e => e.ExamDate >= today);
                 stats["PastExams"] = _context.Exams.Count(e => e.ExamDate < today);
 
-                decimal avgScore = _context.Results.Any()
+                decimal avgScore = (decimal)(_context.Results.Any()
      ? _context.Results.Average(r => r.Score)
-     : 0m;
+     : 0m);
                 stats["AverageScore"] = avgScore;
 
 
