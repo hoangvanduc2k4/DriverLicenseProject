@@ -6,15 +6,12 @@
         Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
 
-    <!-- =====================  RESOURCE DICTIONARY  ===================== -->
     <Window.Resources>
-        <!-- Main background brush -->
         <LinearGradientBrush x:Key="MainBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#B8DDC9" Offset="0"/>
             <GradientStop Color="#FFFFFFFF" Offset="1"/>
         </LinearGradientBrush>
 
-        <!-- Button Style -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#90C29A"/>
             <Setter Property="Foreground" Value="Black"/>
@@ -27,7 +24,6 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <!-- GroupBox Style -->
         <Style TargetType="GroupBox">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="10"/>
@@ -44,7 +40,6 @@
             </Setter>
         </Style>
 
-        <!-- TextBlock Style -->
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="Margin" Value="5,0,0,5"/>
@@ -52,7 +47,6 @@
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
-        <!-- PieChart Style -->
         <Style TargetType="lvc:PieChart">
             <Setter Property="Background" Value="#FFFFFFFF"/>
             <Setter Property="LegendLocation" Value="Bottom"/>
@@ -62,7 +56,6 @@
             <Setter Property="FontSize" Value="14"/>
         </Style>
 
-        <!-- CartesianChart Style -->
         <Style TargetType="lvc:CartesianChart">
             <Setter Property="Background" Value="#FFFFFFFF"/>
             <Setter Property="LegendLocation" Value="Bottom"/>
@@ -72,21 +65,16 @@
         </Style>
     </Window.Resources>
 
-    <!-- =====================  WINDOW BACKGROUND  ===================== -->
     <Window.Background>
         <StaticResource ResourceKey="MainBackgroundBrush"/>
     </Window.Background>
 
-    <!-- =====================  MAIN LAYOUT  ===================== -->
     <Grid>
         <Grid.RowDefinitions>
-            <!-- Row containing the button bar -->
             <RowDefinition Height="Auto"/>
-            <!-- Row containing the GroupBox content -->
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- ========== Button Bar (3 buttons) ========== -->
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Grid.Row="0"
@@ -99,7 +87,6 @@
                     Click="btnCertificateNotificationStats_Click"/>
         </StackPanel>
 
-        <!-- Layout 3 GroupBoxes vertically -->
         <Grid Grid.Row="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -107,21 +94,17 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- =====================  1) GroupBox Users & Courses  ===================== -->
             <GroupBox x:Name="gbUserCourseStats" Header="User Statistics" 
                       Visibility="Collapsed"
                       Grid.Row="0">
                 <StackPanel>
-                    <!-- StackPanel for text statistics -->
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- User Information -->
                         <StackPanel Grid.Column="0">
-                            <!-- Each item: a label + a value -->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Total:" Margin="0,0,5,0"/>
                                 <TextBlock x:Name="txtTotalUsers" Text="0" />
@@ -144,7 +127,6 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <!-- Course Information -->
                         <StackPanel Grid.Column="1">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Total:" Margin="0,0,5,0"/>
@@ -165,14 +147,12 @@
                         </StackPanel>
                     </Grid>
 
-                    <!-- Charts -->
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- PieChart for Roles -->
                         <lvc:PieChart Grid.Column="0" Height="250" Margin="10">
                             <lvc:PieChart.Series>
                                 <lvc:PieSeries x:Name="pieSeriesStudents" Title="Students" Values="0" DataLabels="True"/>
@@ -181,8 +161,7 @@
                                 <lvc:PieSeries x:Name="pieSeriesAdmins" Title="Admins" Values="0" DataLabels="True"/>
                             </lvc:PieChart.Series>
                         </lvc:PieChart>
-
-                        <!-- Courses Column Chart -->
+          
                         <lvc:CartesianChart Grid.Column="1" Height="250" Margin="10">
                             <lvc:CartesianChart.Series>
                                 <lvc:ColumnSeries x:Name="colSeriesCourses" Title="Courses" Values="0"/>
@@ -195,19 +174,16 @@
                 </StackPanel>
             </GroupBox>
 
-            <!-- =====================  2) GroupBox Registrations & Exams  ===================== -->
             <GroupBox x:Name="gbRegistrationExamStats" Header="Registration Statistics"
                       Visibility="Collapsed"
                       Grid.Row="1">
                 <StackPanel>
-                    <!-- Text statistics -->
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Registrations -->
                         <StackPanel Grid.Column="0">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Approved:" Margin="0,0,5,0"/>
@@ -223,7 +199,6 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <!-- Exams -->
                         <StackPanel Grid.Column="1">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Upcoming:" Margin="0,0,5,0"/>
@@ -243,15 +218,13 @@
                             </StackPanel>
                         </StackPanel>
                     </Grid>
-
-                    <!-- Charts -->
+            
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- PieChart Registrations -->
                         <lvc:PieChart Grid.Column="0" Height="250" Margin="10">
                             <lvc:PieChart.Series>
                                 <lvc:PieSeries x:Name="pieSeriesApproved" Title="Approved" Values="0" DataLabels="True"/>
@@ -260,7 +233,6 @@
                             </lvc:PieChart.Series>
                         </lvc:PieChart>
 
-                        <!-- Exams Line Chart -->
                         <lvc:CartesianChart Grid.Column="1" Height="250" Margin="10">
                             <lvc:CartesianChart.Series>
                                 <lvc:LineSeries x:Name="lineSeriesExams" Title="Number of Exams" Values="0" PointGeometrySize="8"/>
@@ -276,19 +248,16 @@
                 </StackPanel>
             </GroupBox>
 
-            <!-- =====================  3) GroupBox Certificates & Notifications  ===================== -->
             <GroupBox x:Name="gbCertificateNotificationStats" Header="Certificate Statistics"
                       Visibility="Collapsed"
                       Grid.Row="2">
                 <StackPanel>
-                    <!-- Text statistics -->
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Certificates -->
                         <StackPanel Grid.Column="0">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Active:" Margin="0,0,5,0"/>
@@ -300,7 +269,6 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <!-- Notifications -->
                         <StackPanel Grid.Column="1">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Read:" Margin="0,0,5,0"/>
@@ -313,14 +281,12 @@
                         </StackPanel>
                     </Grid>
 
-                    <!-- Charts -->
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Certificates Column Chart -->
                         <lvc:CartesianChart Grid.Column="0" Height="250" Margin="10">
                             <lvc:CartesianChart.Series>
                                 <lvc:ColumnSeries x:Name="colSeriesCertificates" Title="Certificates" Values="0"/>
@@ -329,8 +295,7 @@
                                 <lvc:Axis Labels="Active,Inactive"/>
                             </lvc:CartesianChart.AxisX>
                         </lvc:CartesianChart>
-
-                        <!-- Notifications Pie Chart -->
+          
                         <lvc:PieChart Grid.Column="1" Height="250" Margin="10">
                             <lvc:PieChart.Series>
                                 <lvc:PieSeries x:Name="pieSeriesRead" Title="Read" Values="0" DataLabels="True"/>

@@ -39,7 +39,6 @@ namespace DriverLicenseApp.DAL.Repository
 
         }
 
-
         public static void UpdateCourse(Course course)
         {
             try
@@ -55,8 +54,6 @@ namespace DriverLicenseApp.DAL.Repository
             }
 
         }
-
-
 
         public static void DeleteCourse(Course course)
         {
