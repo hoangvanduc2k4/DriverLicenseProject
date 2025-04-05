@@ -36,6 +36,9 @@ namespace DriverLicenseApp
             // Nút chung cho tất cả role
             AddMenuButton("Profile", Profile_Click);
             AddMenuButton("Change Password", changePass_Click);
+            AddMenuButton("Chat Bot", chatbot_Click);
+            AddMenuButton("Chrome", chrome_Click);
+
 
             // Hiển thị nút theo từng role
             switch (currentUser.Role)
@@ -69,6 +72,16 @@ namespace DriverLicenseApp
         private void EC_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new ExamPolice());
+        }
+
+        private void chrome_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new MyChrome());
+        }
+
+        private void chatbot_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow(new ChatBot());
         }
         private void EC2_Click(object sender, RoutedEventArgs e)
         {
