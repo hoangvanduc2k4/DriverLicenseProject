@@ -8,23 +8,17 @@ ORM: Entity Framework Core
 Kiến trúc: Three Layers
 
 Vai Trò & Quyền Hạn Người Dùng
+ <h2>🟢 Common Screens</h2>
 <div align="center">
-    <h2>🟢 Common Screens</h2>
     <p>Các màn hình chung được sử dụng bởi tất cả người dùng:</p>
-    <img src="https://github.com/user-attachments/assets/8e407f74-1b0b-4988-856e-5cc34f366737" width="500">
     <p>Login: Đăng nhập vào hệ thống.</p>
-    <img src="https://github.com/user-attachments/assets/a603b794-a13c-42a4-9363-987384742dd2" width="500">
     <p>Register: Đăng ký tài khoản mới.</p>
-    <img src="https://github.com/user-attachments/assets/4f6ebe0b-5e9d-4b87-826d-3730d01548a0" width="500">
     <p>Profile: Xem và chỉnh sửa thông tin cá nhân.</p>
-    <img src="https://github.com/user-attachments/assets/a5b31829-29c2-474c-807d-0fbe46bed58d" width="500">
     <p>Change Password: Thay đổi mật khẩu tài khoản.</p>
-    <img src="https://github.com/user-attachments/assets/e843ad3e-37ba-4971-8de0-964f77554c70" width="500">
     <p>Main Menu: Giao diện chính của ứng dụng.</p>
 </div>
-
+ <h2>🔴 Admin</h2>
 <div align="center">
-    <h2>🔴 Admin</h2>
     <img src="https://github.com/user-attachments/assets/b9705f21-2a0e-4322-8f13-3e522f43f819" width="500">
     <p>Quản lý tài khoản người dùng.</p>
     <img src="https://github.com/user-attachments/assets/b1ea13b8-3873-466c-85db-f6820d32fcb9" width="500">
@@ -32,9 +26,8 @@ Vai Trò & Quyền Hạn Người Dùng
     <img src="https://github.com/user-attachments/assets/afd5fe7c-72c0-4554-a4df-6157814279d8" width="500">
     <p>Xem số liệu thống kê để giám sát hiệu suất tổng thể của hệ thống (Statistic 2).</p>
 </div>
-
+ <h2>🟠 Teacher</h2>
 <div align="center">
-    <h2>🟠 Teacher</h2>
     <img src="https://github.com/user-attachments/assets/c251ebc1-824f-4288-9b29-7d5aa44d82da" width="500">
     <p>Tạo và quản lý khóa học.</p>
     <img src="https://github.com/user-attachments/assets/b605ff7e-da84-4312-b154-a7dbf8e71adc" width="500">
@@ -44,9 +37,8 @@ Vai Trò & Quyền Hạn Người Dùng
     <img src="https://github.com/user-attachments/assets/adad4f4d-828b-4f5d-9ed2-d038d777bf45" width="500">
     <p>Ghi nhận kết quả thi và phối hợp với cảnh sát giao thông để tổ chức và giám sát kỳ thi (List Mark of Exam).</p>
 </div>
-
+<h2>🔵 Student</h2>
 <div align="center">
-    <h2>🔵 Student</h2>
     <img src="https://github.com/user-attachments/assets/30b22ab1-5dde-4a08-a2d7-44cec7f4bc8a" width="500">
     <p>Đăng ký khóa học.</p>
     <img src="https://github.com/user-attachments/assets/4f6ebe0b-5e9d-4b87-826d-3730d01548a0" width="500">
@@ -62,9 +54,8 @@ Vai Trò & Quyền Hạn Người Dùng
     <img src="https://github.com/user-attachments/assets/332ebcc7-74a7-46a1-90e4-80806950a6ab" width="500">
     <p>Tham gia kỳ thi và nhận chứng chỉ lái xe máy khi đạt yêu cầu (Notification).</p>
 </div>
-
+<h2>🟡 Traffic Police</h2>
 <div align="center">
-    <h2>🟡 Traffic Police</h2>
     <img src="https://github.com/user-attachments/assets/28da45a0-4b5f-42c9-b6cf-59b1f032eb94" width="500">
     <p>Giám sát quá trình thi.</p>
     <img src="https://github.com/user-attachments/assets/bf0435bb-ee9e-4af5-b81c-7c5a6cb0e175" width="500">
