@@ -8,38 +8,70 @@ ORM: Entity Framework Core
 Kiến trúc: Three Layers
 
 Vai Trò & Quyền Hạn Người Dùng
-🟢 Common Screens
-Các màn hình chung được sử dụng bởi tất cả người dùng:
+<div align="center">
+    <h2>🟢 Common Screens</h2>
+    <p>Các màn hình chung được sử dụng bởi tất cả người dùng:</p>
+    <img src="https://github.com/user-attachments/assets/8e407f74-1b0b-4988-856e-5cc34f366737" width="500">
+    <p>Login: Đăng nhập vào hệ thống.</p>
+    <img src="https://github.com/user-attachments/assets/a603b794-a13c-42a4-9363-987384742dd2" width="500">
+    <p>Register: Đăng ký tài khoản mới.</p>
+    <img src="https://github.com/user-attachments/assets/4f6ebe0b-5e9d-4b87-826d-3730d01548a0" width="500">
+    <p>Profile: Xem và chỉnh sửa thông tin cá nhân.</p>
+    <img src="https://github.com/user-attachments/assets/a5b31829-29c2-474c-807d-0fbe46bed58d" width="500">
+    <p>Change Password: Thay đổi mật khẩu tài khoản.</p>
+    <img src="https://github.com/user-attachments/assets/e843ad3e-37ba-4971-8de0-964f77554c70" width="500">
+    <p>Main Menu: Giao diện chính của ứng dụng.</p>
+</div>
 
-Login: Đăng nhập vào hệ thống.  
-Register: Đăng ký tài khoản mới.  
-Profile: Xem và chỉnh sửa thông tin cá nhân.  
-Change Password: Thay đổi mật khẩu tài khoản.  
-Main Menu: Giao diện chính của ứng dụng.
+<div align="center">
+    <h2>🔴 Admin</h2>
+    <img src="https://github.com/user-attachments/assets/b9705f21-2a0e-4322-8f13-3e522f43f819" width="500">
+    <p>Quản lý tài khoản người dùng.</p>
+    <img src="https://github.com/user-attachments/assets/b1ea13b8-3873-466c-85db-f6820d32fcb9" width="500">
+    <p>Xem số liệu thống kê để giám sát hiệu suất tổng thể của hệ thống (Statistic 1).</p>
+    <img src="https://github.com/user-attachments/assets/afd5fe7c-72c0-4554-a4df-6157814279d8" width="500">
+    <p>Xem số liệu thống kê để giám sát hiệu suất tổng thể của hệ thống (Statistic 2).</p>
+</div>
 
-🔴 Admin
+<div align="center">
+    <h2>🟠 Teacher</h2>
+    <img src="https://github.com/user-attachments/assets/c251ebc1-824f-4288-9b29-7d5aa44d82da" width="500">
+    <p>Tạo và quản lý khóa học.</p>
+    <img src="https://github.com/user-attachments/assets/b605ff7e-da84-4312-b154-a7dbf8e71adc" width="500">
+    <p>Xác nhận đăng ký của học sinh.</p>
+    <img src="https://github.com/user-attachments/assets/f64eceab-41f6-4b36-867d-4de456bba172" width="500">
+    <p>Ghi nhận kết quả thi và phối hợp với cảnh sát giao thông để tổ chức và giám sát kỳ thi (List Exam).</p>
+    <img src="https://github.com/user-attachments/assets/adad4f4d-828b-4f5d-9ed2-d038d777bf45" width="500">
+    <p>Ghi nhận kết quả thi và phối hợp với cảnh sát giao thông để tổ chức và giám sát kỳ thi (List Mark of Exam).</p>
+</div>
 
-Quản lý tài khoản người dùng.  
-Xem số liệu thống kê để giám sát hiệu suất tổng thể của hệ thống.Lưu ý: Có hai ảnh "Statistic", tôi đã đặt tên khác nhau để phân biệt.
+<div align="center">
+    <h2>🔵 Student</h2>
+    <img src="https://github.com/user-attachments/assets/30b22ab1-5dde-4a08-a2d7-44cec7f4bc8a" width="500">
+    <p>Đăng ký khóa học.</p>
+    <img src="https://github.com/user-attachments/assets/4f6ebe0b-5e9d-4b87-826d-3730d01548a0" width="500">
+    <p>Cập nhật thông tin cá nhân (Profile ở Common Screens).</p>
+    <img src="https://github.com/user-attachments/assets/a6fb0ed7-3794-4935-a58e-9615ad5c4eea" width="500">
+    <p>Tham gia kỳ thi và nhận chứng chỉ lái xe máy khi đạt yêu cầu (Chatbot).</p>
+    <img src="https://github.com/user-attachments/assets/32320a27-0b36-4b71-b84a-5e3fb89a35a2" width="500">
+    <p>Tham gia kỳ thi và nhận chứng chỉ lái xe máy khi đạt yêu cầu (My Course).</p>
+    <img src="https://github.com/user-attachments/assets/6c4c44c1-f737-41ff-a871-890fe2c74a97" width="500">
+    <p>Tham gia kỳ thi và nhận chứng chỉ lái xe máy khi đạt yêu cầu (Exam vs Result).</p>
+    <img src="https://github.com/user-attachments/assets/5296efdc-d3db-41af-8623-24afdbe8e777" width="500">
+    <p>Tham gia kỳ thi và nhận chứng chỉ lái xe máy khi đạt yêu cầu (My Certificate).</p>
+    <img src="https://github.com/user-attachments/assets/332ebcc7-74a7-46a1-90e4-80806950a6ab" width="500">
+    <p>Tham gia kỳ thi và nhận chứng chỉ lái xe máy khi đạt yêu cầu (Notification).</p>
+</div>
 
-🟠 Teacher
-
-Tạo và quản lý khóa học.  
-Xác nhận đăng ký của học sinh.  
-Ghi nhận kết quả thi và phối hợp với cảnh sát giao thông để tổ chức và giám sát kỳ thi.
-
-🔵 Student
-
-Đăng ký khóa học.  
-Cập nhật thông tin cá nhân.(Đã có trong Profile ở Common Screens)  
-Tham gia kỳ thi và nhận chứng chỉ lái xe máy khi đạt yêu cầu.
-
-🟡 Traffic Police
-
-Giám sát quá trình thi.  
-Tạo lịch thi và phân công giám sát.  
-Kiểm tra tính tuân thủ của kỳ thi theo các quy định an toàn.  
-Phê duyệt cấp chứng chỉ cho học sinh đủ điều kiện.
+<div align="center">
+    <h2>🟡 Traffic Police</h2>
+    <img src="https://github.com/user-attachments/assets/28da45a0-4b5f-42c9-b6cf-59b1f032eb94" width="500">
+    <p>Giám sát quá trình thi.</p>
+    <img src="https://github.com/user-attachments/assets/bf0435bb-ee9e-4af5-b81c-7c5a6cb0e175" width="500">
+    <p>Tạo lịch thi và phân công giám sát (List Certificate).</p>
+    <img src="https://github.com/user-attachments/assets/c9016948-a089-4d29-9b88-247b6e83fea2" width="500">
+    <p>Kiểm tra tính tuân thủ của kỳ thi theo các quy định an toàn và phê duyệt cấp chứng chỉ cho học sinh đủ điều kiện (Issue Certificate).</p>
+</div>
 
 Hướng Dẫn Cài Đặt & Sử Dụng
 1. Clone Repository
