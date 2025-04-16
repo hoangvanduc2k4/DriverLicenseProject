@@ -28,26 +28,25 @@ namespace DriverLicenseApp
             currentUser = user;
             SetupMenu();
         }
+
         private void SetupMenu()
         {
-
             // Xóa tất cả các nút trước khi thêm mới
             StackPanelMenu.Children.Clear();
             // Nút chung cho tất cả role
             AddMenuButton("Profile", Profile_Click);
             AddMenuButton("Change Password", changePass_Click);
-            AddMenuButton("Chat Bot", chatbot_Click);
-            AddMenuButton("Chrome", chrome_Click);
-
 
             // Hiển thị nút theo từng role
             switch (currentUser.Role)
             {
                 //Student
                 case 1:
+                    AddMenuButton("Chat Bot", chatbot_Click);
                     AddMenuButton("My Courses", ViewCoursesOfStudent_Click);
                     AddMenuButton("Registration", SRegistration_Click);
                     AddMenuButton("Notifications", Notifications_Click);
+                    AddMenuButton("Learning through video", OnlineLearning_Click); 
                     break;
                 //Teacher
                 case 2:
@@ -63,10 +62,26 @@ namespace DriverLicenseApp
                 case 4:
                     AddMenuButton("User Management", EC1_Click);
                     AddMenuButton("Statistics", EC2_Click);
-
                     break;
             }
             AddMenuButton("Logout", Logout_Click);
+        }
+
+        private void OnlineLearning_Click(object sender, RoutedEventArgs e)
+        {
+            string youtubeChannelUrl = "https://www.youtube.com/watch?v=XDRXhhqO_3E&list=PLWx4tyHYVeC2fg3cXFs9FFzM_-TQ2cmJs"; // Thay bằng URL kênh YouTube thực tế
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = youtubeChannelUrl,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Không thể mở trình duyệt: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void EC_Click(object sender, RoutedEventArgs e)
@@ -83,6 +98,7 @@ namespace DriverLicenseApp
         {
             OpenWindow(new ChatBot());
         }
+
         private void EC2_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new DetailedStatistics());
@@ -101,7 +117,6 @@ namespace DriverLicenseApp
                 Width = 150,
                 Height = 50,
                 Margin = new Thickness(10),
-
                 Background = new SolidColorBrush(Color.FromRgb(136, 211, 187)), // Màu nền (xanh teal nhạt)
                 Foreground = Brushes.White, // Màu chữ (trắng)
                 BorderBrush = new SolidColorBrush(Color.FromRgb(88, 177, 159)), // Màu viền (đậm hơn nền)
@@ -129,10 +144,12 @@ namespace DriverLicenseApp
             loginWindow.Show();
             this.Close();
         }
+
         private void CourseManagement_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new CourseManagement(currentUser.UserId));
         }
+
         private void ListExam_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow(new ListExam(currentUser.UserId));
