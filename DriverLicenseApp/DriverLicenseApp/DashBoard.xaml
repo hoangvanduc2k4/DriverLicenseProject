@@ -5,21 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriverLicenseApp"
         mc:Ignorable="d"
-        Title="DashBoard" Height="460" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="DashBoard" Height="460" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/background.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <!-- Menu bên trái -->
             <ColumnDefinition Width="*"/>
             <!-- Nội dung chính -->
         </Grid.ColumnDefinitions>
-        <Image HorizontalAlignment="Left" Height="450" VerticalAlignment="Center" Width="801" Grid.ColumnSpan="2" Source="/background.jpg"/>
         <!-- Menu bên trái -->
-        <StackPanel x:Name="StackPanelMenu" Background="Transparent" Width="200" Orientation="Vertical"/>
-
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
+            <StackPanel x:Name="StackPanelMenu" Background="Transparent" Orientation="Vertical"/>
+        </ScrollViewer>
         <!-- Nội dung chính -->
         <Grid Grid.Column="1">
-            <StackPanel x:Name="StackPanelButtons" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="StackPanelButtons" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>
